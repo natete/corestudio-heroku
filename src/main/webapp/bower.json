@@ -1,0 +1,28 @@
+{
+  "name": "CoreStudio_Pilates",
+  "version": "0.0.0",
+  "homepage": "https://github.com/natete/corestudio",
+  "authors": [
+    "natete <natete981@gmail.com>"
+  ],
+  "description": "CoreStudio System Management",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
+    "font-awesome": "fontawesome#~4.4.0",
+    "angular": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "angular-material": "~0.11.4"
+  }
+}
