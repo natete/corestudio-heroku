@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('corestudioApp.controllers', [])
+angular.module('corestudioApp.controllers')
 .controller('LoginController', ['$scope', 'authService', '$state', function($scope, authService, $state) {
 
         $scope.buttonText = 'Entrar';
