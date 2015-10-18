@@ -3,4 +3,4 @@
  */
 
 angular.module('corestudioApp.services')
-    .value('LOGIN_ENDPOINT', '/login');
+    .value('LOGIN_ENDPOINT', 'login');

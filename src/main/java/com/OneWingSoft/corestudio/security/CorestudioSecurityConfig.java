@@ -41,6 +41,9 @@ public class CorestudioSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService customUserDetailsService;
 	
+	/**
+	 * @see WebSecurityConfigurerAdapter#configure(HttpSecurity)
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -62,11 +65,18 @@ public class CorestudioSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 	}
 	
+	/**
+	 * @see WebSecurityConfigurerAdapter#configure(AuthenticationManagerBuilder)
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
+	/**
+	 * Method that returns a new {@link OncePerRequestFilter} Filter to manage Angular cookies
+	 * @return {@link Filter} to manage Angular cookies
+	 */
 	private Filter csrfHeaderFilter() {
 		return new OncePerRequestFilter() {
 			@Override
@@ -87,12 +97,20 @@ public class CorestudioSecurityConfig extends WebSecurityConfigurerAdapter {
 		};
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private CsrfTokenRepository csrfTokenRepository() {
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
 		repository.setHeaderName("X-XSRF-TOKEN");
 		return repository;
 	}
 	
+	/**
+	 * Method to use PasswordEncoder as a singleton
+	 * @return
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		if (encoder == null) {
