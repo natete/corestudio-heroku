@@ -15,41 +15,41 @@ angular.module('corestudioApp').config(['$stateProvider', '$urlRouterProvider', 
    $stateProvider.state('login', {
        url: '/login',
        controller: 'LoginController',
-       //resolve: {
-       //    user:['authService', '$q', function(authService, $q) {
-       //        if(authService.user) {
-       //            return $q.reject({authorized: true});
-       //        }
-       //    }]
-       //},
+       resolve: {
+           user:['authService', '$q', function(authService, $q) {
+               if(authService.user) {
+                   return $q.reject({authorized: true});
+               }
+           }]
+       },
        templateUrl: 'partials/login.html'
    }).state('home', {
        url: '/home',
        controller: 'HomeController',
-       //resolve: {
-       //    user: ['authService', '$q', function(authService, $q) {
-       //        return authService.user || $q.reject({unAuthorized: true});
-       //    }]
-       //},
+       resolve: {
+           user: ['authService', '$q', function(authService, $q) {
+               return authService.user || $q.reject({unAuthorized: true});
+           }]
+       },
        templateUrl: 'partials/home.html'
    }).state('professor', {
        url: '/professor',
        controller: 'ProfessorController',
-       //resolve: {
-       //    user: ['authService', '$q', function(authService, $q) {
-       //        return authService.user || $q.reject({unAuthorized: true});
-       //    }]
-       //},
+       resolve: {
+           user: ['authService', '$q', function(authService, $q) {
+               return authService.user || $q.reject({unAuthorized: true});
+           }]
+       },
        templateUrl: 'partials/professors/professor_details.html'
    })
    ;
 
-    $urlRouterProvider.otherwise('/professor');
+    $urlRouterProvider.otherwise('/home');
     $locationProvider.html5Mode(true);
 
     $httpProvider.defaults.withCredentials = true;
 
 }]);
 
-angular.module('corestudioApp.controllers', []);
 angular.module('corestudioApp.services', []);
+angular.module('corestudioApp.controllers', []);

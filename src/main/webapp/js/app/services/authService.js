@@ -5,7 +5,11 @@ angular.module('corestudioApp.services')
         var auth = {};
 
         auth.login = function (username, password) {
-            return $http.post(LOGIN_ENDPOINT, {username: username, password: password})
+            return $http.post(LOGIN_ENDPOINT, $.param({username: username, password: password}), {
+                headers : {
+                    "content-type" : "application/x-www-form-urlencoded"
+                }
+        	})
                 .then(function(response, status) {
                     auth.user = response.data;
                     $cookieStore.put('user', auth.user);
