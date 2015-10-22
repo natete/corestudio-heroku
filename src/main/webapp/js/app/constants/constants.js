@@ -4,4 +4,5 @@
 
 angular.module('corestudioApp.services')
     .value('LOGIN_ENDPOINT', 'login')
+    .value('LOGOUT_ENDPOINT', 'logout')
     .value('PROFESSOR_ENDPOINT', 'RSProfessor/:id');
