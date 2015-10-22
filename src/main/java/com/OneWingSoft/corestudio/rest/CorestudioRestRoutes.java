@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CorestudioRestRoutes {
 
-	@RequestMapping({ "/home", "/login" })
+	@RequestMapping({ "/home", "/login", "/professor" })
 	public String index() {
 		return "forward:/index.html";
 

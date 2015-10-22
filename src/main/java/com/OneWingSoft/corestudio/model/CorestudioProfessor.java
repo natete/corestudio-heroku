@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 @Table(name = "professors")
 public class CorestudioProfessor {
@@ -36,7 +38,7 @@ public class CorestudioProfessor {
 	
 	@Column
 	@NotNull
-	@Size(min = 1, max = 25)
+	@Size(min = 1, max = 60)
 	private String passwordHash;
 	
 	@Column
@@ -61,13 +63,13 @@ public class CorestudioProfessor {
 	@NotNull
 	@Size(min = 1, max = 35)
 	@Pattern(regexp = "[a-z ñáàâäéèêëíìîïóòôöúùûü-]*")
-	private String surName1;
+	private String surname1;
 	
 	@Column
 	@NotNull
 	@Size(min = 1, max = 35)
 	@Pattern(regexp = "[a-z ñáàâäéèêëíìîïóòôöúùûü-]*")
-	private String surName2;
+	private String surname2;
 	
 	@Column
 	@Temporal(TemporalType.DATE)
@@ -100,6 +102,15 @@ public class CorestudioProfessor {
 	@Column
 	private Integer holidaysUsed;
 
+	public CorestudioProfessor(String username, String password) {
+		this.username = username;
+		this.passwordHash = (new BCryptPasswordEncoder()).encode(password);
+	}
+	
+	public CorestudioProfessor() {
+		
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -140,20 +151,20 @@ public class CorestudioProfessor {
 		this.name = name;
 	}
 
-	public String getSurName1() {
-		return surName1;
+	public String getSurname1() {
+		return surname1;
 	}
 
-	public void setSurName1(String surName1) {
-		this.surName1 = surName1;
+	public void setSurName1(String surname1) {
+		this.surname1 = surname1;
 	}
 
-	public String getSurName2() {
-		return surName2;
+	public String getSurname2() {
+		return surname2;
 	}
 
-	public void setSurName2(String surName2) {
-		this.surName2 = surName2;
+	public void setSurName2(String surname2) {
+		this.surname2 = surname2;
 	}
 
 	public Date getBirthdate() {

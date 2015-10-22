@@ -18,7 +18,7 @@ angular.module('corestudioApp.controllers')
                 $scope.professor.photo = undefined;
                 $scope.professor.qualification = undefined;
                 $scope.professor.training = undefined;
-                Entry.save($scope.professor, function() {
+                Professor.save($scope.professor, function() {
                     alert("Guardado");
                 });
             } else {
