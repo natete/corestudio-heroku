@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('corestudioApp.services', [])
+angular.module('corestudioApp.services')
 .factory('authService', ['LOGIN_ENDPOINT', '$http', '$cookieStore', function(LOGIN_ENDPOINT, $http, $cookieStore) {
         var auth = {};
 

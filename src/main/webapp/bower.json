@@ -25,5 +25,8 @@
     "angular-ui-router": "~0.2.15",
     "angular-material": "~0.11.4",
     "angular-cookies": "~1.4.7"
+  },
+  "devDependencies": {
+    "angular-resource": "~1.4.7"
   }
 }

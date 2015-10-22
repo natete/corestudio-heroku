@@ -1,26 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head lang="es">-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>Corestudio Pilates</title>-->
-    <!--<base href="/">-->
-<!--</head>-->
-<!--<body ng-app="corestudioApp">-->
-
-<!--<div ui-view></div>-->
-
-<!--<script src="js/lib/angular/angular.js"></script>-->
-<!--<script src="js/lib/jquery/jquery.min.js"></script>-->
-<!--<script src="js/lib/bootstrap/bootstrap.min.js"></script>-->
-<!--<script src="js/lib/angular-ui-router/angular-ui-router.min.js"></script>-->
-<!--<script src="js/lib/angular-cookies/angular-cookies.min.js"></script>-->
-<!--<script src="js/app/corestudioApp.js"></script>-->
-<!--<script src="js/app/controllers/LoginController.js"></script>-->
-<!--<script src="js/app/services/authService.js"></script>-->
-<!--<script src="js/app/constants/constants.js"></script>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -46,16 +23,15 @@
 <body ng-app="corestudioApp">
 
 <div id="wrapper">
-
     <!-- Navigation -->
     <div ng-include="'partials/nav.html'"></div>
 
+
     <div id="page-wrapper">
-
-        <div class="container-fluid">
-
-            <div ui-view></div>
-
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <div ui-view></div>
+            </div>
         </div>
         <!-- /.container-fluid -->
 
@@ -71,6 +47,7 @@
 <script src="js/lib/bootstrap/bootstrap.min.js"></script>
 <script src="js/lib/angular-ui-router/angular-ui-router.min.js"></script>
 <script src="js/lib/angular-cookies/angular-cookies.min.js"></script>
+<script src="js/lib/angular-resource/angular-resource.min.js"></script>
 <script src="js/app/corestudioApp.js"></script>
 <script src="js/app/controllers/LoginController.js"></script>
 <script src="js/app/controllers/HomeController.js"></script>
@@ -78,7 +55,7 @@
 <script src="js/app/constants/constants.js"></script>
 <script src="js/app/admin/adminModule.js"></script>
 <script src="js/app/controllers/NavController.js"></script>
-
+<script src="js/app/controllers/ProfessorController.js"></script>
 </body>
 
 </html>
