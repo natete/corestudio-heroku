@@ -53,17 +53,11 @@
         <div class="form-group">
             <label for="role" class="col-md-6-text-right-control-label">Perfil de usuario:</label>
             <div class="col-md-6 input-group">
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="role" data-toggle="dropdown">
-                    {{professor.role}}
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="role">
-                    <li role="presentation" class="dropdown-header">Dropdown header</li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">USER</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ADMIN</a></li>
-                  </ul>
-                </div>
+                <select class="form-control" id="role" ng-model="professor.role" placeholder="Seleccione perfil">
+                    <option value="" disabled selected>Seleccione perfil</option>
+                    <option value="ADMIN">Administrador</option>
+                    <option value="USER">Usuario</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
