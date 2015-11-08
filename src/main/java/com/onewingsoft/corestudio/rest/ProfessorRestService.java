@@ -1,4 +1,4 @@
-package com.OneWingSoft.corestudio.rest;
+package com.onewingsoft.corestudio.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.OneWingSoft.corestudio.model.CorestudioProfessor;
-import com.OneWingSoft.corestudio.repository.CorestudioProfessorRepository;
+import com.onewingsoft.corestudio.model.Professor;
+import com.onewingsoft.corestudio.repository.ProfessorRepository;
 
 @RestController
-@RequestMapping("/RSProfessor")
-public class CorestudioRestProfessor {
+@RequestMapping("/api/professor")
+public class ProfessorRestService {
 
 	@Autowired
-	private CorestudioProfessorRepository corestudioProfessorRepository;
+	private ProfessorRepository professorRepository;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public CorestudioProfessor addProfessor(@RequestBody CorestudioProfessor professor) {
+	public Professor addProfessor(@RequestBody Professor professor) {
 		//TODO work in progress
 		professor.setPasswordHash((new BCryptPasswordEncoder()).encode(professor.getPasswordHash()));
-		return corestudioProfessorRepository.save(professor);
+		return professorRepository.save(professor);
 	}
 }
