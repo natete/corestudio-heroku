@@ -3,7 +3,7 @@
 @import "bootstrap-variables";
 
 // Import Bootstrap for Sass
-@import "../styles/lib/bootstrap/bootstrap";
+@import "lib/bootstrap/bootstrap";
 
 .login-panel, .login-panel.panel-heading {
   background-color: $corestudio-black;

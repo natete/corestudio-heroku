@@ -19,14 +19,14 @@
     "tests"
   ],
   "dependencies": {
+  },
+  "devDependencies": {
     "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
     "font-awesome": "fontawesome#~4.4.0",
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
     "angular-material": "~0.11.4",
-    "angular-cookies": "~1.4.7"
-  },
-  "devDependencies": {
+    "angular-cookies": "~1.4.7",
     "angular-resource": "~1.4.7",
     "angular-ui-grid": "~3.0.7"
   }

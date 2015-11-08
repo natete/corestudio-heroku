@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('corestudioApp.client')
-        .factory('Client', ['$resource', 'USER_ENDPOINT', function ($resource, USER_ENDPOINT) {
-            //return $resource(USER_ENDPOINT);
+        .factory('Client', ['$resource', 'CLIENT_ENDPOINT', function ($resource, CLIENT_ENDPOINT) {
+            return $resource(CLIENT_ENDPOINT);
         }]);
 })();
