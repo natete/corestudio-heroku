@@ -3,6 +3,6 @@
  */
 
 angular.module('corestudioApp.services')
-    .value('LOGIN_ENDPOINT', 'login')
-    .value('LOGOUT_ENDPOINT', 'logout')
-    .value('PROFESSOR_ENDPOINT', 'RSProfessor/:id');
+    .value('LOGIN_ENDPOINT', 'api/login')
+    .value('LOGOUT_ENDPOINT', 'api/logout')
+    .value('PROFESSOR_ENDPOINT', 'api/professor/:id');

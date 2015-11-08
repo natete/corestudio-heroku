@@ -27,6 +27,7 @@
     "angular-cookies": "~1.4.7"
   },
   "devDependencies": {
-    "angular-resource": "~1.4.7"
+    "angular-resource": "~1.4.7",
+    "angular-ui-grid": "~3.0.7"
   }
 }

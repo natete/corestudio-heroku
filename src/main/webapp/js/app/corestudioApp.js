@@ -12,18 +12,7 @@ angular.module('corestudioApp', [
                                     'ngResource']);
 
 angular.module('corestudioApp').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-   $stateProvider.state('login', {
-       url: '/login',
-       controller: 'LoginController',
-       resolve: {
-           user:['authService', '$q', function(authService, $q) {
-               if(authService.user) {
-                   return $q.reject({authorized: true});
-               }
-           }]
-       },
-       templateUrl: 'partials/login.html'
-   }).state('home', {
+   $stateProvider.state('home', {
        url: '/home',
        controller: 'HomeController',
        resolve: {
