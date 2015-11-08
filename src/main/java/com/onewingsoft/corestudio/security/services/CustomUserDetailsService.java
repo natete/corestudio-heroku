@@ -1,4 +1,4 @@
-package com.OneWingSoft.corestudio.security.services;
+package com.onewingsoft.corestudio.security.services;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.OneWingSoft.corestudio.model.CorestudioProfessor;
-import com.OneWingSoft.corestudio.repository.CorestudioProfessorRepository;
+import com.onewingsoft.corestudio.model.Professor;
+import com.onewingsoft.corestudio.repository.ProfessorRepository;
 
 /**
  * Custom class to build authentication from the login details.
@@ -27,7 +27,7 @@ import com.OneWingSoft.corestudio.repository.CorestudioProfessorRepository;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private CorestudioProfessorRepository professorRepository;
+	private ProfessorRepository professorRepository;
 	
 	/**
 	 * @see UserDetailsService#loadUserByUsername(String)
@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		CorestudioProfessor professor = professorRepository.findByUsername(username);
+		Professor professor = professorRepository.findByUsername(username);
 
 		if(professor == null) {
 			throw new UsernameNotFoundException("Nombre de usuario o contraseña no válidos");
@@ -51,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * @param authority {@link GrantedAuthority} the professor has 
 	 * @return {@link User} based on the professor.
 	 */
-	private User buildUserForAuthentication(CorestudioProfessor professor, GrantedAuthority authority) {
+	private User buildUserForAuthentication(Professor professor, GrantedAuthority authority) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(authority);
 		return new User(professor.getUsername(), professor.getPasswordHash(), authorities);

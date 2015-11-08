@@ -1,4 +1,4 @@
-package com.OneWingSoft.corestudio;
+package com.onewingsoft.corestudio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

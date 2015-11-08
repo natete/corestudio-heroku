@@ -1,4 +1,4 @@
-package com.OneWingSoft.corestudio.rest;
+package com.onewingsoft.corestudio.rest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 18 oct. 2015
  */
 @Controller
-public class CorestudioRestRoutes {
+public class RoutesRestService {
 
 	@RequestMapping({ "/home", "/login", "/professor" })
 	public String index() {

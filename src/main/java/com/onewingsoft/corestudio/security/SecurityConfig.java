@@ -1,4 +1,4 @@
-package com.OneWingSoft.corestudio.security;
+package com.onewingsoft.corestudio.security;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ import org.springframework.web.util.WebUtils;
  */
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class CorestudioSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static PasswordEncoder encoder;
 	
@@ -47,24 +47,24 @@ public class CorestudioSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-//		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
 
-		http.authorizeRequests().antMatchers("/user", "/index").authenticated();
-		
-		http
-		 .formLogin()
-		 .loginPage("/login")
-		 .failureUrl("/401")
-		 .usernameParameter("username")
-		 .passwordParameter("password")	
-		 .permitAll()
-		 .and()
-		 .logout()
-		 .logoutSuccessUrl("/login")
-		 .and()
-		 .csrf().csrfTokenRepository(csrfTokenRepository())
-		 .and()
-		 .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+//		http.authorizeRequests().antMatchers("/user", "/index").authenticated();
+//		
+//		http
+//		 .formLogin()
+//		 .loginPage("/login")
+//		 .failureUrl("/401")
+//		 .usernameParameter("username")
+//		 .passwordParameter("password")	
+//		 .permitAll()
+//		 .and()
+//		 .logout()
+//		 .logoutSuccessUrl("/login")
+//		 .and()
+//		 .csrf().csrfTokenRepository(csrfTokenRepository())
+//		 .and()
+//		 .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 	}
 	
 	/**
