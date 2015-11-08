@@ -2,9 +2,12 @@
 @import "bootstrap-variables";
 
 // Import Bootstrap for Sass
-@import "../css/lib/bootstrap/bootstrap";
+@import "../styles/lib/bootstrap/bootstrap";
 
 @import "login";
+@import "components/buttons/buttons";
+@import "components/images/images";
+@import "components/commons/commons";
 
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
@@ -14,9 +17,14 @@
 
 /* Global Styles */
 
+html {
+  height: 100%;
+}
+
 body {
   margin-top: 100px;
   background-color: white;
+  height: 100%;
 }
 
 @media(min-width:768px) {
@@ -28,10 +36,12 @@ body {
 #wrapper {
   padding-left: 0;
   margin: 0 auto -60px;
+  height: 100%;
 }
 
 #page-wrapper {
   width: 100%;
+  height: 100%;
   padding: 0;
   background-color: #fff;
 }
