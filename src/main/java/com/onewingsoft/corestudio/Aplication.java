@@ -9,9 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 @EnableAutoConfiguration
 @SpringBootApplication
-public class CorestudioAplication extends SpringBootServletInitializer {
+public class Aplication extends SpringBootServletInitializer {
 
 	public static void main(String args[]) {
-		SpringApplication.run(CorestudioAplication.class, args);
+		SpringApplication.run(Aplication.class, args);
 	}
 }
