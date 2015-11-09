@@ -20,7 +20,7 @@
                 url: '/newClient',
                 templateUrl: 'scripts/app/entities/client/client_details.html',
                 controller: 'ClientFormController',
-                controllerAs: 'client'
+                controllerAs: 'clientForm'
             });
     }
 })();

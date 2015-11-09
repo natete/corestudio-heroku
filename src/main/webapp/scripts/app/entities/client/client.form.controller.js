@@ -7,12 +7,22 @@
     angular.module('corestudioApp.client')
         .controller('ClientFormController', ClientFormController);
 
-    function ClientFormController() {
+    ClientFormController.$inject = ['Client'];
+
+    function ClientFormController(Client) {
         var vm = this;
 
         this.mode = 'edit';
-        this.name = '';
-        this.firstSurname = '';
-        this.secondSurname = '';
+        this.client = {};
+
+        this.saveClient = saveClient;
+
+        ////////
+
+        function saveClient() {
+
+            Client.save(this.client);
+        }
+
     }
 })();

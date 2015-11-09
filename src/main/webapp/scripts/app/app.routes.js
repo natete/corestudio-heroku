@@ -19,7 +19,7 @@
             //        return authService.user || $q.reject({unAuthorized: true});
             //    }]
             //},
-            templateUrl: '../../../partials/home.html'
+            templateUrl: 'partials/home.html'
         }).state('professor', {
             url: '/professor',
             controller: 'ProfessorController',
