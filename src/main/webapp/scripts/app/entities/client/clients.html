@@ -5,7 +5,26 @@
 </div>
 <div class="row">
     <div class="col-md-9">
-        <div ui-grid="clients.uiGrid" ui-grid-pagination class="grid"></div>
+        <table st-table="clients.data" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th st-sort="name">Nombre</th>
+                    <th st-sort="pendingClases">Clases pendientes</th>
+                    <th st-sort="dueDate">Fecha fin de bono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="client in clients.data">
+                    <td><img src="assets/images/face.png" alt="fotoCliente"/></td>
+                    <td>{{ client.name + ' ' + client.firstSurname }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+
     </div>
 </div>
 <div class="row">
