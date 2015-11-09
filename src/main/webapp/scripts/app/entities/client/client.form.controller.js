@@ -13,8 +13,16 @@
         var vm = this;
 
         this.mode = 'edit';
-        this.name = '';
-        this.firstSurname = '';
-        this.secondSurname = '';
+        this.client = {};
+
+        this.saveClient = saveClient;
+
+        ////////
+
+        function saveClient() {
+
+            Client.save(this.client);
+        }
+
     }
 })();

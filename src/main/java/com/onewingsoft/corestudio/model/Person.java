@@ -1,7 +1,5 @@
 package com.onewingsoft.corestudio.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -9,6 +7,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @MappedSuperclass
 public class Person extends BaseEntity {
@@ -16,19 +15,19 @@ public class Person extends BaseEntity {
 	@Column
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Pattern(regexp = "[a-z ñáàâäéèêëíìîïóòôöúùûü-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
 	private String name;
 
 	@Column
 	@NotNull
 	@Size(min = 1, max = 35)
-	@Pattern(regexp = "[a-z ñáàâäéèêëíìîïóòôöúùûü-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
 	private String firstSurname;
 
 	@Column
 	@NotNull
 	@Size(min = 1, max = 35)
-	@Pattern(regexp = "[a-z ñáàâäéèêëíìîïóòôöúùûü-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
 	private String secondSurname;
 
 	@Column
@@ -41,12 +40,13 @@ public class Person extends BaseEntity {
 
 	@Column
 	@Size(min = 0, max = 9)
+	@Pattern(regexp = "[0-9]*")
 	private String firstPhone;
 
 	@Column
 	@Size(min = 1, max = 50)
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
+	@Pattern(regexp = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+			+ "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?", message = "{invalid.email}")
 	private String email;
 
 	@Column

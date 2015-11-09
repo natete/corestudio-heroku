@@ -5,20 +5,20 @@
                 <img src="assets/images/face.png" class="img-circle img-responsive profile-size">
             </div>
             <div class="col-md-9">
-                <div ng-switch="client.mode">
+                <div ng-switch="clientForm.mode">
                     <div ng-switch-when="edit">
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="name">Nombre</label>
-                                <input type="text" class="form-control" id="name" ng-model="client.name"/>
+                                <input type="text" class="form-control" id="name" ng-model="clientForm.client.name"/>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="firstSurname">Primer apellido</label>
-                                <input type="text" class="form-control" id="firstSurname" ng-model="client.secondSurname"/>
+                                <input type="text" class="form-control" id="firstSurname" ng-model="clientForm.client.firstSurname"/>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="secondSurname">Segundo apellido</label>
-                                <input type="text" class="form-control" id="secondSurname" ng-model="client.secondSurname"/>
+                                <input type="text" class="form-control" id="secondSurname" ng-model="clientForm.client.secondSurname"/>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <!-- TAB CONTENT -->
                 <div class="tab-content">
                     <div class="active tab-pane fade in" id="personalTab">
-                        <div ng-switch="client.mode">
+                        <div ng-switch="clientForm.mode">
                             <div ng-switch-when="edit">
                                 <div ng-include="'scripts/app/entities/client/client-form.html'"></div>
                             </div>

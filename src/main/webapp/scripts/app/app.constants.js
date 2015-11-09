@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module("corestudioApp")
-
-.constant("USER_ENDPOINT", "api/user/:id")
+    .constant("CLIENT_ENDPOINT", "api/clients/:id")
 
 ;

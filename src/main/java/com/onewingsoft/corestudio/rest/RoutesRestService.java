@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RoutesRestService {
 
-	@RequestMapping({ "/home", "/login", "/professor" })
+	@RequestMapping({ "/home", "/login", "/professor", "/clients", "/newClient*" })
 	public String index() {
 		return "forward:/index.html";
 
