@@ -1,0 +1,67 @@
+<form class="row" name="userForm" novalidate>
+    <div class="col-md-9">
+        <div class="row vertical-align">
+            <div class="col-md-3">
+                <img src="assets/images/face.png" class="img-circle img-responsive profile-size">
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="name">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" ng-model="clientForm.client.name" ng-disabled="!clientForm.editMode" required/>
+                            <div ng-messages="userForm.name.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="firstSurname">Primer apellido</label>
+                            <input type="text" class="form-control" id="firstSurname" name="firstSurname" ng-model="clientForm.client.firstSurname" ng-disabled="!clientForm.editMode" required/>
+                            <div ng-messages="userForm.firstSurname.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="secondSurname">Segundo apellido</label>
+                            <input type="text" class="form-control" id="secondSurname" name="secondSurname" ng-model="clientForm.client.secondSurname" ng-disabled="!clientForm.editMode" required/>
+                            <div ng-messages="userForm.secondSurname.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+                <!-- TAB NAVIGATION -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#personalTab" role="tab" data-toggle="tab">Personal</a></li>
+                    <li><a href="#tab2" role="tab" data-toggle="tab" class="disabled" ng-disabled="true">Pagos</a></li>
+                    <li><a href="#tab3" role="tab" data-toggle="tab" class="disabled" ng-disabled="true">Grupos</a></li>
+                </ul>
+                <!-- TAB CONTENT -->
+                <div class="tab-content">
+                    <div class="active tab-pane fade in" id="personalTab">
+                        <div ng-include="'scripts/app/entities/client/client-form.html'"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2">
+                        <h2>Tab2</h2>
+
+                        <p>Lorem ipsum.</p>
+                    </div>
+                    <div class="tab-pane fade" id="tab3">
+                        <h2>Tab3</h2>
+
+                        <p>Lorem ipsum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

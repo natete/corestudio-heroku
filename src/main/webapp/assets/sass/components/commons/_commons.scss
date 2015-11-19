@@ -1,0 +1,36 @@
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+.has-feedback {
+  .form-control-feedback.fa {
+    line-height: 34px;
+  }
+}
+
+.form-group {
+  .help-block, .form-control-feedback {
+    display: none;
+  }
+  &.has-error {
+    .help-block, .form-control-feedback {
+      display: block;
+    }
+  }
+  &.has-success {
+    .form-control-feedback {
+      display: block;
+    }
+  }
+}
+
+.form-control[disabled] {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.horizontal-control-label {
+  line-height: 34px;
+}

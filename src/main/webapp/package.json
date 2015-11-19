@@ -1,0 +1,29 @@
+{
+  "name": "CoreStudio_Pilates",
+  "version": "0.0.0",
+  "description": "Corestudio Pilates System Management",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -a localhost -p 9000 -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:natete/corestudio.git"
+  },
+  "author": "natete <natete981@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/natete/corestudio",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-bower": "0.0.10",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-ng-constant": "^1.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.0.4",
+    "gulp-sass": "^2.0.4",
+    "gulp-uglify": "^1.4.2",
+    "http-server": "^0.8.5"
+  }
+}

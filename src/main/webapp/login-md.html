@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="corestudioApp">
+<head lang="es">
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>CoreStudio</title>
+    <link rel="stylesheet" href="assets/styles/login.css"/>
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body ng-controller="LoginController" ng-cloak>
+
+<md-toolbar class="md-default-theme" id="login_navbar">
+    <div class="md-toolbar-tools">Sistema de control</div>
+</md-toolbar>
+<md-content id="login_content" role="main" flex layout-align="center center" layout="row" layout-fill>
+    <div layout="column" flex="30">
+        <md-whiteframe id="login_whiteframe" class="md-whiteframe-18dp">
+            <div layout="row" layout-align="center center">
+                <img src="assets/images/logoT.png" alt="Corestudio Pilates" class="login_logo">
+            </div>
+
+            <form name="loginForm" id="login_form">
+                <div layout="row" layout-align="center center">
+                    <div layout="column" flex="80">
+                        <md-input-container class="login_input_container">
+                            <label for="username">Nombre de usuario</label>
+                            <input type="text" ng-model="credential.username" id="username" required>
+                        </md-input-container>
+                        <md-input-container class="login_input_container">
+                            <label for="password">Contraseña</label>
+                            <input ng-model="credential.password" type="password" id="contraseña" name="password"
+                                   required>
+                        </md-input-container>
+                        <div layout="row" layout-align="center center" >
+                            <md-button id="login_button" class="md-raised md-primary" flex>Entrar</md-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </md-whiteframe>
+    </div>
+</md-content>
+<footer>
+    OneWingSoft
+</footer>
+
+<script src="assets/js/lib/angular/angular.js"></script>
+<script src="assets/js/lib/angular-animate/angular-animate.js"></script>
+<script src="assets/js/lib/angular-aria/angular-aria.js"></script>
+<script src="assets/js/lib/angular-material/angular-material.js"></script>
+<script>
+    var corestudioApp = angular.module("corestudioApp", [
+        "ngMaterial"
+    ]).config(function($mdThemingProvider) {
+
+        var corestudio = $mdThemingProvider.extendPalette('red', {
+            '500': '2b2b2b'
+        });
+
+        $mdThemingProvider.definePalette('corestudio', corestudio);
+        $mdThemingProvider.theme('default')
+                .primaryPalette('corestudio');
+    });
+
+//
+//            .config(function ($mdThemingProvider) {
+//                $mdThemingProvider.definePalette('amazingPaletteName', {
+//                    '50': 'ffebee',
+//                    '100': 'ffcdd2',
+//                    '200': 'ef9a9a',
+//                    '300': 'e57373',
+//                    '400': 'ef5350',
+//                    '500': '#2B2B2B',
+//                    '600': 'e53935',
+//                    '700': 'd32f2f',
+//                    '800': 'c62828',
+//                    '900': 'b71c1c',
+//                    'A100': 'ff8a80',
+//                    'A200': 'ff5252',
+//                    'A400': 'ff1744',
+//                    'A700': 'd50000',
+//                    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+//                                                        // on this palette should be dark or light
+//                    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+//                        '200', '300', '400', 'A100'],
+//                    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+//                });
+//                $mdThemingProvider.theme('default')
+//                        .primaryPalette('amazingPaletteName');
+//            });
+    corestudioApp.controller("LoginController", function ($scope) {
+        $scope.credential = {};
+    });
+</script>
+</body>
+</html>
