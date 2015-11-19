@@ -1,7 +1,15 @@
 .btn-circle {
+  background-color: $corestudio-gold;
+  color: $corestudio-black;
   width: 37px;
   height: 37px;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   border-radius: 25px;
+}
+
+.btn-cancel {
+  background-color: #cccccc;
+  color: black;
+  border-color: #aaaaaa;
 }

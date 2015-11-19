@@ -14,6 +14,7 @@
         var vm = this;
 
         vm.data = {};
+        vm.displayData = [].concat(vm.Data);
 
         activate();
 

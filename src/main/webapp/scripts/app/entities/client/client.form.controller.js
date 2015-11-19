@@ -7,21 +7,47 @@
     angular.module('corestudioApp.client')
         .controller('ClientFormController', ClientFormController);
 
-    ClientFormController.$inject = ['Client'];
+    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope'];
 
-    function ClientFormController(Client) {
+    function ClientFormController(Client, editMode, $stateParams, $scope) {
         var vm = this;
 
-        this.mode = 'edit';
-        this.client = {};
+        vm.editMode = editMode;
+        vm.client = {};
+        vm.birthdateDatepicker = {
+            opened: false
+        };
+        vm.admissionDateDatepicker = {
+            opened: false
+        };
 
-        this.saveClient = saveClient;
+        vm.saveClient = saveClient;
+        vm.openDatepicker = openDatepicker;
+
+        activate();
 
         ////////
+        function activate() {
+            if($stateParams.id !== undefined) {
+                var result = Client.get({ id: $stateParams.id });
+                result.$promise.then(function(client) {
+                    vm.client = client;
+                });
+            }
+        }
 
         function saveClient() {
+            $scope.$broadcast('show-errors-check-validity');
 
-            Client.save(this.client);
+            if($scope.userForm.$invalid) {
+                return;
+            } else {
+                Client.save(this.client);
+            }
+        }
+
+        function openDatepicker(datepickerStatus) {
+            datepickerStatus = true;
         }
 
     }

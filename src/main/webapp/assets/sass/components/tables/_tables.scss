@@ -1,0 +1,34 @@
+.font-awesome-icon {
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  color: white;
+  font-size: 18px;
+  padding-right: 0.5em;
+}
+
+.st-sort-ascent:before{
+  content: "\f106";
+  @extend .font-awesome-icon;
+}
+
+.st-sort-descent:before{
+  content: "\f107";
+  @extend .font-awesome-icon;
+}
+
+table {
+  thead {
+    background-color: $corestudio-black;
+    color: white;
+  }
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+        border-color: $corestudio-gold;
+      }
+    }
+  }
+}

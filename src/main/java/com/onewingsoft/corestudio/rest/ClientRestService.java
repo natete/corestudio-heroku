@@ -33,7 +33,7 @@ public class ClientRestService {
 	@RequestMapping(value = "/clients/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Client> getClient(@PathVariable Long id) {
 		Client client = clientBusinessLogic.getClient(id);
-		if (null == client) {
+		if (null != client) {
 			return ResponseEntity.ok().body(client);
 		} else {
 			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);

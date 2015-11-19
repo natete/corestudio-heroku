@@ -10,17 +10,45 @@
     config.$inject = ['$stateProvider'];
 
     function config($stateProvider) {
-        $stateProvider.state('clients', {
-            url: '/clients',
-            templateUrl: 'scripts/app/entities/client/clients.html',
-            controller: 'ClientController',
-            controllerAs: 'clients'
-        })
+        $stateProvider
+            .state('clients', {
+                url: '/clients',
+                templateUrl: 'scripts/app/entities/client/clients.html',
+                controller: 'ClientController',
+                controllerAs: 'clients'
+            })
             .state('newClient', {
                 url: '/newClient',
                 templateUrl: 'scripts/app/entities/client/client_details.html',
                 controller: 'ClientFormController',
-                controllerAs: 'clientForm'
+                controllerAs: 'clientForm',
+                resolve: {
+                    editMode: function() {
+                        return true;
+                    }
+                }
+            })
+            .state('viewClient', {
+                url: '/viewClient/:id/:permalink',
+                templateUrl: 'scripts/app/entities/client/client_details.html',
+                controller: 'ClientFormController',
+                controllerAs: 'clientForm',
+                resolve: {
+                    editMode: function() {
+                        return false;
+                    }
+                }
+            })
+            .state('editClient', {
+                url: '/editClient/:id/:permalink',
+                templateUrl: 'scripts/app/entities/client/client_details.html',
+                controller: 'ClientFormController',
+                controllerAs: 'clientForm',
+                resolve: {
+                    editMode: function() {
+                        return true;
+                    }
+                }
             });
     }
 })();

@@ -21,26 +21,6 @@ public class ClientBusinessLogic {
 	}
 
 	public Client createClient(Client client) {
-		// if(validateClient(client)) {
 		return clientRepository.save(client);
-		// } else {
-		// return null;
-		// }
 	}
-
-	// private boolean validateClient(Client client) {
-	// boolean result = true;
-	//
-	// if(null != client) {
-	// if(client.getName() == null) {
-	// result = false;
-	// } else if(null == client.getFirstSurname()) {
-	// result = false;
-	// } else if (null == client.getSecondSurname()) {
-	//
-	// }
-	// }
-	//
-	// return result;
-	// }
 }

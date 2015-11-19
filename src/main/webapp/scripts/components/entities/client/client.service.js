@@ -6,6 +6,17 @@
 
     angular.module('corestudioApp.client')
         .factory('Client', ['$resource', 'CLIENT_ENDPOINT', function ($resource, CLIENT_ENDPOINT) {
-            return $resource(CLIENT_ENDPOINT);
+            return $resource(CLIENT_ENDPOINT, {}, {
+                'query': { method: 'GET', isArray: true},
+                'get': {
+                    method: 'GET',
+                    transformResponse: function (data) {
+                        data = angular.fromJson(data);
+                        return data;
+                    }
+                },
+                'update': { method: 'PUT' },
+                'save': { method: 'POST' }
+            });
         }]);
 })();

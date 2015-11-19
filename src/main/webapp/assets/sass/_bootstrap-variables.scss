@@ -21,17 +21,13 @@ $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 //
-$brand-primary:           $corestudio-gold !default;
+//$brand-primary:           $corestudio-gold !default;
 //$brand-success:         #5cb85c !default;
 //$brand-info:            #5bc0de !default;
 //$brand-warning:         #f0ad4e !default;
 //$brand-danger:          #d9534f !default;
 //
 
-// Corestudio Colors
-
-$corestudio-black: #2b2b2b;
-$corestudio-gold: #A18E5C;
 //
 ////== Scaffolding
 ////
@@ -43,7 +39,7 @@ $body-bg:               $corestudio-gold !default;
 //$text-color:            $gray-dark !default;
 //
 ////** Global textual link color.
-//$link-color:            $brand-primary !default;
+//$link-color:              $btn-submit !default;
 ////** Link hover color set via `darken()` function.
 //$link-hover-color:      darken($link-color, 15%) !default;
 ////** Link hover decoration.
@@ -146,9 +142,9 @@ $border-radius-none:          0px;
 ////** Default background color used for all tables.
 //$table-bg:                      transparent !default;
 ////** Background color used for `.table-striped`.
-//$table-bg-accent:               #f9f9f9 !default;
+$table-bg-accent:                 $gray-lighter !default;
 ////** Background color used for `.table-hover`.
-//$table-bg-hover:                #f5f5f5 !default;
+$table-bg-hover:                  lighten($corestudio-gold, 33.5%) !default;
 //$table-bg-active:               $table-bg-hover !default;
 //
 ////** Border color for table and cell borders.
@@ -161,11 +157,11 @@ $border-radius-none:          0px;
 //
 //$btn-font-weight:                normal !default;
 //
-//$btn-default-color:              #333 !default;
-//$btn-default-bg:                 #fff !default;
-//$btn-default-border:             #ccc !default;
+//$btn-default-color:                #fff !default;
+//$btn-default-bg:                   #ccc !default;
+//$btn-default-border:               #aaa !default;
 //
-$btn-primary-color:                $corestudio-black !default;
+//$btn-primary-color:                $corestudio-black !default;
 //$btn-primary-bg:                 $brand-primary !default;
 //$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
 //

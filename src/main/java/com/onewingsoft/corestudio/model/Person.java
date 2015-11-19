@@ -15,19 +15,19 @@ public class Person extends BaseEntity {
 	@Column
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüçÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÇ-]*")
 	private String name;
 
 	@Column
 	@NotNull
 	@Size(min = 1, max = 35)
-	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüçÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÇ-]*")
 	private String firstSurname;
 
 	@Column
 	@NotNull
 	@Size(min = 1, max = 35)
-	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜ-]*")
+	@Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüçÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÇ-]*")
 	private String secondSurname;
 
 	@Column

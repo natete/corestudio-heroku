@@ -28,6 +28,10 @@
     "angular-cookies": "~1.4.7",
     "angular-resource": "~1.4.7",
     "angular-ui-grid": "~3.0.7",
-    "angular-smart-table": "~2.1.4"
+    "angular-smart-table": "~2.1.4",
+    "angular-bootstrap-show-errors": "~2.3.0",
+    "angular-messages": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "angular-locale_es-es": "*"
   }
 }
