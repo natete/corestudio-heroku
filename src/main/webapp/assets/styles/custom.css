@@ -11711,6 +11711,9 @@ button.close {
 .horizontal-control-label {
   line-height: 34px; }
 
+textarea {
+  resize: none; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;

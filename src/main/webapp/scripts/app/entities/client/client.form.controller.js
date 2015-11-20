@@ -7,9 +7,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientFormController', ClientFormController);
 
-    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope'];
+    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope', '$state'];
 
-    function ClientFormController(Client, editMode, $stateParams, $scope) {
+    function ClientFormController(Client, editMode, $stateParams, $scope, $state) {
         var vm = this;
 
         vm.editMode = editMode;
@@ -42,7 +42,9 @@
             if($scope.userForm.$invalid) {
                 return;
             } else {
-                Client.save(this.client);
+                Client.save(this.client).then(function() {
+                    $state.go('clients');
+                });
             }
         }
 
