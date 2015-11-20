@@ -22,8 +22,8 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <a class="btn btn-lg" ui-sref="viewClient({id: client.id, permalink: {{ client | permalink | replaceAccents }}})"><i class="fa fa-eye"></i></a>
-                        <a class="btn btn-lg" ui-sref="editClient({id: client.id, permalink: {{ client | permalink | replaceAccents }}})"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -34,6 +34,6 @@
 </div>
 <div class="row">
     <div class="col-md-9 text-right">
-        <button ui-sref="newClient" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+        <button ui-sref="clients.newClient" class="btn btn-circle"><i class="fa fa-plus"></i></button>
     </div>
 </div>

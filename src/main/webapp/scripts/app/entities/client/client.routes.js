@@ -7,18 +7,24 @@
     angular.module('corestudioApp.client')
         .config(config);
 
-    config.$inject = ['$stateProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider) {
+    function config($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.when('/clients', '/clients/list')
         $stateProvider
             .state('clients', {
                 url: '/clients',
+                template: '<ui-view/>',
+                //abstract: true,
+            })
+            .state('clients.list', {
+                url: '/list',
                 templateUrl: 'scripts/app/entities/client/clients.html',
                 controller: 'ClientController',
                 controllerAs: 'clients'
             })
-            .state('newClient', {
-                url: '/newClient',
+            .state('clients.newClient', {
+                url: '/new',
                 templateUrl: 'scripts/app/entities/client/client_details.html',
                 controller: 'ClientFormController',
                 controllerAs: 'clientForm',
@@ -28,8 +34,8 @@
                     }
                 }
             })
-            .state('viewClient', {
-                url: '/viewClient/:id/:permalink',
+            .state('clients.viewClient', {
+                url: '/:id/:permalink/view',
                 templateUrl: 'scripts/app/entities/client/client_details.html',
                 controller: 'ClientFormController',
                 controllerAs: 'clientForm',
@@ -39,8 +45,8 @@
                     }
                 }
             })
-            .state('editClient', {
-                url: '/editClient/:id/:permalink',
+            .state('clients.editClient', {
+                url: '/:id/:permalink/edit',
                 templateUrl: 'scripts/app/entities/client/client_details.html',
                 controller: 'ClientFormController',
                 controllerAs: 'clientForm',

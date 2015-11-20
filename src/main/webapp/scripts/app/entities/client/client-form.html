@@ -37,7 +37,7 @@
         <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de nacimiento</label>
         <div class="col-md-4 input-group">
             <input type="date" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate" ng-disabled="!clientForm.editMode">
-            <span class="input-group-btn">
+            <span class="input-group-btn" ng-show="clientForm.editMode">
                 <button type="button" class="btn btn-default" ng-click="clientForm.birthdateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
             </span>
         </div>
@@ -46,7 +46,7 @@
         <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
         <div class="col-md-4 input-group">
             <input type="date" class="form-control" id="admissionDate" uib-datepicker-popup is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.amissionDate" ng-disabled="!clientForm.editMode">
-            <span class="input-group-btn">
+            <span class="input-group-btn" ng-show="clientForm.editMode">
                 <button type="button" class="btn btn-default" ng-click="clientForm.admissionDateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
             </span>
         </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 text-right">
-            <a class="btn btn-cancel" ui-sref="clients">Volver</a>
+            <a class="btn btn-cancel" ui-sref="clients.list">Volver</a>
 	        <button ng-show="clientForm.editMode" class="btn btn-primary" ng-click="clientForm.saveClient()"><i class="fa fa-floppy-o"></i> Guardar</button>
         </div>
     </div>
