@@ -6,8 +6,9 @@
 
     angular.module('corestudioApp', [
         'app.core',
-        //'ui.router',
-        'corestudioApp.client'
+        'corestudioApp.client',
+        'corestudioApp.calendar',
+        'corestudioApp.admin'
     ]);
 
 

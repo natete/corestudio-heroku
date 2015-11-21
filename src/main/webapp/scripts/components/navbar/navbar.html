@@ -55,6 +55,14 @@
             <li ui-sref-active="active">
                 <a ui-sref="professor"><i class="fa fa-fw fa-graduation-cap"></i> Profesores</a>
             </li>
+            <li ui-sref-active="active">
+                <a data-toggle="collapse" data-target="#adminMenu"><i class="fa fa-cogs"></i> Administrar</a>
+                <ul id="adminMenu" class="collapse">
+                    <li>
+                        <a ui-sref="admin.holidays"><i class="fa fa-calendar"></i> Días festivos</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="#"><i class="fa fa-fw fa-money"></i> Pagos</a>
             </li>

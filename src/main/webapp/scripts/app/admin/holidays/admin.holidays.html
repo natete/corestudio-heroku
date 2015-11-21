@@ -1,0 +1,29 @@
+<ol class="breadcrumb">
+    <li class="active">
+        <i class="fa fa-calendar"></i> Días festivos
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 text-right">
+        <ul class="list-inline">
+            <li>
+                <button class="btn btn-default"><i class="fa fa-chevron-left" ng-click="holidays.year = holidays.year - 1"></i></button>
+            </li>
+            <li>
+                <div class="form-group">
+                    <label for="selectYear">Seleccione el año</label>
+                    <select id="selectYear" class="form-control" ng-options="year for year in holidays.yearsList" ng-model="holidays.year"></select>
+                </div>
+            </li>
+            <li>
+                <button class="btn btn-default"><i class="fa fa-chevron-right" ng-click="holidays.year = holidays.year + 1"></i></button>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <horizontal-calendar year="{{holidays.year}}"></horizontal-calendar>
+        </div>
+    </div>
+</div>

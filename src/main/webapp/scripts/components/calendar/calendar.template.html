@@ -1,0 +1,16 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th></th>
+            <th ng-repeat="day in daysNames">{{day.name}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="month in months">
+			<td>
+                <strong>{{month.name}}</strong>
+            </td>
+            <td class="day" ng-repeat="day in month.days track by $index"><span ng-if="day">{{day.getDate()}}</span></td>
+		</tr>
+	</tbody>
+</table>
