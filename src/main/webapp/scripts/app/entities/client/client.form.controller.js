@@ -20,9 +20,10 @@
         vm.admissionDateDatepicker = {
             opened: false
         };
+        vm.saveDisabled = false;
+        vm.saveBtnText = 'Guardar';
 
         vm.saveClient = saveClient;
-        vm.openDatepicker = openDatepicker;
 
         activate();
 
@@ -42,14 +43,13 @@
             if($scope.userForm.$invalid) {
                 return;
             } else {
-                Client.save(this.client).then(function() {
+                vm.saveDisabled = true;
+                vm.saveBtnText = 'Guardando...';
+                var result = Client.save(this.client);
+                result.$promise.then(function() {
                     $state.go('clients');
                 });
             }
-        }
-
-        function openDatepicker(datepickerStatus) {
-            datepickerStatus = true;
         }
 
     }
