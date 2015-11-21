@@ -60,7 +60,7 @@
     <div class="row">
         <div class="col-md-12 text-right">
             <a class="btn btn-cancel" ui-sref="clients.list">Volver</a>
-	        <button ng-show="clientForm.editMode" class="btn btn-primary" ng-click="clientForm.saveClient()"><i class="fa fa-floppy-o"></i> Guardar</button>
+	        <button ng-show="clientForm.editMode" class="btn btn-primary" ng-click="clientForm.saveClient()" ng-disabled="clientForm.saveDisabled"><i class="fa fa-floppy-o" ng-hide="clientForm.saveDisabled"></i> {{clientForm.saveBtnText}}</button>
         </div>
     </div>
 <!--</form>-->
