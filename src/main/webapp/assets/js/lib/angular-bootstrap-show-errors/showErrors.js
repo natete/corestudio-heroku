@@ -129,7 +129,7 @@
     };
     this.showFeedback = function (showFeedback) {
       return _showFeedback = showFeedback;
-    }
+    };
     this.$get = function() {
       return {
         showSuccess: _showSuccess,

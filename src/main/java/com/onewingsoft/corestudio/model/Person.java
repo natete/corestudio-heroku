@@ -9,6 +9,9 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+/**
+ * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
+ */
 @MappedSuperclass
 public class Person extends BaseEntity {
 
