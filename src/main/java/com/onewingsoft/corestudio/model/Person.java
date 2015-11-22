@@ -39,12 +39,13 @@ public class Person extends BaseEntity {
 	private Date admissionDate;
 
 	@Column
-	@Size(min = 0, max = 9)
+	@Size(min = 9, max = 9)
+	@NotNull
 	@Pattern(regexp = "[0-9]*")
 	private String firstPhone;
 
 	@Column
-	@Size(min = 1, max = 50)
+	@Size(min = 0, max = 50)
 	@Pattern(regexp = "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "{invalid.email}")
 	private String email;
