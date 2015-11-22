@@ -23,4 +23,14 @@ public class ClientBusinessLogic {
 	public Client createClient(Client client) {
 		return clientRepository.save(client);
 	}
+
+	public Client updateClient(Client client) throws IllegalArgumentException {
+		Client persistedClient = this.getClient(client.getId());
+		if (persistedClient == null) {
+			throw new IllegalArgumentException("El cliente que trata de editar no exite");
+		} else {
+			Client result = clientRepository.save(client);
+			return result;
+		}
+	}
 }

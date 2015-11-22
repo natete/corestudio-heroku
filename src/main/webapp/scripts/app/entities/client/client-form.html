@@ -36,7 +36,7 @@
     <div class="form-group">
         <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de nacimiento</label>
         <div class="col-md-4 input-group">
-            <input type="date" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate" ng-disabled="!clientForm.editMode">
+            <input type="text" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate" ng-disabled="!clientForm.editMode">
             <span class="input-group-btn" ng-show="clientForm.editMode">
                 <button type="button" class="btn btn-default" ng-click="clientForm.birthdateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
             </span>
@@ -45,7 +45,7 @@
     <div class="form-group">
         <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
         <div class="col-md-4 input-group">
-            <input type="date" class="form-control" id="admissionDate" uib-datepicker-popup is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.amissionDate" ng-disabled="!clientForm.editMode">
+            <input type="text" class="form-control" id="admissionDate" uib-datepicker-popup is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.admissionDate" ng-disabled="!clientForm.editMode">
             <span class="input-group-btn" ng-show="clientForm.editMode">
                 <button type="button" class="btn btn-default" ng-click="clientForm.admissionDateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
             </span>

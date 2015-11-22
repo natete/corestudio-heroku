@@ -23,33 +23,61 @@
         vm.saveDisabled = false;
         vm.saveBtnText = 'Guardar';
 
-        vm.saveClient = saveClient;
+        vm.saveClient = processSaveClient;
+        vm.updateClient = updateClient;
 
         activate();
 
         ////////
         function activate() {
-            if($stateParams.id !== undefined) {
-                var result = Client.get({ id: $stateParams.id });
-                result.$promise.then(function(client) {
+            if ($stateParams.id !== undefined) {
+                var result = Client.get({id: $stateParams.id});
+                result.$promise.then(function (client) {
                     vm.client = client;
+                    vm.client = parseDates(vm.client);
                 });
             }
         }
 
-        function saveClient() {
+        function processSaveClient() {
             $scope.$broadcast('show-errors-check-validity');
 
-            if($scope.userForm.$invalid) {
+            if ($scope.userForm.$invalid) {
                 return;
             } else {
                 vm.saveDisabled = true;
                 vm.saveBtnText = 'Guardando...';
-                var result = Client.save(this.client);
-                result.$promise.then(function() {
-                    $state.go('clients');
-                });
+                vm.client = parseDates(vm.client);
+                if ($state.is('clients.newClient')) {
+                    saveClient();
+                } else if ($state.is('clients.editClient')) {
+                    updateClient();
+                }
             }
+        }
+
+        function saveClient() {
+            var result = Client.save(vm.client);
+            result.$promise.then(function () {
+                $state.go('clients');
+            });
+        }
+
+        function updateClient() {
+            var result = Client.update(vm.client);
+            result.$promise.then(function () {
+                $state.go('clients');
+            });
+        }
+
+        function parseDates(client) {
+            if (client.birthdate) {
+                client.birthdate = new Date(client.birthdate);
+            }
+            if (client.admissionDate) {
+                client.admissionDate = new Date(client.admissionDate);
+            }
+            return client;
         }
 
     }

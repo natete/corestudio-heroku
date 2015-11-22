@@ -33,5 +33,6 @@
         uibDatepickerConfig.startingDay = 1;
         uibDatepickerConfig.initDate = new Date();
         uibDatePickerPopupConfig.showButtonBar = false;
+        uibDatePickerPopupConfig.datepickerPopup = 'dd/MM/yyyy';
     }
 })();

@@ -52,4 +52,18 @@ public class ClientRestService {
 					.headers(HeaderUtil.createEntityCreationAlert("cliente", result.getId().toString())).body(result);
 		}
 	}
+
+	@RequestMapping(value = "/clients", method = RequestMethod.PUT)
+	public ResponseEntity<Client> updateClient(@Valid @RequestBody Client client) throws URISyntaxException {
+
+		Client result = null;
+		try {
+			result = clientBusinessLogic.updateClient(client);
+			return ResponseEntity.created(new URI("/api/clients/" + result.getId()))
+					.headers(HeaderUtil.createEntityUpdateAlert("cliente", result.getId().toString())).body(result);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().header(e.getMessage())
+					.body(null);
+		}
+	}
 }
