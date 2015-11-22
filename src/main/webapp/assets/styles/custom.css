@@ -11691,6 +11691,9 @@ button.close {
   display: flex;
   align-items: center; }
 
+.vertical-middle {
+  vertical-align: middle; }
+
 .has-feedback .form-control-feedback.fa {
   line-height: 34px; }
 
