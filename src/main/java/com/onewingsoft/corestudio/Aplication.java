@@ -21,6 +21,7 @@ public class Aplication extends SpringBootServletInitializer {
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
 	}
 }
