@@ -45,8 +45,8 @@ public class Person extends BaseEntity {
 
 	@Column
 	@Size(min = 1, max = 50)
-	@Pattern(regexp = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-			+ "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?", message = "{invalid.email}")
+	@Pattern(regexp = "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "{invalid.email}")
 	private String email;
 
 	@Column
