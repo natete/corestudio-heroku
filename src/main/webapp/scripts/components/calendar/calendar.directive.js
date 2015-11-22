@@ -10,7 +10,7 @@
 
 
     function directive () {
-        var linkFunction, daysInMonth, getCalendar, getMonth, getMaxDays, getDayNames;
+        var linkFunction, daysInMonth, getCalendar, getMonth, getMaxDays, getDayNames, controllerFunction;
         var config = {};
         config.monthsNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         config.daysName = ["lu", "ma", "mi", "ju", "vi", "sa", "do"];
@@ -22,8 +22,10 @@
             scope.daysNames = calendar.daysNames;
             scope.months = calendar.months;
 
-            scope.$watch(attrs.year, function (value) {
-                getCalendar(value);
+            attrs.$observe('year', function (year) {
+                var calendar = getCalendar(year);
+                scope.daysNames = calendar.daysNames;
+                scope.months = calendar.months;
             });
         };
 
@@ -52,7 +54,7 @@
             for (var i = 0; i < firstWeekDay; i++) {
                 month.days.push(undefined);
             }
-            for (var j = 0; j < daysInMonth(i, year); j++) {
+            for (var j = 0; j < daysInMonth(monthNumber, year); j++) {
                 month.days.push(new Date(initialDate));
                 initialDate.setDate(initialDate.getDate() + 1);
             }
@@ -81,10 +83,25 @@
             return 32 - new Date(year, month, 32).getDate();
         };
 
+        controllerFunction = function() {
+            var vm = this;
+            vm.selectDate = selectDate;
+
+            function selectDate (date) {
+                vm.onSelectDate({date: date});
+            }
+        };
+
         return {
             restrict: 'AE',
-            scope: {},
+            scope: {
+                year: '@',
+                onSelectDate: '&'
+            },
             link: linkFunction,
+            controller: controllerFunction,
+            controllerAs: 'vm',
+            bindToController: true,
             templateUrl: 'scripts/components/calendar/calendar.template.html'
         }
     }

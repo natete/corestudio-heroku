@@ -10,7 +10,7 @@
 			<td>
                 <strong>{{month.name}}</strong>
             </td>
-            <td class="day" ng-repeat="day in month.days track by $index"><span ng-if="day">{{day.getDate()}}</span></td>
+            <td class="day text-center" ng-repeat="day in month.days track by $index" ng-click="vm.selectDate(day)"><span ng-if="day">{{day.getDate()}}</span></td>
 		</tr>
 	</tbody>
 </table>

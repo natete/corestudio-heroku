@@ -11737,6 +11737,9 @@ table tbody tr td {
   vertical-align: middle;
   border-color: #A18E5C; }
 
+.day {
+  cursor: pointer; }
+
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
