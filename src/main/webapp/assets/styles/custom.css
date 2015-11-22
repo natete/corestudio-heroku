@@ -11694,6 +11694,9 @@ button.close {
 table tr td.vertical-middle {
   vertical-align: middle; }
 
+table tr td .center-image {
+  margin: 0 auto; }
+
 .has-feedback .form-control-feedback.fa {
   line-height: 34px; }
 

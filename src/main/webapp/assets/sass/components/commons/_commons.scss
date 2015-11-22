@@ -5,8 +5,13 @@
 
 table {
   tr {
-    td.vertical-middle {
-      vertical-align: middle;
+    td{
+      &.vertical-middle {
+        vertical-align: middle;
+      }
+      .center-image {
+        margin: 0 auto;
+      }
     }
   }
 }
