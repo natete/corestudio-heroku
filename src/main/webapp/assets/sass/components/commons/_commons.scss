@@ -3,8 +3,12 @@
   align-items: center;
 }
 
-.vertical-middle {
-  vertical-align: middle;
+table {
+  tr {
+    td.vertical-middle {
+      vertical-align: middle;
+    }
+  }
 }
 
 .has-feedback {
