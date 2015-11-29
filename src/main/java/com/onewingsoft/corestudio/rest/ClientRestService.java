@@ -36,7 +36,7 @@ public class ClientRestService {
 		if (null != client) {
 			return ResponseEntity.ok().body(client);
 		} else {
-			return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

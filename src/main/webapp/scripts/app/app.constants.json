@@ -1,3 +1,4 @@
 {
-  "CLIENT_ENDPOINT" : "api/clients/:id"
+  "CLIENT_ENDPOINT" : "api/clients/:id",
+  "HOLIDAYS_ENDPOINT": "api/admin/holidays/:id"
 }

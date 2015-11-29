@@ -9,14 +9,14 @@
         .directive('horizontalCalendar', directive);
 
 
-    function directive () {
-        var linkFunction, daysInMonth, getCalendar, getMonth, getMaxDays, getDayNames, controllerFunction;
+    function directive() {
+        var linkFunction, daysInMonth, processSelectedDates, arrangeDates, getCalendar, getMonth, addSelectedToMonth, getMaxDays, getDayNames, controllerFunction;
         var config = {};
         config.monthsNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         config.daysName = ["lu", "ma", "mi", "ju", "vi", "sa", "do"];
 
         linkFunction = function (scope, elem, attrs) {
-
+            //var arrangedSelectedDates = processSelectedDates(scope.vm.selectedDates);
             var calendar = getCalendar(attrs.year);
 
             scope.daysNames = calendar.daysNames;
@@ -27,9 +27,49 @@
                 scope.daysNames = calendar.daysNames;
                 scope.months = calendar.months;
             });
+            scope.$on('update-selected-dates', function (e, selectedDates, callback) {
+               var arrangedSelectedDates = processSelectedDates(selectedDates);
+                scope.months.forEach(function(month, index) {
+                    addSelectedToMonth(month, index, arrangedSelectedDates);
+                });
+                callback && callback();
+            });
+            scope.$on('deleted-date', function (e, date) {
+                var month = scope.months[date.date.getMonth()];
+                var day = month.days[date.date.getDate() + month.offset];
+                day.type = undefined;
+                day.description = undefined;
+            });
+
+
         };
 
-        getCalendar = function(year) {
+        processSelectedDates = function (selectedDates) {
+            var arrangedSelectedDates = [];
+            selectedDates.forEach(function (selectedType) {
+                var arrangedType = {
+                    type: selectedType.type
+                };
+                arrangedType.arrangedDates = arrangeDates(selectedType.dates);
+                arrangedSelectedDates.push(arrangedType);
+            });
+            return arrangedSelectedDates;
+        };
+
+        arrangeDates = function (dates) {
+            var arrangedDates = [];
+            dates.forEach(function (date) {
+                date.date = new Date(date.date);
+                var month = date.date.getMonth();
+                if (arrangedDates[month] === undefined) {
+                    arrangedDates[month] = [];
+                }
+                arrangedDates[month].push(date);
+            });
+            return arrangedDates;
+        };
+
+        getCalendar = function (year) {
             var result = {};
             result.months = [];
 
@@ -50,21 +90,40 @@
             var firstWeekDay = (initialDate.getDay() + 6) % 7;
             var month = {};
             month.name = config.monthsNames[monthNumber];
+            month.offset = firstWeekDay - 1;
             month.days = [];
             for (var i = 0; i < firstWeekDay; i++) {
                 month.days.push(undefined);
             }
             for (var j = 0; j < daysInMonth(monthNumber, year); j++) {
-                month.days.push(new Date(initialDate));
+                var day = {
+                    date: new Date(initialDate)
+                };
+                month.days.push(day);
                 initialDate.setDate(initialDate.getDate() + 1);
             }
             return month;
         };
 
+        addSelectedToMonth = function (month, monthNumber, selectedDates) {
+            selectedDates.forEach(function(selectedType) {
+                if(selectedType.arrangedDates[monthNumber] !== undefined) {
+                    selectedType.arrangedDates[monthNumber].forEach(function(date) {
+                        var day = month.days[date.date.getDate() + month.offset];
+                        day.type = selectedType.type;
+                        day.description = date.description;
+                        day.id = date.id;
+
+                    });
+                }
+            });
+            return month;
+        };
+
         getMaxDays = function (months) {
             var result = 0;
-            months.forEach(function(month) {
-                if(month.days.length > result) {
+            months.forEach(function (month) {
+                if (month.days.length > result) {
                     result = month.days.length;
                 }
             });
@@ -83,11 +142,11 @@
             return 32 - new Date(year, month, 32).getDate();
         };
 
-        controllerFunction = function() {
+        controllerFunction = function () {
             var vm = this;
             vm.selectDate = selectDate;
 
-            function selectDate (date) {
+            function selectDate(date) {
                 vm.onSelectDate({date: date});
             }
         };
@@ -96,7 +155,8 @@
             restrict: 'AE',
             scope: {
                 year: '@',
-                onSelectDate: '&'
+                onSelectDate: '&',
+                selectedDates: '='
             },
             link: linkFunction,
             controller: controllerFunction,

@@ -1,3 +1,34 @@
-.day {
-  cursor: pointer;
+horizontal-calendar {
+  table.table {
+    & > tbody {
+      & > tr {
+        & > td {
+          &.month {
+            vertical-align: middle;
+          }
+          &.day {
+            cursor: pointer;
+            height: 36px;
+            vertical-align: middle;
+            padding: 8px 0;
+
+            div {
+              display: inline-block;
+              &.holiday {
+                background-color: #E87272;
+                color: white;
+                border-radius: 79px;
+                background-clip: content-box;
+                font-weight: bolder;
+                height: 26px;
+                width: 26px;
+                line-height: 26px;
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
 }

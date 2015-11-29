@@ -8,7 +8,9 @@
         'app.core',
         'corestudioApp.client',
         'corestudioApp.calendar',
-        'corestudioApp.admin'
+        'corestudioApp.admin',
+        'corestudioApp.alerts',
+        'corestudioApp.overlay'
     ]);
 
 

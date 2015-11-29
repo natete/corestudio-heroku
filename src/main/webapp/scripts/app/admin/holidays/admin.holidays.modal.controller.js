@@ -14,9 +14,25 @@
         var vm = this;
         vm.selectedDate = date;
         vm.close = close;
+        vm.dismiss = dismiss;
+        vm.saveDate = saveDate;
+        vm.deleteDate = deleteDate;
 
-        function close() {
+
+        function dismiss() {
             $uibModalInstance.dismiss('cancel');
+        }
+
+        function saveDate() {
+            if(vm.selectedDate.type === undefined) {
+                $uibModalInstance.close('save');
+            } else {
+                $uibModalInstance.close('update');
+            }
+        }
+
+        function deleteDate() {
+            $uibModalInstance.close('delete');
         }
     }
 

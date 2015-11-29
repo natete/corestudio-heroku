@@ -1,7 +1,9 @@
 package com.onewingsoft.corestudio.repository;
 
 import com.onewingsoft.corestudio.model.Holiday;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HolidayRepository extends PagingAndSortingRepository<Holiday, Long> {
 
+    @Query("SELECT h FROM Holiday h WHERE year(h.date) = :year")
+    Iterable<Holiday> findByYear(@Param("year") Integer year);
 }

@@ -7,10 +7,14 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="month in months">
-			<td>
+			<td class="text-center month">
                 <strong>{{month.name}}</strong>
             </td>
-            <td class="day text-center" ng-repeat="day in month.days track by $index" ng-click="vm.selectDate(day)"><span ng-if="day">{{day.getDate()}}</span></td>
+            <td class="text-center" ng-class="{'day': day != undefined}" ng-repeat="day in month.days track by $index" ng-click="day && vm.selectDate(day)">
+				<div uib-tooltip="{{day.description}}" ng-class="day.type">
+					<span ng-if="day">{{day.date.getDate()}}</span>
+				</div>
+			</td>
 		</tr>
 	</tbody>
 </table>
