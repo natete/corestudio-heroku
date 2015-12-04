@@ -1,41 +1,6 @@
 <div class="row">
-    <div class="col-md-12">
-        <h1>Clientes</h1>
-    </div>
-</div>
-<div class="row">
     <div class="col-md-9">
-        <table st-table="clients.displayData" st-safe-src="clients.data" class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th class="" st-sort="name">Nombre</th>
-                    <th st-sort="pendingClases">Clases pendientes</th>
-                    <th st-sort="dueDate">Fecha fin de bono</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="client in clients.displayData">
-                    <td>
-                        <img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small center-image"/>
-                    </td>
-                    <td class="vertical-middle">{{ client.name + ' ' + client.firstSurname }}</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">
-                        <a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
-                        <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-
-        </table>
-
+        <h1 class="page-header"><i class="fa fa-user"></i> Clientes</h1>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-9 text-right">
-        <button ui-sref="clients.newClient" class="btn btn-circle"><i class="fa fa-plus"></i></button>
-    </div>
-</div>
+<ui-view></ui-view>

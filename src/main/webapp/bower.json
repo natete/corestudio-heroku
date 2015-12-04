@@ -32,6 +32,8 @@
     "angular-bootstrap-show-errors": "~2.3.0",
     "angular-messages": "~1.4.7",
     "angular-bootstrap": "~0.14.3",
-    "angular-locale_es-es": "*"
+    "angular-locale_es-es": "*",
+    "angular-animate": "~1.4.8",
+    "angular-treasure-overlay-spinner": "~1.1.0"
   }
 }

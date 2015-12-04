@@ -14,12 +14,12 @@
         $stateProvider
             .state('clients', {
                 url: '/clients',
-                template: '<ui-view/>',
+                templateUrl: 'scripts/app/entities/client/clients.html'
                 //abstract: true,
             })
             .state('clients.list', {
                 url: '/list',
-                templateUrl: 'scripts/app/entities/client/clients.html',
+                templateUrl: 'scripts/app/entities/client/clients_list.html',
                 controller: 'ClientController',
                 controllerAs: 'clients'
             })

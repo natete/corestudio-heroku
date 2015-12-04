@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-9">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-list-alt"></i> Lista de clientes
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <table st-table="clients.displayData" st-safe-src="clients.data" class="table  table-hover ">
+            <thead>
+            <tr>
+                <th></th>
+                <th st-sort="name">Nombre</th>
+                <th st-sort="pendingClases">Clases pendientes</th>
+                <th st-sort="dueDate">Fecha fin de bono</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="client in clients.displayData">
+                <td><img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small"/></td>
+                <td>{{ client.name + ' ' + client.firstSurname }}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 text-right">
+        <button ui-sref="clients.newClient" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

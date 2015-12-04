@@ -5,17 +5,20 @@
     'use strict';
 
     angular.module('app.core', [
-        'ui.router',
-        'ui.bootstrap.showErrors',
-        'ngCookies',
-        'smart-table',
-        'ngResource',
-        'ngMessages',
-        'ui.bootstrap'
-    ])
-        .config(config);
+            'ui.router',
+            'ui.bootstrap.showErrors',
+            'ngCookies',
+            'smart-table',
+            'ngResource',
+            'ngMessages',
+            'ui.bootstrap',
+            'ngAnimate',
+            'treasure-overlay-spinner'
+        ])
+        .config(config)
+        .run(run);
 
-    config.$inject = ['showErrorsConfigProvider', 'uibDatepickerConfig','uibDatepickerPopupConfig'];
+    config.$inject = ['showErrorsConfigProvider', 'uibDatepickerConfig', 'uibDatepickerPopupConfig'];
 
     function config(showErrorsConfigProvider, uibDatepickerConfig, uibDatepickerPopupConfig) {
         configShowErrors(showErrorsConfigProvider);
@@ -34,5 +37,13 @@
         uibDatepickerConfig.initDate = new Date();
         uibDatePickerPopupConfig.showButtonBar = false;
         uibDatePickerPopupConfig.datepickerPopup = 'dd/MM/yyyy';
+    }
+
+    run.$inject = ['$rootScope'];
+
+    function run($rootScope) {
+        $rootScope.spinner = {
+            active: false,
+        };
     }
 })();

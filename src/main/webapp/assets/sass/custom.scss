@@ -9,6 +9,9 @@
 @import "components/images/images";
 @import "components/commons/commons";
 @import "components/tables/tables";
+@import "components/calendar/calendar";
+@import "components/alerts/alerts";
+@import "components/animations/animations";
 
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
@@ -25,12 +28,13 @@ html {
 body {
   margin-top: 100px;
   background-color: white;
-  height: 100%;
+  //height: 100%;
 }
 
 @media(min-width:768px) {
   body {
     margin-top: 50px;
+    margin-bottom: 30px;
   }
 }
 
@@ -58,6 +62,7 @@ footer {
   height: 30px;
   bottom: 0;
   width: 100%;
+  z-index: 1000%;
 }
 
 .huge {

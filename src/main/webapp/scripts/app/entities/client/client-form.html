@@ -1,66 +1,90 @@
-<h1>Información personal</h1>
-<!--<form role="form" class="form-horizontal">-->
-	<div class="form-group">
-		<label for="address" class="col-md-6 control-label horizontal-control-label text-right">Dirección</label>
-		<div class="col-md-4 input-group">
-            <input type="text" class="form-control" id="address" ng-model="clientForm.client.address" ng-disabled="!clientForm.editMode">
-        </div>
-	</div>
-    <div class="form-group has-feedback" show-errors>
-        <label for="firstPhone" class="col-md-6 control-label horizontal-control-label text-right">Teléfono 1</label>
-        <div class="col-md-4 input-group">
-            <input type="text" class="form-control" id="firstPhone" name="firstPhone" ng-model="clientForm.client.firstPhone" ng-pattern="/^[0-9]{9}$/" ng-disabled="!clientForm.editMode" required>
-            <div ng-messages="userForm.firstPhone.$error" class="help-block" role="alert">
-                <div ng-messages-include="scripts/components/errors/errors.html"></div>
-            </div>
+<div class="form-group">
+    <label for="address" class="col-md-6 control-label horizontal-control-label text-right">Dirección</label>
+
+    <div class="col-md-4 input-group">
+        <input type="text" class="form-control" id="address" ng-model="clientForm.client.address"
+               ng-disabled="!clientForm.editMode">
+    </div>
+</div>
+<div class="form-group has-feedback" show-errors>
+    <label for="firstPhone" class="col-md-6 control-label horizontal-control-label text-right">Teléfono 1</label>
+
+    <div class="col-md-4 input-group">
+        <input type="text" class="form-control" id="firstPhone" name="firstPhone"
+               ng-model="clientForm.client.firstPhone" ng-pattern="/^[0-9]{9}$/" ng-disabled="!clientForm.editMode"
+               required>
+
+        <div ng-messages="userForm.firstPhone.$error" class="help-block" role="alert">
+            <div ng-messages-include="scripts/components/errors/errors.html"></div>
         </div>
     </div>
-    <div class="form-group has-feedback" show-errors="{showSuccess: false}">
-        <label for="secondPhone" class="col-md-6 control-label horizontal-control-label text-right">Teléfono 2</label>
-        <div class="col-md-4 input-group">
-            <input type="text" class="form-control" id="secondPhone" name="secondPhone" ng-model="clientForm.client.secondPhone" ng-pattern="/^[0-9]{9}$/" ng-disabled="!clientForm.editMode">
-            <div ng-messages="userForm.secondPhone.$error" class="help-block" role="alert">
-                <div ng-messages-include="scripts/components/errors/errors.html"></div>
-            </div>
+</div>
+<div class="form-group has-feedback" show-errors="{showSuccess: false}">
+    <label for="secondPhone" class="col-md-6 control-label horizontal-control-label text-right">Teléfono 2</label>
+
+    <div class="col-md-4 input-group">
+        <input type="text" class="form-control" id="secondPhone" name="secondPhone"
+               ng-model="clientForm.client.secondPhone" ng-pattern="/^[0-9]{9}$/" ng-disabled="!clientForm.editMode">
+
+        <div ng-messages="userForm.secondPhone.$error" class="help-block" role="alert">
+            <div ng-messages-include="scripts/components/errors/errors.html"></div>
         </div>
     </div>
-    <div class="form-group has-feedback" show-errors="{showSuccess: false}">
-        <label for="email" class="col-md-6 control-label horizontal-control-label text-right">Correo electrónico</label>
-        <div class="col-md-4 input-group">
-            <input type="email" class="form-control" id="email" name="email" ng-model="clientForm.client.email" ng-disabled="!clientForm.editMode">
-            <div ng-messages="userForm.email.$error" class="help-block" role="alert">
-                <div ng-messages-include="scripts/components/errors/errors.html"></div>
-            </div>
+</div>
+<div class="form-group has-feedback" show-errors="{showSuccess: false}">
+    <label for="email" class="col-md-6 control-label horizontal-control-label text-right">Correo electrónico</label>
+
+    <div class="col-md-4 input-group">
+        <input type="email" class="form-control" id="email" name="email" ng-model="clientForm.client.email"
+               ng-disabled="!clientForm.editMode">
+
+        <div ng-messages="userForm.email.$error" class="help-block" role="alert">
+            <div ng-messages-include="scripts/components/errors/errors.html"></div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de nacimiento</label>
-        <div class="col-md-4 input-group">
-            <input type="text" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate" ng-disabled="!clientForm.editMode">
+</div>
+<div class="form-group">
+    <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de
+        nacimiento</label>
+
+    <div class="col-md-4 input-group">
+        <input type="date" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup
+               is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate"
+               ng-disabled="!clientForm.editMode">
             <span class="input-group-btn" ng-show="clientForm.editMode">
-                <button type="button" class="btn btn-default" ng-click="clientForm.birthdateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default" ng-click="clientForm.birthdateDatepicker.opened = true"><i
+                        class="fa fa-calendar"></i></button>
             </span>
-        </div>
     </div>
-    <div class="form-group">
-        <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
-        <div class="col-md-4 input-group">
-            <input type="text" class="form-control" id="admissionDate" uib-datepicker-popup is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.admissionDate" ng-disabled="!clientForm.editMode">
+</div>
+<div class="form-group">
+    <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
+
+    <div class="col-md-4 input-group">
+        <input type="date" class="form-control" id="admissionDate" uib-datepicker-popup
+               is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.amissionDate"
+               ng-disabled="!clientForm.editMode">
             <span class="input-group-btn" ng-show="clientForm.editMode">
-                <button type="button" class="btn btn-default" ng-click="clientForm.admissionDateDatepicker.opened = true"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default"
+                        ng-click="clientForm.admissionDateDatepicker.opened = true"><i class="fa fa-calendar"></i>
+                </button>
             </span>
-        </div>
     </div>
-    <div class="form-group">
-        <label for="comments" class="col-md-6 control-label horizontal-control-label text-right">Comentarios</label>
-        <div class="col-md-4 input-group">
-            <textarea type="text" class="form-control" id="comments" ng-model="clientForm.client.comments" ng-disabled="!clientForm.editMode"></textarea>
-        </div>
+</div>
+<div class="form-group">
+    <label for="comments" class="col-md-6 control-label horizontal-control-label text-right">Comentarios</label>
+
+    <div class="col-md-4 input-group">
+        <textarea type="text" class="form-control" id="comments" ng-model="clientForm.client.comments"
+                  ng-disabled="!clientForm.editMode"></textarea>
     </div>
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <a class="btn btn-cancel" ui-sref="clients.list">Volver</a>
-	        <button ng-show="clientForm.editMode" class="btn btn-primary" ng-click="clientForm.saveClient()" ng-disabled="clientForm.saveDisabled"><i class="fa fa-floppy-o" ng-hide="clientForm.saveDisabled"></i> {{clientForm.saveBtnText}}</button>
-        </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a class="btn btn-cancel" ui-sref="clients.list">Volver</a>
+        <button ng-show="clientForm.editMode" class="btn btn-primary" ng-click="clientForm.saveClient()"
+                ng-disabled="clientForm.saveDisabled"><i class="fa fa-floppy-o" ng-hide="clientForm.saveDisabled"></i>
+            {{clientForm.saveBtnText}}
+        </button>
     </div>
-<!--</form>-->
+</div>

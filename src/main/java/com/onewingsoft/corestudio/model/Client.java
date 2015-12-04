@@ -6,6 +6,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * Entity to persist the clients
+ * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
+ */
 @Entity
 @Table(name = "client")
 public class Client extends Person {

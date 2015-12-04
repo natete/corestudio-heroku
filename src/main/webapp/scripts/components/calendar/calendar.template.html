@@ -1,0 +1,20 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th></th>
+            <th ng-repeat="day in daysNames">{{day.name}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="month in months">
+			<td class="text-center month">
+                <strong>{{month.name}}</strong>
+            </td>
+            <td class="text-center" ng-class="{'day': day != undefined}" ng-repeat="day in month.days track by $index" ng-click="day && vm.selectDate(day)">
+				<div uib-tooltip="{{day.description}}" ng-class="day.type">
+					<span ng-if="day">{{day.date.getDate()}}</span>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

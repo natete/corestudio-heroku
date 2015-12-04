@@ -30,9 +30,19 @@
 
         ////////
         function activate() {
-            if ($stateParams.id !== undefined) {
-                var result = Client.get({id: $stateParams.id});
-                result.$promise.then(function (client) {
+            if($state.is('clients.newClient')) {
+                vm.area = 'Nuevo cliente';
+                vm.classArea = 'fa-eye';
+            } else if($state.is('clients.viewClient')) {
+                vm.area = 'Detalles  del cliente';
+                vm.classArea = 'fa-floppy-o';
+            } else if($state.is('clients.editClient')) {
+                vm.area = 'Editar cliente';
+                vm.classArea = 'fa-pencil-square-o';
+            }
+            if($stateParams.id !== undefined) {
+                var result = Client.get({ id: $stateParams.id });
+                result.$promise.then(function(client) {
                     vm.client = client;
                     vm.client = parseDates(vm.client);
                 });
