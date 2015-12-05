@@ -11720,6 +11720,12 @@ table tr td .center-image {
 textarea {
   resize: none; }
 
+.input-group-addon {
+  background-color: white; }
+
+.addon-feedback {
+  right: 40px; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;

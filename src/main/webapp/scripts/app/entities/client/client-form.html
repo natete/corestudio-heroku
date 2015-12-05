@@ -43,32 +43,39 @@
         </div>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group has-feedback" show-errors="{showSuccess: false}">
     <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de
         nacimiento</label>
 
     <div class="col-md-4 input-group">
-        <input type="date" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup
-               is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate"
-               ng-disabled="!clientForm.editMode">
-            <span class="input-group-btn" ng-show="clientForm.editMode">
-                <button type="button" class="btn btn-default" ng-click="clientForm.birthdateDatepicker.opened = true"><i
-                        class="fa fa-calendar"></i></button>
+        <div class="input-group">
+            <input type="text" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup
+                   is-open="clientForm.birthdateDatepicker.opened" ng-model="clientForm.client.birthdate"
+                   ng-disabled="!clientForm.editMode" ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
+            <span class="btn btn-default input-group-addon" ng-show="clientForm.editMode" ng-click="clientForm.birthdateDatepicker.opened = true">
+                <i class="fa fa-calendar"></i>
             </span>
+        </div>
+        <div ng-messages="userForm.birthdate.$error" class="help-block" role="alert">
+            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+        </div>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group has-feedback" show-errors="{showSuccess: false}">
     <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
 
     <div class="col-md-4 input-group">
-        <input type="date" class="form-control" id="admissionDate" uib-datepicker-popup
-               is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.amissionDate"
-               ng-disabled="!clientForm.editMode">
-            <span class="input-group-btn" ng-show="clientForm.editMode">
-                <button type="button" class="btn btn-default"
-                        ng-click="clientForm.admissionDateDatepicker.opened = true"><i class="fa fa-calendar"></i>
-                </button>
+        <div class="input-group">
+            <input type="text" class="form-control" id="admissionDate" name="admissionDate" uib-datepicker-popup
+                   is-open="clientForm.admissionDateDatepicker.opened" ng-model="clientForm.client.admissionDate"
+                   ng-disabled="!clientForm.editMode" ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
+            <span class="btn btn-default input-group-addon" ng-show="clientForm.editMode" ng-click="clientForm.admissionDateDatepicker.opened = true">
+                <i class="fa fa-calendar"></i>
             </span>
+        </div>
+        <div ng-messages="userForm.admissionDate.$error" class="help-block" role="alert">
+            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+        </div>
     </div>
 </div>
 <div class="form-group">

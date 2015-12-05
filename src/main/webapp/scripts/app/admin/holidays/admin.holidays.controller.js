@@ -80,13 +80,8 @@
         }
 
         function addDate(date) {
-            var dateToPersist = {
-                date: $filter('date')(date.date, 'dd/MM/yyyy'),
-                description: date.description
-            };
-            Holiday.save(dateToPersist, function (holiday, headers) {
+            Holiday.save(date, function (holiday, headers) {
                 holiday.type = 'holiday';
-                holiday.date = new Date(holiday.date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3"));
                 vm.holidaysList[0].dates.push(holiday);
                 $scope.$broadcast('update-selected-dates', vm.holidaysList);
                 Alerts.addSuccessAlert('Se ha añadido el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
@@ -96,13 +91,8 @@
         }
 
         function updateDate(date) {
-            var dateToUpdate = {
-                date: $filter('date')(date.date, 'dd/MM/yyyy'),
-                description: date.description
-            };
-            Holiday.update(dateToUpdate, function (holiday) {
+            Holiday.update(date, function (holiday) {
                 var updated = $filter('filter')(vm.holidaysList[0].dates, {id: holiday.id}, true)[0];
-                updated.date = new Date(holiday.date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3"));
                 updated.description = holiday.description;
                 $scope.$broadcast('update-selected-dates', vm.holidaysList);
                 Alerts.addSuccessAlert('Se ha actualizado el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
@@ -115,10 +105,7 @@
                 var index = vm.holidaysList[0].dates.indexOf(deleted);
                 vm.holidaysList[0].dates.splice(index, 1);
                 $scope.$broadcast('deleted-date', deleted);
-                Alerts.addAlert({
-                    type: 'success',
-                    msg: 'Se ha eliminado el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy')
-                });
+                Alerts.addSuccessAlert('Se ha eliminado el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
             }, function () {
                 Alerts.addErrorAlert('Ha ocurrido un error eliminando la fecha');
             });

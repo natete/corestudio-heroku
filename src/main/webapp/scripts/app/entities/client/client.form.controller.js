@@ -7,9 +7,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientFormController', ClientFormController);
 
-    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope', '$state'];
+    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope', '$state', 'Alerts'];
 
-    function ClientFormController(Client, editMode, $stateParams, $scope, $state) {
+    function ClientFormController(Client, editMode, $stateParams, $scope, $state, Alerts) {
         var vm = this;
 
         vm.editMode = editMode;
@@ -29,6 +29,7 @@
         activate();
 
         ////////
+
         function activate() {
             if($state.is('clients.newClient')) {
                 vm.area = 'Nuevo cliente';
@@ -41,10 +42,10 @@
                 vm.classArea = 'fa-pencil-square-o';
             }
             if($stateParams.id !== undefined) {
-                var result = Client.get({ id: $stateParams.id });
-                result.$promise.then(function(client) {
-                    vm.client = client;
-                    vm.client = parseDates(vm.client);
+                Client.get({ id: $stateParams.id }, function (client) {
+                    vm.client = parseDates(client);
+                }, function () {
+                    Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
                 });
             }
         }
@@ -53,11 +54,11 @@
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.userForm.$invalid) {
+                Alerts.addErrorAlert('El formulario de creación contiene datos erróneos');
                 return;
             } else {
                 vm.saveDisabled = true;
                 vm.saveBtnText = 'Guardando...';
-                vm.client = parseDates(vm.client);
                 if ($state.is('clients.newClient')) {
                     saveClient();
                 } else if ($state.is('clients.editClient')) {
@@ -67,16 +68,20 @@
         }
 
         function saveClient() {
-            var result = Client.save(vm.client);
-            result.$promise.then(function () {
+            Client.save(vm.client, function(client) {
                 $state.go('clients');
+                Alerts.addSuccessAlert('Se ha guardado el cliente ' + client.name + ' ' + client.firstSurname);
+            }, function(client) {
+                Alerts.addErrorAlert('Se ha producido un error guardando el client');
             });
         }
 
         function updateClient() {
-            var result = Client.update(vm.client);
-            result.$promise.then(function () {
+            Client.update(vm.client, function (client) {
+                Alerts.addSuccessAlert('Se ha actualizado el cliente ' + client.name + ' ' + client.firstSurname);
                 $state.go('clients');
+            }, function() {
+                Alerts.addErrorAlert('Se ha producido un error actualizando el cliente ' + client.name + ' ' + client.firstSurname);
             });
         }
 
@@ -89,6 +94,5 @@
             }
             return client;
         }
-
     }
 })();

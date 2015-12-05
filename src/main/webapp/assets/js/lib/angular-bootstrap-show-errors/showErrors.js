@@ -69,14 +69,16 @@
           el.toggleClass('has-error', invalid);
           el.find('error-feedback').remove();
           el.find('success-feedback').remove();
+          var hasAddon = el.find('input').next().hasClass('input-group-addon');
+          var errorClass = hasAddon ? 'addon-feedback' : '';
           if(showFeedback) {
             if (invalid) {
-              el.find('input').after($compile('<error-feedback></error-feedback>')({}));
+              el.find('input').after($compile('<error-feedback class="' + errorClass + '"></error-feedback>')({}));
             }
           }
           if (showSuccess) {
             if(!invalid) {
-              el.find('input').after($compile('<success-feedback></success-feedback>')({}));
+              el.find('input').after($compile('<success-feedback class="' + errorClass + '"></success-feedback>')({}));
             }
             return el.toggleClass('has-success', !invalid);
           }
