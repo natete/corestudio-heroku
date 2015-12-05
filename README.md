@@ -1,3 +1,4 @@
-The OpenShift `jbossas` cartridge documentation can be found at:
+**UOC**
 
-https://github.com/openshift/origin-server/tree/master/cartridges/openshift-origin-cartridge-jbossas/README.md
+***Projecte fi de grau***
+
