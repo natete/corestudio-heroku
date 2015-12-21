@@ -13,7 +13,7 @@ public class ActivityDTO {
 
     public ActivityDTO(Activity activity) {
         this.activity = activity;
-        this.relatedGroups = activity.getGroups().size();
+        this.relatedGroups = activity.getGroups() == null ? 0 : activity.getGroups().size();
     }
 
     public Activity getActivity() {

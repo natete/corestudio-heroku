@@ -18,10 +18,6 @@ public class Activity extends BaseEntity {
     @NotNull
     private String name;
 
-    @Column
-    @NotNull
-    private Integer basePrice;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")
     @JsonIgnore
     private Set<Group> groups;
@@ -32,14 +28,6 @@ public class Activity extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(Integer basePrice) {
-        this.basePrice = basePrice;
     }
 
     public Set<Group> getGroups() {

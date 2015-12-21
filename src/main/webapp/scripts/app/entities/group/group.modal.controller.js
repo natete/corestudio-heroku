@@ -32,7 +32,7 @@
         }
 
         function dismiss() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('CANCEL');
         }
 
         function saveGroup() {
@@ -40,9 +40,9 @@
 
             if ($scope.groupForm.$valid && vm.selectedGroup.days.length > 0) {
                 if(isNew) {
-                    $uibModalInstance.close({action: 'save', group: vm.selectedGroup});
+                    $uibModalInstance.close({action: 'SAVE', group: vm.selectedGroup});
                 } else {
-                    $uibModalInstance.close({action: 'update', group: vm.selectedGroup});
+                    $uibModalInstance.close({action: 'UPDATE', group: vm.selectedGroup});
                 }
             } else if(vm.selectedGroup.days.length === 0) {
                 if(listener === undefined) {

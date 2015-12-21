@@ -1,17 +1,17 @@
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
- * @since 08/12/15.
+ * @since 21/12/15.
  */
 (function () {
     'use strict';
 
     angular.module('corestudioApp.admin')
-        .factory('Activity', Activity);
+        .factory('PassType', PassType);
 
-    Activity.$inject = ['$resource', 'ACTIVITIES_ENDPOINT'];
+    PassType.$inject = ['$resource', 'PASS_TYPES_ENDPOINT'];
 
-    function Activity($resource, ACTIVITIES_ENDPOINT) {
-        return $resource(ACTIVITIES_ENDPOINT, {}, {
+    function PassType($resource, PASS_TYPES_ENDPOINT) {
+        return $resource(PASS_TYPES_ENDPOINT, {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
@@ -24,6 +24,5 @@
             'save': {method: 'POST'}
         });
     }
-
 })();
 

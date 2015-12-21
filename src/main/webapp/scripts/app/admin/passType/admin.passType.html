@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-ticket "></i> Tipos de abono
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-9">
+        <table class="table" st-table="passTypes.displayData" st-safe-src="passTypes.data">
+            <thead>
+            <tr>
+                <th class="text-center" st-sort="activity">Actividad</th>
+                <th class="text-center" st-sort="numberOfSessions">Número de sesiones</th>
+                <th class="text-center" st-sort="basePrice">Precio base</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="passType in passTypes.displayData">
+                <td class="vertical-middle text-center">{{passType.activity.name}}</td>
+                <td class="vertical-middle text-center">{{passType.numberOfSessions}}</td>
+                <td class="vertical-middle text-center">{{passType.basePrice/100 | currency}}</td>
+                <td class="vertical-middle text-center">
+                    <ul class="list-inline">
+                        <li>
+                            <a ng-click="passTypes.deletePassType(passType)" class="btn btn-lg">
+                                <i class="fa fa-trash-o text-danger"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="passTypes.openModal(passType)" class="btn btn-lg">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 text-right">
+        <button class="btn btn-circle" ng-click="passTypes.openModal()"><i class="fa fa-plus"></i></button>
+    </div>
+</div>
