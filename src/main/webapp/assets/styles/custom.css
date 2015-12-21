@@ -11712,7 +11712,8 @@ table tr td .center-image {
 .form-control[disabled] {
   background: none;
   border: none;
-  box-shadow: none; }
+  box-shadow: none;
+  cursor: text; }
 
 .horizontal-control-label {
   line-height: 34px; }

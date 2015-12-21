@@ -13,7 +13,8 @@
             'ngMessages',
             'ui.bootstrap',
             'ngAnimate',
-            'treasure-overlay-spinner'
+            'treasure-overlay-spinner',
+            'checklist-model'
         ])
         .config(config)
         .run(run);

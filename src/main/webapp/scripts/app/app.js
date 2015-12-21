@@ -10,7 +10,9 @@
         'corestudioApp.calendar',
         'corestudioApp.admin',
         'corestudioApp.alerts',
-        'corestudioApp.overlay'
+        'corestudioApp.overlay',
+        'corestudioApp.currency',
+        'corestudioApp.group'
     ]);
 
 

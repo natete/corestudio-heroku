@@ -35,6 +35,7 @@
     "angular-locale_es-es": "*",
     "angular-animate": "~1.4.8",
     "angular-treasure-overlay-spinner": "~1.1.0",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "checklist-model": "~0.8.0"
   }
 }

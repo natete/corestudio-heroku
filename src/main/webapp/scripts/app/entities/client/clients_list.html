@@ -20,12 +20,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="client in clients.displayData">
-                <td><img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small"/></td>
-                <td>{{ client.name + ' ' + client.firstSurname }}</td>
-                <td></td>
-                <td></td>
-                <td class="text-center">
+            <tr ng-repeat="client in clients.displayData track by client.id">
+                <td class="vertical-middle"><img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small center-block"/></td>
+                <td class="vertical-middle">{{ client.name + ' ' + client.firstSurname }}</td>
+                <td class="vertical-middle"></td>
+                <td class="vertical-middle"></td>
+                <td class="text-center vertical-middle">
                     <a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
                     <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
                 </td>

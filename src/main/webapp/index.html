@@ -35,7 +35,7 @@
 
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
         <div class="alert-area">
-            <uib-alert ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)" ng-animate="'animate'">
+            <uib-alert ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)" ng-animate="'animate'" ng-cloak>
                 {{alert.msg}}
             </uib-alert>
         </div>
@@ -62,12 +62,14 @@
 <script src="assets/js/lib/angular-locale/angular-locale_es-es.js"></script>
 <script src="assets/js/lib/angular-animate/angular-animate.min.js"></script>
 <script src="assets/js/lib/angular-treasure-overlay/treasure-overlay-spinner.min.js"></script>
+<script src="assets/js/lib/checklist-model/checklist-model.js"></script>
 
 <!-- Angular modules -->
 <script src="scripts/app/app.js"></script>
 <script src="scripts/app/app.core.js"></script>
 <script src="scripts/app/app.routes.js"></script>
 <script src="scripts/app/app.constants.js"></script>
+<script src="scripts/app/app.controller.js"></script>
 <!--<script src="scripts/app/login/login.js"></script>-->
 <script src="scripts/app/entities/client/client.module.js"></script>
 <script src="scripts/app/entities/client/client.routes.js"></script>
@@ -77,16 +79,26 @@
 <script src="scripts/app/admin/admin.routes.js"></script>
 <script src="scripts/app/admin/holidays/admin.holidays.controller.js"></script>
 <script src="scripts/app/admin/holidays/admin.holidays.modal.controller.js"></script>
-<script src="scripts/app/app.controller.js"></script>
+<script src="scripts/app/admin/activities/admin.activities.controller.js"></script>
+<script src="scripts/app/entities/group/group.module.js"></script>
+<script src="scripts/app/entities/group/group.routes.js"></script>
+<script src="scripts/app/entities/group/group.controller.js"></script>
+<script src="scripts/app/entities/group/group.modal.controller.js"></script>
 
 <script src="scripts/components/navbar/navbar.controller.js"></script>
+<script src="scripts/components/alerts/alerts.service.js"></script>
+<script src="scripts/components/overlay/overlay.service.js"></script>
 <script src="scripts/components/entities/client/client.service.js"></script>
 <script src="scripts/components/entities/client/client.filters.js"></script>
 <script src="scripts/components/calendar/calendar.module.js"></script>
 <script src="scripts/components/calendar/calendar.directive.js"></script>
 <script src="scripts/components/admin/admin.holidays.service.js"></script>
-<script src="scripts/components/alerts/alerts.service.js"></script>
-<script src="scripts/components/overlay/overlay.service.js"></script>
+<script src="scripts/components/admin/admin.activities.service.js"></script>
+<script src="scripts/components/currency/currency.module.js"></script>
+<script src="scripts/components/currency/currency.directive.js"></script>
+<script src="scripts/components/config/config.service.js"></script>
+<script src="scripts/components/config/config.filters.js"></script>
+<script src="scripts/components/entities/group/group.service.js"></script>
 
 </body>
 
