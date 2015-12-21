@@ -11802,6 +11802,9 @@ horizontal-calendar table.table > tbody > tr > td.day {
   width: 150px;
   height: 30px; }
 
+.tab-content {
+  padding-top: 25px; }
+
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
@@ -11841,7 +11844,7 @@ footer {
   height: 30px;
   bottom: 0;
   width: 100%;
-  z-index: 1000%; }
+  z-index: 1000; }
 
 .huge {
   font-size: 50px;

@@ -12,6 +12,7 @@
 @import "components/calendar/calendar";
 @import "components/alerts/alerts";
 @import "components/animations/animations";
+@import "components/tabs/tabs";
 
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
@@ -62,7 +63,7 @@ footer {
   height: 30px;
   bottom: 0;
   width: 100%;
-  z-index: 1000%;
+  z-index: 1000;
 }
 
 .huge {
