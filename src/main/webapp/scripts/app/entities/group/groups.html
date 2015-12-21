@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header"><i class="fa fa-users"></i> Grupos</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-list-alt"></i> Lista de grupos
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <table st-table="groups.displayData" st-safe-src="groups.data" class="table  table-hover ">
+            <thead>
+            <tr>
+                <th st-sort="days" class="text-center">Días</th>
+                <th st-sort="hour" class="text-center">Hora</th>
+                <th st-sort="level" class="text-center">Nivel</th>
+                <th st-sort="activity" class="text-center">Actividad</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="group in groups.displayData track by group.id">
+                <td class="vertical-middle text-center">{{ group.days | daysArray }}</td>
+                <td class="vertical-middle text-center">{{ group.hour | hour }}</td>
+                <td class="vertical-middle text-center">{{ group.level | level }}</td>
+                <td class="vertical-middle text-center">{{ group.activity.name }}</td>
+                <td class="text-center vertical-middle">
+                    <!--<a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>-->
+                    <!--<a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>-->
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 text-right">
+        <button ng-click="groups.openModal()" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

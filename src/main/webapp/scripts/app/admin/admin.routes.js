@@ -21,6 +21,12 @@
                 templateUrl: 'scripts/app/admin/holidays/admin.holidays.html',
                 controller: 'HolidaysController',
                 controllerAs: 'holidays'
+            })
+            .state('admin.activities', {
+                url: '/activities',
+                templateUrl: 'scripts/app/admin/activities/admin.activities.html',
+                controller: 'ActivitiesController',
+                controllerAs: 'activities'
             });
     }
 })();

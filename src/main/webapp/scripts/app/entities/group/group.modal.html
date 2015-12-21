@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="modal.dismiss()" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">{{ modal.title}}</h4>
+</div>
+<div class="modal-body">
+    <form novalidate name="groupForm">
+        <div class="form-group" ng-class="{'has-error': modal.isDaysEmpty}">
+            <div>
+                <label class="control-label">Seleccione los días</label>
+            </div>
+            <ul class="list-inline">
+                <li ng-repeat="(key, value) in modal.days">
+                    <label class="control-label text-center">
+                        <div>{{value}}</div>
+                        <input type="checkbox" checklist-model="modal.selectedGroup.days" checklist-value="key">
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group" show-errors="{showFeedback: false, showSuccess: false}">
+            <label for="hour" class="control-label">Seleccione el horario</label>
+            <select name="hour" id="hour" class="form-control" ng-model="modal.selectedGroup.hour" ng-options="hour as (hour | hour) for hour in [] | range:7:22" required></select>
+        </div>
+        <div class="form-group" show-errors="{showFeedback: false, showSuccess: false}">
+            <label for="level" class="control-label">Seleccione el nivel</label>
+            <select name="level" id="level" class="form-control" ng-model="modal.selectedGroup.level" ng-options="key as value for (key, value) in modal.levels" required></select>
+        </div>
+        <div class="form-group" show-errors="{showFeedback: false, showSuccess: false}">
+            <label for="activity" class="control-label">Selecciones la actividad</label>
+            <select name="activity" id="activity" class="form-control" ng-model="modal.selectedGroup.activity" ng-options="activity.name for activity in modal.activities" required></select>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="modal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-primary" ng-click="modal.saveGroup()">Guardar</button>
+</div>

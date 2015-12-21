@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-cubes"></i> Actividades
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <form name="activitiesForm" class="col-xs-9">
+        <table st-table="activities.displayData" st-safe-src="activities.data" class="table">
+            <thead>
+            <tr>
+                <th class="text-center" st-sort="name">Actividad</th>
+                <th class="text-center" st-sort="basePrice">Precio base</th>
+                <th class="text-center" st-sort="relatedGroups">Grupos vinculados</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="activity in activities.displayData">
+                <td class="vertical-middle text-center">
+                    <div class="form-group" show-errors="{showFeedback: false}">
+                        <input type="text" name="name" ng-model="activity.activity.name" ng-disabled="!activity.editing"
+                               required class="form-control">
+                    </div>
+                </td>
+                <td class="vertical-middle text-center">
+                    <div class="form-group" show-errors="{showFeedback: false}">
+                        <input currency type="number" name="basePrice" ng-model="activity.activity.basePrice"
+                               ng-disabled="!activity.editing"
+                               required class="form-control" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+                    </div>
+                </td>
+                <td class="vertical-middle text-center">
+                    <div class="form-group">{{activity.relatedGroups}}</div>
+                </td>
+                <td class="vertical-middle text-center">
+                    <a href="" ng-click="activities.deleteActivity(activity)" class="btn btn-lg"
+                       ng-if="!activity.editing">
+                        <i class="fa fa-trash-o text-danger"></i>
+                    </a>
+                    <a href="" ng-click="activity.editing = true" class="btn btn-lg" ng-if="!activity.editing">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="" ng-click="activities.cancelEdition(activity)" class="btn btn-lg"
+                       ng-if="activity.editing">
+                        <i class="fa fa-times text-danger"></i>
+                    </a>
+                    <a href="" ng-click="activities.saveActivity(activity)" class="btn btn-lg"
+                       ng-if="activity.editing">
+                        <i class="fa fa-check text-success"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-9 text-right">
+        <button class="btn btn-circle" ng-click="activities.addActivity()"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

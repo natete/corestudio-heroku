@@ -30,8 +30,7 @@ public class HolidayBusinessLogic {
         if (persistedHoliday == null) {
             throw new IllegalArgumentException("El festivo que quiere actualizar no está registrado");
         } else {
-            holidayRepository.save(holiday);
-            return holiday;
+            return holidayRepository.save(holiday);
         }
     }
 

@@ -25,7 +25,7 @@
       getShowFeedback = function (options) {
         var showFeedback;
         showFeedback = showErrorsConfig.showFeedback;
-        if(options && options.showFeedback) {
+        if(options && (options.showFeedback != null)) {
           showFeedback = options.showFeedback;
         }
         return showFeedback;
@@ -77,7 +77,7 @@
             }
           }
           if (showSuccess) {
-            if(!invalid) {
+            if(!invalid && showFeedback) {
               el.find('input').after($compile('<success-feedback class="' + errorClass + '"></success-feedback>')({}));
             }
             return el.toggleClass('has-success', !invalid);
