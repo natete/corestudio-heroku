@@ -12,7 +12,8 @@
         'corestudioApp.alerts',
         'corestudioApp.overlay',
         'corestudioApp.currency',
-        'corestudioApp.group'
+        'corestudioApp.group',
+        'corestudioApp.modals'
     ]);
 
 

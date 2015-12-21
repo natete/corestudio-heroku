@@ -56,8 +56,5 @@ public class ActivityBusinessLogic {
         if(activity.getName() == null) {
             throw new IllegalArgumentException("El nombre es necesario");
         }
-        if(activity.getBasePrice() == null) {
-            throw new IllegalArgumentException("El precio es necesario");
-        }
     }
 }

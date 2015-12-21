@@ -13,7 +13,7 @@
             <thead>
             <tr>
                 <th class="text-center" st-sort="name">Actividad</th>
-                <th class="text-center" st-sort="basePrice">Precio base</th>
+                <!--<th class="text-center" st-sort="basePrice">Precio base</th>-->
                 <th class="text-center" st-sort="relatedGroups">Grupos vinculados</th>
                 <th></th>
             </tr>
@@ -26,13 +26,13 @@
                                required class="form-control">
                     </div>
                 </td>
-                <td class="vertical-middle text-center">
-                    <div class="form-group" show-errors="{showFeedback: false}">
-                        <input currency type="number" name="basePrice" ng-model="activity.activity.basePrice"
-                               ng-disabled="!activity.editing"
-                               required class="form-control" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
-                    </div>
-                </td>
+                <!--<td class="vertical-middle text-center">-->
+                    <!--<div class="form-group" show-errors="{showFeedback: false}">-->
+                        <!--<input currency type="number" name="basePrice" ng-model="activity.activity.basePrice"-->
+                               <!--ng-disabled="!activity.editing"-->
+                               <!--required class="text-center form-control" step="1" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">-->
+                    <!--</div>-->
+                <!--</td>-->
                 <td class="vertical-middle text-center">
                     <div class="form-group">{{activity.relatedGroups}}</div>
                 </td>
