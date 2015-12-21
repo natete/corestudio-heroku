@@ -32,8 +32,18 @@
                 <td class="vertical-middle text-center">{{ group.level | level }}</td>
                 <td class="vertical-middle text-center">{{ group.activity.name }}</td>
                 <td class="text-center vertical-middle">
-                    <!--<a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>-->
-                    <!--<a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>-->
+                    <ul class="list-inline">
+                        <li>
+                            <a ng-click="groups.deleteGroup(group)" class="btn btn-lg">
+                                <i class="fa fa-trash-o text-danger"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="groups.openModal(group)" class="btn btn-lg">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
             </tbody>

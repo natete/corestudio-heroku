@@ -27,6 +27,12 @@
                 templateUrl: 'scripts/app/admin/activities/admin.activities.html',
                 controller: 'ActivitiesController',
                 controllerAs: 'activities'
+            })
+            .state('admin.passTypes', {
+                url: '/passTypes',
+                templateUrl: 'scripts/app/admin/passType/admin.passType.html',
+                controller: 'PassTypeController',
+                controllerAs: 'passTypes'
             });
     }
 })();
