@@ -76,15 +76,33 @@
         }
 
         function deleteActivity(activity) {
-            var index = vm.data.indexOf(activity);
-            Activity.delete({id: activity.activity.id}, function () {
-                vm.data.splice(index, 1);
-                Alerts.addSuccessAlert('Se ha eliminado la actividad ' + activity.name);
-            }, function () {
-                Alerts.addErrorAlert('Ha habido un error eliminando la actividad ' + activity.name);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'scripts/components/modals/confirmModal.html',
+                size: 'sm',
+                controller: 'ConfirmModalController',
+                controllerAs: 'modal',
+                resolve: {
+                    title: function () {
+                        return 'Eliminar grupo';
+                    },
+                    message: function () {
+                        return 'Está seguro de que desea eliminar el grupo de ' + daysArrayToString(group.days) + ' a las ' + group.hour + '?';
+                    }
+
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                if (result === 'OK') {
+                    var index = vm.data.indexOf(activity);
+                    Activity.delete({id: activity.activity.id}, function () {
+                        vm.data.splice(index, 1);
+                        Alerts.addSuccessAlert('Se ha eliminado la actividad ' + activity.name);
+                    }, function () {
+                        Alerts.addErrorAlert('Ha habido un error eliminando la actividad ' + activity.name);
+                    });
+                }
             });
         }
     }
-
 })();
-
