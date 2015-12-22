@@ -1,5 +1,6 @@
 package com.onewingsoft.corestudio.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onewingsoft.corestudio.model.Activity;
 
 /**
@@ -32,10 +33,12 @@ public class ActivityDTO {
         this.relatedGroups = relatedGroups;
     }
 
+    @JsonIgnore
     public Long getId() {
         return activity.getId();
     }
 
+    @JsonIgnore
     public String getName() {
         return activity.getName();
     }

@@ -18,6 +18,9 @@ public class Activity extends BaseEntity {
     @NotNull
     private String name;
 
+    @Column
+    private boolean groupActivity;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")
     @JsonIgnore
     private Set<Group> groups;
@@ -28,6 +31,14 @@ public class Activity extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isGroupActivity() {
+        return groupActivity;
+    }
+
+    public void setGroupActivity(boolean groupActivity) {
+        this.groupActivity = groupActivity;
     }
 
     public Set<Group> getGroups() {

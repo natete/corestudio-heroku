@@ -29,6 +29,11 @@ public class ActivityRestClient {
         return activityBusinessLogic.getAllActivities();
     }
 
+    @RequestMapping(value = "/activities/getGroupActivities", method = RequestMethod.GET)
+    public Iterable<Activity> getGroupActivities(){
+        return activityBusinessLogic.getGroupActivities();
+    }
+
     @RequestMapping(value = "/activities", method = RequestMethod.POST)
     public ResponseEntity<ActivityDTO> createActivity(@Validated @RequestBody final Activity activity) {
         try {

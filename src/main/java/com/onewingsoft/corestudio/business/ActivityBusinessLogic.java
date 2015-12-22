@@ -57,4 +57,8 @@ public class ActivityBusinessLogic {
             throw new IllegalArgumentException("El nombre es necesario");
         }
     }
+
+    public Iterable<Activity> getGroupActivities() {
+        return activityRepository.findByGroupActivity(true);
+    }
 }

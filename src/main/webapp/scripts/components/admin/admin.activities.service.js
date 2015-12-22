@@ -15,13 +15,18 @@
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
-                transformResponse: function(data) {
+                transformResponse: function (data) {
                     data = angular.fromJson(data);
                     return data;
                 }
             },
             'update': {method: 'PUT'},
-            'save': {method: 'POST'}
+            'save': {method: 'POST'},
+            'getGroupActivities': {
+                method: 'GET',
+                isArray: true,
+                url: 'api/admin/activities/getGroupActivities'
+            }
         });
     }
 

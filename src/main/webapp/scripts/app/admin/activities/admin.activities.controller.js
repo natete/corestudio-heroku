@@ -20,6 +20,7 @@
         vm.cancelEdition = cancelEdition;
         vm.saveActivity = saveActivity;
         vm.deleteActivity = deleteActivity;
+        vm.initEditing = initEditing;
 
         activate();
 
@@ -36,7 +37,14 @@
                 isNew: true
             };
 
+            cancelAllEditing();
             vm.data.push(activity);
+        }
+
+        function initEditing(activity) {
+            cancelAllEditing();
+            activity.editing = true;
+            activity.oldValue = angular.copy(activity.activity);
         }
 
         function cancelEdition(activity) {
@@ -44,7 +52,16 @@
                 vm.data.splice(vm.data.indexOf(activity), 1);
             } else {
                 activity.editing = false;
+                if(activity.oldValue) {
+                    activity.activity = activity.oldValue;
+                }
             }
+        }
+
+        function cancelAllEditing() {
+            vm.data.forEach(function (value) {
+                cancelEdition(value);
+            });
         }
 
         function saveActivity(activity) {

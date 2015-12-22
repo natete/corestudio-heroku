@@ -26,7 +26,7 @@
         activate();
 
         function activate() {
-            Activity.query({}, function(data) {
+            Activity.getGroupActivities({}, function(data) {
                 vm.activities = data;
             });
         }
