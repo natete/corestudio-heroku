@@ -62,8 +62,14 @@ footer {
   position: fixed;
   height: 30px;
   bottom: 0;
-  width: 100%;
-  z-index: 1000;
+  width: 225px;
+  z-index: 1999;
+  left: 0;
+  padding: 0 15px;
+
+  @media(max-width: $screen-sm-max) {
+    display: none;
+  }
 }
 
 .huge {
