@@ -7,12 +7,11 @@
     angular.module('corestudioApp.client')
         .controller('ClientFormController', ClientFormController);
 
-    ClientFormController.$inject = ['Client', 'editMode', '$stateParams', '$scope', '$state', 'Alerts'];
+    ClientFormController.$inject = ['Client', '$stateParams', '$scope', '$state', 'Alerts'];
 
-    function ClientFormController(Client, editMode, $stateParams, $scope, $state, Alerts) {
+    function ClientFormController(Client, $stateParams, $scope, $state, Alerts) {
         var vm = this;
 
-        vm.editMode = editMode;
         vm.client = {};
         vm.birthdateDatepicker = {
             opened: false
@@ -34,19 +33,20 @@
             if($state.is('clients.newClient')) {
                 vm.area = 'Nuevo cliente';
                 vm.classArea = 'fa-eye';
-            } else if($state.is('clients.viewClient')) {
-                vm.area = 'Detalles  del cliente';
-                vm.classArea = 'fa-floppy-o';
             } else if($state.is('clients.editClient')) {
                 vm.area = 'Editar cliente';
                 vm.classArea = 'fa-pencil-square-o';
             }
             if($stateParams.id !== undefined) {
-                Client.get({ id: $stateParams.id }, function (client) {
-                    vm.client = parseDates(client);
-                }, function () {
-                    Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
-                });
+                if($stateParams.client === undefined) {
+                    Client.get({ id: $stateParams.id }, function (client) {
+                        vm.client = parseDates(client);
+                    }, function () {
+                        Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
+                    });
+                } else {
+                    vm.client = $stateParams.client;
+                }
             }
         }
 
@@ -55,7 +55,6 @@
 
             if ($scope.userForm.$invalid) {
                 Alerts.addErrorAlert('El formulario de creación contiene datos erróneos');
-                return;
             } else {
                 vm.saveDisabled = true;
                 vm.saveBtnText = 'Guardando...';

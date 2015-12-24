@@ -5,21 +5,27 @@ package com.onewingsoft.corestudio.utils;
  * @since 08/12/15.
  */
 public enum Day {
-    MONDAY("Lu"),
-    TUESDAY("Ma"),
-    WEDNESDAY("Mi"),
-    THURSDAY("Ju"),
-    FRIDAY("Vi"),
-    SATURDAY("Sa"),
-    SUNDAY("Do");
+    MONDAY(2, "Lu"),
+    TUESDAY(3, "Ma"),
+    WEDNESDAY(4, "Mi"),
+    THURSDAY(5, "Ju"),
+    FRIDAY(6, "Vi"),
+    SATURDAY(7, "Sa"),
+    SUNDAY(1, "Do");
 
-    private String value;
+    private int value;
+    private String shortName;
 
-    Day(String value) {
+    Day(int value, String shortName) {
         this.value = value;
+        this.shortName = shortName;
     }
 
-    public String getValue() {
+    public int getValue() {
         return this.value;
+    }
+
+    public String getShortName() {
+        return shortName;
     }
 }

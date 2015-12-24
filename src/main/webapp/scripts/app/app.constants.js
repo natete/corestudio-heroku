@@ -7,4 +7,5 @@ angular.module("corestudioApp")
     .constant("GROUP_ENDPOINT", "api/groups/:id")
     .constant("CONFIG_ENDPOINT", "api/config")
     .constant("PASS_TYPES_ENDPOINT", "api/admin/passTypes/:id")
+    .constant("PASS_ENDPOINT", "api/pass/:id")
 ;

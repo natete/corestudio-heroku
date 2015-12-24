@@ -1,3 +1,23 @@
-.tab-content {
-  padding-top: 25px;
+.dynamic-tabs{
+
+  ul.nav.nav-tabs.nav-justified > li.active > a {
+    background: white;
+    border-bottom: 0;
+    font-weight: bold;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .dynamic-tab-content {
+    padding: 25px 15px 15px 15px;
+    border: solid 1px #dddddd;
+    border-top: 0;
+    -webkit-border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 15px;
+  }
 }
+

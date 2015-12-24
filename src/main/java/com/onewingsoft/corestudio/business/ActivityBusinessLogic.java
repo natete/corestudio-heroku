@@ -4,6 +4,7 @@ import com.onewingsoft.corestudio.dto.ActivityDTO;
 import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ import java.util.List;
  * @since 05/12/15.
  */
 @Service
-public class ActivityBusinessLogic {
+public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
 
     @Autowired
     private ActivityRepository activityRepository;
 
-    public Iterable<ActivityDTO> getAllActivities() {
+    public Iterable<ActivityDTO> getAllDtos() {
         Iterable<Activity> activities = activityRepository.findAll();
         List<ActivityDTO> dtos = new ArrayList<>();
         for (Activity activity: activities) {
@@ -30,35 +31,31 @@ public class ActivityBusinessLogic {
     }
 
     public ActivityDTO saveActivity(final Activity activity) throws IllegalArgumentException {
-        if(activity.getId() == null) {
-            validateActivity(activity);
-            return new ActivityDTO(activityRepository.save(activity));
-        } else {
-            throw new IllegalArgumentException("Un nuevo registro no debe tener id");
-        }
+        return new ActivityDTO(super.createEntity(activity));
     }
 
     public ActivityDTO updateActivity(final Activity activity) throws IllegalArgumentException {
-        validateActivity(activity);
-        Activity persistedActivity = activityRepository.findOne(activity.getId());
-        if(persistedActivity == null) {
-            throw new IllegalArgumentException("La actividad que quiere actualizar no existe");
-        } else {
-            return new ActivityDTO(activityRepository.save(activity));
-        }
-    }
-
-    public void deleteActivity(final Long id) {
-        activityRepository.delete(id);
-    }
-
-    private void validateActivity(final Activity activity) throws IllegalArgumentException {
-        if(activity.getName() == null) {
-            throw new IllegalArgumentException("El nombre es necesario");
-        }
+        return new ActivityDTO(super.updateEntity(activity));
     }
 
     public Iterable<Activity> getGroupActivities() {
         return activityRepository.findByGroupActivity(true);
+    }
+
+    @Override
+    protected Activity processEntity(Activity activity) {
+        return activity;
+    }
+
+    @Override
+    protected void validateEntity(Activity entity) throws IllegalArgumentException {
+        if(entity.getName() == null) {
+            throw new IllegalArgumentException("El nombre es necesario");
+        }
+    }
+
+    @Override
+    protected PagingAndSortingRepository getRepository() {
+        return this.activityRepository;
     }
 }

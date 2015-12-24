@@ -26,8 +26,8 @@
                 <td class="vertical-middle"></td>
                 <td class="vertical-middle"></td>
                 <td class="text-center vertical-middle">
-                    <a class="btn btn-lg" ui-sref="clients.viewClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-lg" ui-sref="clients.viewClient.personal({id: client.id, permalink: '{{ client | permalink | replaceAccents }}', client: client})"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}', client: client})"><i class="fa fa-pencil"></i></a>
                 </td>
             </tr>
             </tbody>

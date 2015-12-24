@@ -25,6 +25,8 @@
 
         activate();
 
+        /////////////////////
+
         function activate() {
             Activity.getGroupActivities({}, function(data) {
                 vm.activities = data;

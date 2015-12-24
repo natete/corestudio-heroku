@@ -21,7 +21,12 @@
                 }
             },
             'update': {method: 'PUT'},
-            'save': {method: 'POST'}
+            'save': {method: 'POST'},
+            'getGroupsByActivity':{
+                method: 'GET',
+                isArray: true,
+                url: 'api/groups/getByActivity/:activityId'
+            }
         });
     }
 

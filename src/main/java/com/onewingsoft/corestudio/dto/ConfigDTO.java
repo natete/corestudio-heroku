@@ -19,7 +19,7 @@ public class ConfigDTO {
         this.levels = new LinkedHashMap<>();
 
         for (Day day : Day.values()) {
-            this.days.put(day.name(), day.getValue());
+            this.days.put(day.name(), day.getShortName());
         }
 
         for (Level level : Level.values()) {

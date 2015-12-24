@@ -15,4 +15,7 @@ public interface HolidayRepository extends PagingAndSortingRepository<Holiday, L
 
     @Query("SELECT h FROM Holiday h WHERE year(h.date) = :year")
     Iterable<Holiday> findByYear(@Param("year") Integer year);
+
+    @Query("SELECT h FROM Holiday h WHERE day(h.date) = :day AND month(h.date) = :month AND year(h.date) = :year")
+    Holiday findByDate(@Param("day") Integer day, @Param("month") Integer month, @Param("year") Integer year);
 }

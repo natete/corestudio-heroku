@@ -1,0 +1,28 @@
+<table class="table table-hover" st-table="vm.displayData" st-safe-src="vm.data" ng-if="vm.data.length">
+    <thead>
+    <tr>
+        <th class="text-center sortable-header" st-sort="paymentDate">Fecha de pago</th>
+        <th class="text-center sortable-header" st-sort="initialDate">Fecha de inicio</th>
+        <th class="text-center sortable-header" st-sort="numberOfSessions">Sesiones</th>
+        <th class="text-center sortable-header" st-sort="">Pendientes</th>
+        <th class="text-center sortable-header" st-sort="">Fecha fin</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="pass in vm.displayData track by pass.id">
+        <td class="vertical-middle text-center">{{pass.paymentDate | date:'dd/MM/yyyy'}}</td>
+        <td class="vertical-middle text-center">{{pass.initialDate | date:'dd/MM/yyyy'}}</td>
+        <td class="vertical-middle text-center">{{pass.passType.numberOfSessions}}</td>
+        <td class="vertical-middle text-center">{{pass.passType.numberOfSessions - pass.consumedDates.length}}</td>
+        <td class="vertical-middle text-center">{{pass.lastDate | date:'dd/MM/yyyy'}}</td>
+        <td class="vertical-middle text-center"></td>
+    </tr>
+    </tbody>
+</table>
+<h4 class="text-muted text-center" ng-if="!vm.data.length">El cliente no tiene pagos registrados</h4>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button ng-click="vm.openModal()" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

@@ -13,7 +13,8 @@
         'corestudioApp.overlay',
         'corestudioApp.currency',
         'corestudioApp.group',
-        'corestudioApp.modals'
+        'corestudioApp.modals',
+        'corestudioApp.pass'
     ]);
 
 

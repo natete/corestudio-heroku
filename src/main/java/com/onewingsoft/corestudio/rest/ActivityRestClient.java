@@ -1,6 +1,7 @@
 package com.onewingsoft.corestudio.rest;
 
 import com.onewingsoft.corestudio.business.ActivityBusinessLogic;
+import com.onewingsoft.corestudio.business.BaseBusinessLogic;
 import com.onewingsoft.corestudio.dto.ActivityDTO;
 import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
@@ -18,23 +19,28 @@ import java.net.URISyntaxException;
  * @since 05/12/15.
  */
 @RestController
-@RequestMapping("/api/admin")
-public class ActivityRestClient {
+@RequestMapping("/api/admin/activities")
+public class ActivityRestClient extends BaseRestService<Activity> {
 
     @Autowired
     private ActivityBusinessLogic activityBusinessLogic;
 
-    @RequestMapping(value = "/activities", method = RequestMethod.GET)
-    public Iterable<ActivityDTO> getAllActivities() {
-        return activityBusinessLogic.getAllActivities();
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<Activity> getAllActivities() {
+        return super.getAll();
     }
 
-    @RequestMapping(value = "/activities/getGroupActivities", method = RequestMethod.GET)
-    public Iterable<Activity> getGroupActivities(){
+    @RequestMapping(value = "/getAllDtos", method = RequestMethod.GET)
+    public Iterable<ActivityDTO> getAllDtos() {
+        return activityBusinessLogic.getAllDtos();
+    }
+
+    @RequestMapping(value = "/getGroupActivities", method = RequestMethod.GET)
+    public Iterable<Activity> getGroupActivities() {
         return activityBusinessLogic.getGroupActivities();
     }
 
-    @RequestMapping(value = "/activities", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ActivityDTO> createActivity(@Validated @RequestBody final Activity activity) {
         try {
             ActivityDTO result = activityBusinessLogic.saveActivity(activity);
@@ -47,7 +53,7 @@ public class ActivityRestClient {
         }
     }
 
-    @RequestMapping(value = "/activities", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<ActivityDTO> updateActivity(@Validated @RequestBody final Activity activity) {
         try {
             ActivityDTO result = activityBusinessLogic.updateActivity(activity);
@@ -61,8 +67,28 @@ public class ActivityRestClient {
     }
 
 
-    @RequestMapping(value = "/activities/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteActivity(@PathVariable final Long id) {
-        activityBusinessLogic.deleteActivity(id);
+        super.deleteEntity(id);
+    }
+
+    @Override
+    protected BaseBusinessLogic getBusinessLogic() {
+        return this.activityBusinessLogic;
+    }
+
+    @Override
+    protected String getUri() {
+        return "/api/admin/activities";
+    }
+
+    @Override
+    protected String getEntityName() {
+        return " actividad ";
+    }
+
+    @Override
+    protected String getParameter(Activity entity) {
+        return entity.getName().toString();
     }
 }

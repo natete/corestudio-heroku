@@ -18,10 +18,15 @@
   @extend .font-awesome-icon;
 }
 
-table {
+table.table {
   thead {
     background-color: $corestudio-black;
     color: white;
+    tr {
+      th {
+        line-height: 18px;
+      }
+    }
   }
   tbody {
     tr {
@@ -31,4 +36,8 @@ table {
       }
     }
   }
+}
+
+.sortable-header {
+  cursor: pointer;
 }

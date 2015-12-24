@@ -8,9 +8,9 @@
     angular.module('corestudioApp.group')
         .controller('GroupController', GroupController);
 
-    GroupController.$inject = ['Alerts', '$uibModal', 'Config', 'Group']
+    GroupController.$inject = ['Alerts', '$uibModal', 'Config', 'Group', 'translateDaysFilter']
 
-    function GroupController(Alerts, $uibModal, Config, Group) {
+    function GroupController(Alerts, $uibModal, Config, Group, translateDaysFilter) {
 
         var vm = this;
         vm.displayData = [].concat(vm.data);
@@ -39,7 +39,7 @@
                 controllerAs: 'modal',
                 resolve: {
                     group: function () {
-                        return group;
+                        return angular.copy(group);
                     },
                     config: function() {
                         return vm.config;
@@ -64,7 +64,7 @@
         function createGroup(group) {
             Group.save(group, function(data) {
                 vm.data.push(data);
-                Alerts.addSuccessAlert('Se ha creado el grupo ' + daysArrayToString(group.days) + ' a las ' + data.hour);
+                Alerts.addSuccessAlert('Se ha creado el grupo ' + translateDaysFilter(group.days) + ' a las ' + data.hour);
             }, function () {
                 Alerts.addErrorAlert('Se ha producido un error creando el grupo');
             });
@@ -74,7 +74,7 @@
             var index = vm.data.indexOf(group);
             Group.update(group, function (data) {
                 vm.data[index] = data;
-                Alerts.addSuccessAlert('Se ha actualizado el grupo ' + daysArrayToString(group.days) + ' a las ' + data.hour)
+                Alerts.addSuccessAlert('Se ha actualizado el grupo ' + translateDaysFilter(group.days) + ' a las ' + data.hour)
             }, function () {
                 Alerts.addErrorAlert('Se ha producido un error actualizando el grupo');
             })
@@ -91,7 +91,7 @@
                         return 'Eliminar grupo';
                     },
                     message: function () {
-                        return 'Está seguro de que desea eliminar el grupo de ' + daysArrayToString(group.days) + ' a las ' + group.hour + '?';
+                        return 'Está seguro de que desea eliminar el grupo de ' + translateDaysFilter(group.days) + ' a las ' + group.hour + '?';
                     }
 
                 }
@@ -102,30 +102,12 @@
                     var index = vm.data.indexOf(group);
                     Group.delete({id: group.id}, function () {
                         vm.data.splice(index, 1);
-                        Alerts.addSuccessAlert('Se ha eliminado el grupo de ' + daysArrayToString(group.days) + ' a las ' + group.hour + '?');
+                        Alerts.addSuccessAlert('Se ha eliminado el grupo de ' + translateDaysFilter(group.days) + ' a las ' + group.hour + '?');
                     }, function () {
                         Alerts.addErrorAlert('Se ha producido un error eliminando el grupo');
                     });
                 }
             });
-        }
-
-        function daysArrayToString(array) {
-            var daysMapper = {
-                MONDAY: 'lunes',
-                TUESDAY: 'martes',
-                WEDNESDAY: 'miércoles',
-                THURSDAY: 'jueves',
-                FRIDAY: 'viernes',
-                SATURDAY: 'sábado',
-                SUNDAY: 'domingo'
-            };
-
-            var translated = array.map(function(value) {
-                return daysMapper[value];
-            });
-
-            return translated.join(', ');
         }
     }
 })();

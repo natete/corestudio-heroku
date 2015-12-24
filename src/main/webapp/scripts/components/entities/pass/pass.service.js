@@ -1,17 +1,17 @@
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
- * @since 08/12/15.
+ * @since 23/12/15.
  */
 (function () {
     'use strict';
 
-    angular.module('corestudioApp.admin')
-        .factory('Activity', Activity);
+    angular.module('corestudioApp.pass')
+        .factory('Pass', Pass);
 
-    Activity.$inject = ['$resource', 'ACTIVITIES_ENDPOINT'];
+    Pass.$inject = ['$resource', 'PASS_ENDPOINT'];
 
-    function Activity($resource, ACTIVITIES_ENDPOINT) {
-        return $resource(ACTIVITIES_ENDPOINT, {}, {
+    function Pass($resource, PASS_ENDPOINT) {
+        return $resource(PASS_ENDPOINT, {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
@@ -22,15 +22,10 @@
             },
             'update': {method: 'PUT'},
             'save': {method: 'POST'},
-            'getGroupActivities': {
+            'getByClient': {
                 method: 'GET',
                 isArray: true,
-                url: 'api/admin/activities/getGroupActivities'
-            },
-            'getAllDtos': {
-                method: 'GET',
-                isArray: true,
-                url: 'api/admin/activities/getAllDtos'
+                url: 'api/pass/getByClient/:clientId'
             }
         });
     }

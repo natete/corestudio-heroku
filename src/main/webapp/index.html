@@ -19,10 +19,7 @@
     <!-- Overlay CSS -->
     <link href="/assets/styles/lib/angular-treasure-overlay/treasure-overlay-spinner.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Remote config -->
     <base href="/">
-    <!-- Local config -->
-     <!--<base href="/pilates/">-->
 
 </head>
 
@@ -35,7 +32,7 @@
 
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
         <div class="alert-area" ng-cloak>
-            <uib-alert ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)" ng-animate="'animate'">
+            <uib-alert class="animate-if" ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)">
                 {{alert.msg}}
             </uib-alert>
         </div>
@@ -75,6 +72,8 @@
 <script src="scripts/app/entities/client/client.routes.js"></script>
 <script src="scripts/app/entities/client/client.controller.js"></script>
 <script src="scripts/app/entities/client/client.form.controller.js"></script>
+<script src="scripts/app/entities/client/client.tabs.controller.js"></script>
+<script src="scripts/app/entities/client/client.pass.controller.js"></script>
 <script src="scripts/app/admin/admin.module.js"></script>
 <script src="scripts/app/admin/admin.routes.js"></script>
 <script src="scripts/app/admin/holidays/admin.holidays.controller.js"></script>
@@ -86,6 +85,8 @@
 <script src="scripts/app/entities/group/group.modal.controller.js"></script>
 <script src="scripts/app/admin/passType/admin.passType.controller.js"></script>
 <script src="scripts/app/admin/passType/admin.passType.modal.controller.js"></script>
+<script src="scripts/app/entities/pass/pass.module.js"></script>
+<script src="scripts/app/entities/pass/pass.modal.controller.js"></script>
 
 <script src="scripts/components/navbar/navbar.controller.js"></script>
 <script src="scripts/components/alerts/alerts.service.js"></script>
@@ -101,10 +102,13 @@
 <script src="scripts/components/config/config.service.js"></script>
 <script src="scripts/components/config/config.filters.js"></script>
 <script src="scripts/components/entities/group/group.service.js"></script>
+<script src="scripts/components/entities/group/group.filters.js"></script>
 <script src="scripts/components/admin/admin.passType.service.js"></script>
 <script src="scripts/components/modals/modals.module.js"></script>
 <script src="scripts/components/modals/modals.confirm.controller.js"></script>
 <script src="scripts/components/commons/commons.filters.js"></script>
+<script src="scripts/components/entities/pass/pass.service.js"></script>
+<script src="scripts/components/admin/admin.filters.js"></script>
 
 </body>
 

@@ -1,0 +1,49 @@
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Dirección</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.address}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Teléfono 1</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.firstPhone}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Teléfono 2</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.secondPhone}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Correo electrónico</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.email}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Fecha de nacimiento</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.birthdate | date:'dd/MM/yyyy'}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Fecha de alta</label>
+
+    <div class="col-md-6 personal-info">
+        {{tabs.client.admissionDate | date:'dd/MM/yyyy'}}
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-6 control-label horizontal-control-label text-right">Comentarios</label>
+
+    <div class="col-md-6 personal-info text-justify">
+        {{tabs.client.comments}}
+    </div>
+</div>

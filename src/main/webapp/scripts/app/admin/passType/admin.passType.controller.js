@@ -37,7 +37,7 @@
                 controllerAs: 'modal',
                 resolve: {
                     passType: function () {
-                        return passType;
+                        return angular.copy(passType);
                     }
                 }
             });
@@ -48,7 +48,7 @@
                         createPassType(result.passType);
                         break;
                     case 'UPDATE':
-                        updatePassType(result.passType);
+                        updatePassType(result.passType, vm.data.indexOf(passType));
                         break;
                     default:
                         break;
@@ -65,10 +65,10 @@
             });
         }
 
-        function updatePassType(passType) {
-            var index = vm.data.indexOf(passType);
+        function updatePassType(passType, index) {
             PassType.update(passType, function (data) {
                 vm.data[index] = data;
+                vm.displayData = [].concat(vm.data);
                 Alerts.addSuccessAlert('Se ha actualizado el tipo de abono ' + data.activity.name + ' ' + data.numberOfSessions + ' sesiones.');
             }, function () {
                 Alerts.addErrorAlert('Se ha producido un error actualizando el tipo de abono');

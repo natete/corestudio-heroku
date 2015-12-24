@@ -5,6 +5,9 @@ import com.onewingsoft.corestudio.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 21/11/15.
@@ -39,8 +42,15 @@ public class HolidayBusinessLogic {
     }
 
     private void validateHoliday(final Holiday holiday) throws IllegalArgumentException {
-        if(holiday.getDate() == null) {
+        if (holiday.getDate() == null) {
             throw new IllegalArgumentException("La fecha es necesaria");
         }
+    }
+
+    public boolean isHoliday(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        Holiday holiday = holidayRepository.findByDate(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH + 1), cal.get(Calendar.YEAR));
+        return holiday != null;
     }
 }

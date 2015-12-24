@@ -4,7 +4,7 @@ import com.onewingsoft.corestudio.utils.Day;
 import com.onewingsoft.corestudio.utils.Level;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -17,7 +17,7 @@ public class Group extends BaseEntity {
     @Column
     @ElementCollection(targetClass = Day.class)
     @Enumerated(EnumType.STRING)
-    private Collection<Day> days;
+    private List<Day> days;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -30,11 +30,11 @@ public class Group extends BaseEntity {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    public Collection<Day> getDays() {
+    public List<Day> getDays() {
         return days;
     }
 
-    public void setDays(Collection<Day> days) {
+    public void setDays(List<Day> days) {
         this.days = days;
     }
 

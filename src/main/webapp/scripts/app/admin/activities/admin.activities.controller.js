@@ -8,9 +8,9 @@
     angular.module('corestudioApp.admin')
         .controller('ActivitiesController', ActivitiesController);
 
-    ActivitiesController.$inject = ['Activity', 'Alerts', '$scope'];
+    ActivitiesController.$inject = ['Activity', 'Alerts', '$scope', '$uibModal'];
 
-    function ActivitiesController(Activity, Alerts, $scope) {
+    function ActivitiesController(Activity, Alerts, $scope, $uibModal) {
         var vm = this;
 
         vm.data = [];
@@ -27,7 +27,9 @@
         /////////////////////////
 
         function activate() {
-            vm.data = Activity.query();
+            Activity.getAllDtos({}, function(data) {
+                vm.data = data;
+            });
         }
 
         function addActivity() {
@@ -77,7 +79,7 @@
                     activity.activity.id = savedActivity.id;
                     activity.isNew = false;
                     activity.editing = false;
-                    Alerts.addSuccessAlert('Se ha guardado la actividad ' + savedActivity.name);
+                    Alerts.addSuccessAlert('Se ha guardado la actividad ' + savedActivity.activity.name);
                 }, function () {
                     Alerts.addErrorAlert('Ha habido un error creando la actividad ' + activity.name);
                 });
@@ -85,7 +87,7 @@
                 Activity.update(activity.activity, function (savedActivity) {
                     activity.isNew = false;
                     activity.editing = false;
-                    Alerts.addSuccessAlert('Se ha actualizado la actividad ' + savedActivity.name);
+                    Alerts.addSuccessAlert('Se ha actualizado la actividad ' + savedActivity.activity.name);
                 }, function () {
                     Alerts.addErrorAlert('Ha habido un error actualizando la actividad ' + activity.name);
                 });
@@ -100,10 +102,10 @@
                 controllerAs: 'modal',
                 resolve: {
                     title: function () {
-                        return 'Eliminar grupo';
+                        return 'Eliminar actividad';
                     },
                     message: function () {
-                        return 'Está seguro de que desea eliminar el grupo de ' + daysArrayToString(group.days) + ' a las ' + group.hour + '?';
+                        return 'Está seguro de que desea eliminar la actividad ' + activity.activity.name;
                     }
 
                 }
@@ -114,9 +116,9 @@
                     var index = vm.data.indexOf(activity);
                     Activity.delete({id: activity.activity.id}, function () {
                         vm.data.splice(index, 1);
-                        Alerts.addSuccessAlert('Se ha eliminado la actividad ' + activity.name);
+                        Alerts.addSuccessAlert('Se ha eliminado la actividad ' + activity.activity.name);
                     }, function () {
-                        Alerts.addErrorAlert('Ha habido un error eliminando la actividad ' + activity.name);
+                        Alerts.addErrorAlert('Ha habido un error eliminando la actividad ' + activity.activity.name);
                     });
                 }
             });

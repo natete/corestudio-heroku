@@ -46,4 +46,9 @@ public class PassType extends BaseEntity {
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+
+    @Transient
+    public boolean isGroupActivity() {
+        return this.activity.isGroupActivity();
+    }
 }
