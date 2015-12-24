@@ -4,8 +4,8 @@
         <th class="text-center sortable-header" st-sort="paymentDate">Fecha de pago</th>
         <th class="text-center sortable-header" st-sort="initialDate">Fecha de inicio</th>
         <th class="text-center sortable-header" st-sort="numberOfSessions">Sesiones</th>
-        <th class="text-center sortable-header" st-sort="">Pendientes</th>
-        <th class="text-center sortable-header" st-sort="">Fecha fin</th>
+        <th class="text-center sortable-header" st-sort="vm.getPendingSessions">Pendientes</th>
+        <th class="text-center sortable-header" st-sort="lastDate">Fecha fin</th>
         <th></th>
     </tr>
     </thead>
@@ -14,7 +14,7 @@
         <td class="vertical-middle text-center">{{pass.paymentDate | date:'dd/MM/yyyy'}}</td>
         <td class="vertical-middle text-center">{{pass.initialDate | date:'dd/MM/yyyy'}}</td>
         <td class="vertical-middle text-center">{{pass.passType.numberOfSessions}}</td>
-        <td class="vertical-middle text-center">{{pass.passType.numberOfSessions - pass.consumedDates.length}}</td>
+        <td class="vertical-middle text-center">{{vm.getPendingSessions(pass)}}</td>
         <td class="vertical-middle text-center">{{pass.lastDate | date:'dd/MM/yyyy'}}</td>
         <td class="vertical-middle text-center"></td>
     </tr>

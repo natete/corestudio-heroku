@@ -1,5 +1,6 @@
 package com.onewingsoft.corestudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onewingsoft.corestudio.utils.Day;
 
 import javax.persistence.*;
@@ -139,16 +140,19 @@ public class Pass extends BaseEntity {
     }
 
     @Transient
+    @JsonIgnore
     public int getNumberOfSession() {
         return this.passType.getNumberOfSessions();
     }
 
     @Transient
+    @JsonIgnore
     public boolean isGroupPass() {
         return this.passType.isGroupActivity();
     }
 
     @Transient
+    @JsonIgnore
     public List<Day> getDays() {return this.group.getDays();}
 
     public void addPendingDate(Date date) {

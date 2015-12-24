@@ -13,7 +13,10 @@
     function ClientPassController(Pass, $stateParams, $uibModal, Alerts, $scope) {
         var vm = this;
 
+        vm.displayData = [].concat(vm.data);
+
         vm.openModal = openModal;
+        vm.getPendingSessions = getPendingSessions;
 
         activate();
 
@@ -70,6 +73,10 @@
             }, function () {
                 Alerts.addErrorAlert('Se ha producido un error actualizando el bono');
             });
+        }
+
+        function getPendingSessions(pass) {
+            return pass.passType.numberOfSessions - pass.consumedDates.length;
         }
     }
 })();
