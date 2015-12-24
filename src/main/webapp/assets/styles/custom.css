@@ -11682,7 +11682,7 @@ button.close {
   border-color: #aaaaaa; }
 
 .profile-size {
-  height: 150px; }
+  height: 100px; }
 
 .profile-small {
   height: 50px; }
@@ -11730,6 +11730,14 @@ textarea {
 .personal-info {
   line-height: 34px; }
 
+.page-header {
+  margin: 15px 0;
+  padding-bottom: 5px; }
+
+.breadcrumb {
+  padding: 5px 15px;
+  margin-bottom: 15px; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;
@@ -11758,6 +11766,9 @@ table.table tbody tr td {
 .sortable-header {
   cursor: pointer; }
 
+horizontal-calendar table.table > thead > tr > th {
+  padding: 5px 4px; }
+
 horizontal-calendar table.table > tbody > tr > td.month {
   vertical-align: middle; }
 
@@ -11771,7 +11782,31 @@ horizontal-calendar table.table > tbody > tr > td.day {
     horizontal-calendar table.table > tbody > tr > td.day div.holiday {
       background-color: #E87272;
       color: white;
-      border-radius: 79px;
+      border-radius: 50%;
+      background-clip: content-box;
+      font-weight: bolder;
+      height: 26px;
+      width: 26px;
+      line-height: 26px; }
+    horizontal-calendar table.table > tbody > tr > td.day div.pending-date {
+      border-radius: 50%;
+      border: 2px solid #337ab7;
+      background-clip: content-box;
+      height: 26px;
+      width: 26px;
+      line-height: 21px; }
+    horizontal-calendar table.table > tbody > tr > td.day div.frozen-date {
+      border-radius: 50%;
+      border: 2px solid #337ab7;
+      background-clip: content-box;
+      height: 26px;
+      width: 26px;
+      line-height: 21px;
+      background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, #337ab7 46%, #337ab7 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #337ab7 46%, #337ab7 56%, transparent 56%, transparent 100%); }
+    horizontal-calendar table.table > tbody > tr > td.day div.consumed-date {
+      background-color: #337ab7;
+      color: white;
+      border-radius: 50%;
       background-clip: content-box;
       font-weight: bolder;
       height: 26px;
@@ -11816,6 +11851,9 @@ horizontal-calendar table.table > tbody > tr > td.day {
   -moz-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
   margin-bottom: 15px; }
+
+.client-header {
+  maargin-bottom: 15px; }
 
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)

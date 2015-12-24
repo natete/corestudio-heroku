@@ -27,8 +27,8 @@
                 scope.daysNames = calendar.daysNames;
                 scope.months = calendar.months;
             });
-            scope.$on('update-selected-dates', function (e, selectedDates, callback) {
-               var arrangedSelectedDates = processSelectedDates(selectedDates);
+            scope.$on('update-selected-dates', function (e, selectedDates, year, callback) {
+               var arrangedSelectedDates = processSelectedDates(selectedDates, year);
                 scope.months.forEach(function(month, index) {
                     addSelectedToMonth(month, index, arrangedSelectedDates);
                 });
@@ -44,27 +44,29 @@
 
         };
 
-        processSelectedDates = function (selectedDates) {
+        processSelectedDates = function (selectedDates, year) {
             var arrangedSelectedDates = [];
             selectedDates.forEach(function (selectedType) {
                 var arrangedType = {
                     type: selectedType.type
                 };
-                arrangedType.arrangedDates = arrangeDates(selectedType.dates);
+                arrangedType.arrangedDates = arrangeDates(selectedType.dates, year);
                 arrangedSelectedDates.push(arrangedType);
             });
             return arrangedSelectedDates;
         };
 
-        arrangeDates = function (dates) {
+        arrangeDates = function (dates, year) {
             var arrangedDates = [];
             dates.forEach(function (date) {
-                date.date = new Date(date.date);
-                var month = date.date.getMonth();
-                if (arrangedDates[month] === undefined) {
-                    arrangedDates[month] = [];
+                if(new Date(date.date).getFullYear() === year) {
+                    date.date = new Date(date.date);
+                    var month = date.date.getMonth();
+                    if (arrangedDates[month] === undefined) {
+                        arrangedDates[month] = [];
+                    }
+                    arrangedDates[month].push(date);
                 }
-                arrangedDates[month].push(date);
             });
             return arrangedDates;
         };

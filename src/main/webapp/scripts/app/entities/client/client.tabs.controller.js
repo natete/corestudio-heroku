@@ -36,7 +36,7 @@
 
             vm.tabs = [
                 { title: 'Personal', route: 'clients.viewClient.personal', active: false },
-                { title: 'Pagos', route: 'clients.viewClient.payments', active: false },
+                { title: 'Pagos', route: 'clients.viewClient.passes', active: false },
                 { title: 'Calendario', route: 'clients.viewClient.calendar', active: false },
                 { title: 'Comentarios', route: '', active: false }
             ]

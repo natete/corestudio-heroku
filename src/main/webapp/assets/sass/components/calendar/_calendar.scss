@@ -1,5 +1,12 @@
 horizontal-calendar {
   table.table {
+    & > thead {
+      & > tr {
+        & > th {
+          padding: 5px 4px;
+        }
+      }
+    }
     & > tbody {
       & > tr {
         & > td {
@@ -17,7 +24,37 @@ horizontal-calendar {
               &.holiday {
                 background-color: #E87272;
                 color: white;
-                border-radius: 79px;
+                border-radius: 50%;
+                background-clip: content-box;
+                font-weight: bolder;
+                height: 26px;
+                width: 26px;
+                line-height: 26px;
+              }
+
+              &.pending-date {
+                border-radius: 50%;
+                border: 2px solid $brand-primary;
+                background-clip: content-box;
+                height: 26px;
+                width: 26px;
+                line-height: 21px;
+              }
+
+              &.frozen-date {
+                border-radius: 50%;
+                border: 2px solid $brand-primary;
+                background-clip: content-box;
+                height: 26px;
+                width: 26px;
+                line-height: 21px;
+                background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, $brand-primary 46%,  $brand-primary 56%,transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, $brand-primary 46%,  $brand-primary 56%,transparent 56%, transparent 100%);
+              }
+
+              &.consumed-date {
+                background-color: $brand-primary;
+                color: white;
+                border-radius: 50%;
                 background-clip: content-box;
                 font-weight: bolder;
                 height: 26px;

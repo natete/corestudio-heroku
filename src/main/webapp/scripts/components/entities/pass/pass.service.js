@@ -26,6 +26,11 @@
                 method: 'GET',
                 isArray: true,
                 url: 'api/pass/getByClient/:clientId'
+            },
+            'getByClientAndYear': {
+                method: 'GET',
+                isArray: true,
+                url: 'api/pass/getByClientAndYear/:clientId/:year'
             }
         });
     }

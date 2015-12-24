@@ -72,7 +72,7 @@
                     type: 'holiday',
                     dates: holidays
                 }];
-                $scope.$broadcast('update-selected-dates', vm.holidaysList, Overlay.off);
+                $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year, Overlay.off);
             }, function (data) {
                 Overlay.off();
                 Alerts.addErrorAlert('Error accediendo a la lista de festivos');
@@ -83,7 +83,7 @@
             Holiday.save(date, function (holiday, headers) {
                 holiday.type = 'holiday';
                 vm.holidaysList[0].dates.push(holiday);
-                $scope.$broadcast('update-selected-dates', vm.holidaysList);
+                $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
                 Alerts.addSuccessAlert('Se ha añadido el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
             }, function (data, headers) {
                 Alerts.addErrorAlert();
@@ -94,7 +94,7 @@
             Holiday.update(date, function (holiday) {
                 var updated = $filter('filter')(vm.holidaysList[0].dates, {id: holiday.id}, true)[0];
                 updated.description = holiday.description;
-                $scope.$broadcast('update-selected-dates', vm.holidaysList);
+                $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
                 Alerts.addSuccessAlert('Se ha actualizado el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
             });
         }

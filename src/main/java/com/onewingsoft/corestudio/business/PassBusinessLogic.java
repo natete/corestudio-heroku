@@ -29,6 +29,10 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         return repository.findByClientId(clientId);
     }
 
+    public Iterable<Pass> getByClientAndYear(Long clientId, Integer year) {
+        return repository.findByClientIdAndYear(clientId, year);
+    }
+
     @Override
     protected Pass processEntity(Pass pass) {
         if (pass.isGroupPass()) {

@@ -40,6 +40,11 @@ public class PassRestService extends BaseRestService<Pass> {
         return passBusinessLogic.getByClient(clientId);
     }
 
+    @RequestMapping(value = "/getByClientAndYear/{clientId}/{year}", method = RequestMethod.GET)
+    public Iterable<Pass> getByClientAndYear(@PathVariable final Long clientId, @PathVariable final Integer year) {
+        return passBusinessLogic.getByClientAndYear(clientId, year);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePass(@PathVariable final Long id) {
         super.deleteEntity(id);
