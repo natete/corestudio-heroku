@@ -13,11 +13,11 @@
     function HolidaysModalController($uibModalInstance, date) {
         var vm = this;
         vm.selectedDate = date;
-        vm.close = close;
         vm.dismiss = dismiss;
         vm.saveDate = saveDate;
         vm.deleteDate = deleteDate;
 
+        /////////////////////////////
 
         function dismiss() {
             $uibModalInstance.dismiss('cancel');

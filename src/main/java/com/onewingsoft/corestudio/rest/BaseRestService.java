@@ -23,7 +23,8 @@ public abstract class BaseRestService<T extends BaseEntity> {
         try {
             T result = (T) this.getBusinessLogic().createEntity(entity);
             return ResponseEntity.created(new URI(this.getUri() + result.getId()))
-                    .headers(HeaderUtil.createEntityCreationAlert(this.getEntityName(), this.getParameter(result))).body(result);
+                    .headers(HeaderUtil.createEntityCreationAlert(this.getEntityName(), this.getParameter(result)))
+                    .body(result);
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
@@ -35,7 +36,8 @@ public abstract class BaseRestService<T extends BaseEntity> {
         try {
             T result = (T) this.getBusinessLogic().updateEntity(entity);
             return ResponseEntity.created(new URI(this.getUri() + result.getId()))
-                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result))).body(result);
+                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .body(result);
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {

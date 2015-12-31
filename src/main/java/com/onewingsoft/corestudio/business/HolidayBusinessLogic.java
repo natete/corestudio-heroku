@@ -50,7 +50,7 @@ public class HolidayBusinessLogic {
     public boolean isHoliday(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        Holiday holiday = holidayRepository.findByDate(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH + 1), cal.get(Calendar.YEAR));
+        Holiday holiday = holidayRepository.findByDate(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
         return holiday != null;
     }
 }

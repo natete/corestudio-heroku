@@ -43,15 +43,15 @@ public class Pass extends BaseEntity {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Temporal(TemporalType.DATE)
-    private List<Date> frozenDates;
+    private List<Date> frozenDates = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Temporal(TemporalType.DATE)
-    private List<Date> consumedDates;
+    private List<Date> consumedDates = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Temporal(TemporalType.DATE)
     private List<Date> pendingDates = new ArrayList<>();
 
@@ -153,9 +153,28 @@ public class Pass extends BaseEntity {
 
     @Transient
     @JsonIgnore
-    public List<Day> getDays() {return this.group.getDays();}
+    public List<Day> getDays() {
+        return this.group.getDays();
+    }
 
     public void addPendingDate(Date date) {
         pendingDates.add(date);
+    }
+
+    public void addFrozenDate(Date date) {
+        frozenDates.add(date);
+    }
+
+    public void addConsumedDate(Date date) {
+        consumedDates.add(date);
+    }
+
+    public void freezeDate(Date date) {
+        addFrozenDate(date);
+        if (consumedDates.contains(date)) {
+            consumedDates.remove(date);
+        } else if (pendingDates.contains(date)) {
+            pendingDates.remove(date);
+        }
     }
 }

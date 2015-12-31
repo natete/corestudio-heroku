@@ -8,9 +8,12 @@
     angular.module('corestudioApp.pass')
         .factory('Pass', Pass);
 
-    Pass.$inject = ['$resource', 'PASS_ENDPOINT'];
+    Pass.$inject = ['$resource', 'PASS_ENDPOINT', 'GET_PASSES_BY_CLIENT_ENDPOINT', 'GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT', '$cacheFactory', 'FREEZE_DATE'];
 
-    function Pass($resource, PASS_ENDPOINT) {
+    function Pass($resource, PASS_ENDPOINT, GET_PASSES_BY_CLIENT_ENDPOINT, GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT, $cacheFactory, FREEZE_DATE) {
+
+        var cache = $cacheFactory('passCache');
+
         return $resource(PASS_ENDPOINT, {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
@@ -21,16 +24,36 @@
                 }
             },
             'update': {method: 'PUT'},
-            'save': {method: 'POST'},
+            'save': {
+                method: 'POST',
+                interceptor: {
+                    response: function (response) {
+                        cache.removeAll();
+                        return response.data;
+                    }
+                }
+            },
             'getByClient': {
                 method: 'GET',
                 isArray: true,
-                url: 'api/pass/getByClient/:clientId'
+                cache: cache,
+                url: GET_PASSES_BY_CLIENT_ENDPOINT
             },
             'getByClientAndYear': {
                 method: 'GET',
                 isArray: true,
-                url: 'api/pass/getByClientAndYear/:clientId/:year'
+                cache: cache,
+                url: GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT
+            },
+            'freezeDate': {
+                method: 'POST',
+                url: FREEZE_DATE,
+                interceptor: {
+                    response: function (response) {
+                        cache.removeAll();
+                        return response.data;
+                    }
+                }
             }
         });
     }

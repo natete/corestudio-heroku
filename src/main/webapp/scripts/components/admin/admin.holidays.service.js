@@ -12,9 +12,14 @@
 
     function Holiday ($resource, HOLIDAYS_ENDPOINT) {
         return $resource(HOLIDAYS_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {
+                method: 'GET',
+                isArray: true,
+                cache: true
+            },
             'get': {
                 method: 'GET',
+                cache: true,
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
                     return data;

@@ -1,5 +1,6 @@
 package com.onewingsoft.corestudio.business;
 
+import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.PassRepository;
 import com.onewingsoft.corestudio.utils.Day;
@@ -83,6 +84,21 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         }
 
         return result;
+    }
+
+    public Pass freezeDate(ClientDateDTO clientDateDTO) {
+        Pass pass = repository.findByClientIdAndDate(clientDateDTO.getClientId(), clientDateDTO.getDate());
+
+        pass.freezeDate(clientDateDTO.getDate());
+
+        Date nextDate = findNextDate(pass.getLastDate(), pass);
+
+        pass.addPendingDate(nextDate);
+        pass.setLastDate(nextDate);
+
+        this.updateEntity(pass);
+
+        return pass;
     }
 
     @Override

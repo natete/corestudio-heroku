@@ -2,11 +2,17 @@ package com.onewingsoft.corestudio.rest;
 
 import com.onewingsoft.corestudio.business.BaseBusinessLogic;
 import com.onewingsoft.corestudio.business.PassBusinessLogic;
+import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.Pass;
+import com.onewingsoft.corestudio.utils.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -48,6 +54,21 @@ public class PassRestService extends BaseRestService<Pass> {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePass(@PathVariable final Long id) {
         super.deleteEntity(id);
+    }
+
+    @RequestMapping(value = "freezeDate", method = RequestMethod.POST)
+    public ResponseEntity<Pass> freezeDate(@RequestBody ClientDateDTO clientDateDTO) {
+        try {
+            Pass result = passBusinessLogic.freezeDate(clientDateDTO);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .body(result);
+        } catch (URISyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(e.getMessage()).body(null);
+        }
+
     }
 
     @Override

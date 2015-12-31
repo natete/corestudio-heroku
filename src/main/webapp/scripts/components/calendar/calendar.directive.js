@@ -10,26 +10,19 @@
 
 
     function directive() {
-        var linkFunction, daysInMonth, processSelectedDates, arrangeDates, getCalendar, getMonth, addSelectedToMonth, getMaxDays, getDayNames, controllerFunction;
+        var linkFunction, daysInMonth, setUpCalendar, processSelectedDates, arrangeDates, getCalendar, getMonth, addSelectedToMonth, getMaxDays, getDayNames, controllerFunction;
         var config = {};
         config.monthsNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         config.daysName = ["lu", "ma", "mi", "ju", "vi", "sa", "do"];
 
         linkFunction = function (scope, elem, attrs) {
             //var arrangedSelectedDates = processSelectedDates(scope.vm.selectedDates);
-            var calendar = getCalendar(attrs.year);
+            setUpCalendar(scope, attrs);
 
-            scope.daysNames = calendar.daysNames;
-            scope.months = calendar.months;
-
-            attrs.$observe('year', function (year) {
-                var calendar = getCalendar(year);
-                scope.daysNames = calendar.daysNames;
-                scope.months = calendar.months;
-            });
             scope.$on('update-selected-dates', function (e, selectedDates, year, callback) {
-               var arrangedSelectedDates = processSelectedDates(selectedDates, year);
-                scope.months.forEach(function(month, index) {
+                setUpCalendar(scope, attrs);
+                var arrangedSelectedDates = processSelectedDates(selectedDates, year);
+                scope.months.forEach(function (month, index) {
                     addSelectedToMonth(month, index, arrangedSelectedDates);
                 });
                 callback && callback();
@@ -40,8 +33,13 @@
                 day.type = undefined;
                 day.description = undefined;
             });
+        };
 
+        setUpCalendar = function (scope, attrs) {
+            var calendar = getCalendar(attrs.year);
 
+            scope.daysNames = calendar.daysNames;
+            scope.months = calendar.months;
         };
 
         processSelectedDates = function (selectedDates, year) {
@@ -59,7 +57,7 @@
         arrangeDates = function (dates, year) {
             var arrangedDates = [];
             dates.forEach(function (date) {
-                if(new Date(date.date).getFullYear() === year) {
+                if (new Date(date.date).getFullYear() === year) {
                     date.date = new Date(date.date);
                     var month = date.date.getMonth();
                     if (arrangedDates[month] === undefined) {
@@ -108,9 +106,9 @@
         };
 
         addSelectedToMonth = function (month, monthNumber, selectedDates) {
-            selectedDates.forEach(function(selectedType) {
-                if(selectedType.arrangedDates[monthNumber] !== undefined) {
-                    selectedType.arrangedDates[monthNumber].forEach(function(date) {
+            selectedDates.forEach(function (selectedType) {
+                if (selectedType.arrangedDates[monthNumber] !== undefined) {
+                    selectedType.arrangedDates[monthNumber].forEach(function (date) {
                         var day = month.days[date.date.getDate() + month.offset];
                         day.type = selectedType.type;
                         day.description = date.description;

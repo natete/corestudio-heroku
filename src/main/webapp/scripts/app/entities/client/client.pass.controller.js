@@ -8,9 +8,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientPassController', ClientPassController);
 
-    ClientPassController.$inject = ['Pass', '$stateParams', '$uibModal', 'Alerts', '$scope'];
+    ClientPassController.$inject = ['Pass', '$stateParams', '$uibModal', 'Alerts', 'Client'];
 
-    function ClientPassController(Pass, $stateParams, $uibModal, Alerts, $scope) {
+    function ClientPassController(Pass, $stateParams, $uibModal, Alerts, Client) {
         var vm = this;
 
         vm.displayData = [].concat(vm.data);
@@ -21,9 +21,16 @@
         activate();
 
         function activate() {
+            Client.get({id: $stateParams.id}, function(data) {
+                vm.client = data;
+            }, function() {
+                Alerts.addErrorAlert("El cliente solicitado no existe");
+            });
             Pass.getByClient({clientId: $stateParams.id}, function (data) {
                 vm.data = data;
                 vm.displayData = [].concat(vm.data);
+            }, function() {
+                Alerts.addErrorAlert("El cliente solicitado no existe");
             });
         }
 
@@ -35,7 +42,7 @@
                 resolve: {
                     params: function () {
                         return {
-                            client: $scope.tabs.client,
+                            client: vm.client,
                             pass: pass
                         };
                     }
@@ -59,6 +66,7 @@
         function createPass(pass) {
             Pass.save(pass, function (data) {
                 vm.data.push(data);
+                vm.displayData = [].concat(vm.data);
                 Alerts.addSuccessAlert('Se ha creado el bono de ' + pass.client.name + ' ' + pass.client.firstSurname);
             }, function () {
                 Alerts.addErrorAlert('Se ha producido un error creando el bono');
@@ -76,7 +84,7 @@
         }
 
         function getPendingSessions(pass) {
-            return pass.passType.numberOfSessions - pass.consumedDates.length;
+            return pass.passType.numberOfSessions - (pass.consumedDates ? pass.consumedDates.length : 0);
         }
     }
 })();
