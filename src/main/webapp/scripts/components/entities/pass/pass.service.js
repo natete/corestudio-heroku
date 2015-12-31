@@ -8,9 +8,9 @@
     angular.module('corestudioApp.pass')
         .factory('Pass', Pass);
 
-    Pass.$inject = ['$resource', 'PASS_ENDPOINT', 'GET_PASSES_BY_CLIENT_ENDPOINT', 'GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT', '$cacheFactory', 'FREEZE_DATE'];
+    Pass.$inject = ['$resource', 'PASS_ENDPOINT', 'GET_PASSES_BY_CLIENT_ENDPOINT', 'GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT', '$cacheFactory', 'FREEZE_DATE_ENDPOINT', 'CONSUME_DATE_ENDPOINT'];
 
-    function Pass($resource, PASS_ENDPOINT, GET_PASSES_BY_CLIENT_ENDPOINT, GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT, $cacheFactory, FREEZE_DATE) {
+    function Pass($resource, PASS_ENDPOINT, GET_PASSES_BY_CLIENT_ENDPOINT, GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT, $cacheFactory, FREEZE_DATE_ENDPOINT, CONSUME_DATE_ENDPOINT) {
 
         var cache = $cacheFactory('passCache');
 
@@ -47,7 +47,17 @@
             },
             'freezeDate': {
                 method: 'POST',
-                url: FREEZE_DATE,
+                url: FREEZE_DATE_ENDPOINT,
+                interceptor: {
+                    response: function (response) {
+                        cache.removeAll();
+                        return response.data;
+                    }
+                }
+            },
+            'consumeDate': {
+                method: 'POST',
+                url: CONSUME_DATE_ENDPOINT,
                 interceptor: {
                     response: function (response) {
                         cache.removeAll();

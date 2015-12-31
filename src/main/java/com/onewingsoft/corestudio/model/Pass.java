@@ -6,6 +6,7 @@ import com.onewingsoft.corestudio.utils.Day;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -157,24 +158,39 @@ public class Pass extends BaseEntity {
         return this.group.getDays();
     }
 
+    @Transient
+    @JsonIgnore
+    public int getPendingSessions() {
+        return getNumberOfSession() - consumedDates.size();
+    }
+
     public void addPendingDate(Date date) {
         pendingDates.add(date);
+        Collections.sort(pendingDates);
     }
 
     public void addFrozenDate(Date date) {
         frozenDates.add(date);
+        Collections.sort(frozenDates);
     }
 
     public void addConsumedDate(Date date) {
         consumedDates.add(date);
+        Collections.sort(consumedDates);
     }
 
     public void freezeDate(Date date) {
         addFrozenDate(date);
+
         if (consumedDates.contains(date)) {
             consumedDates.remove(date);
         } else if (pendingDates.contains(date)) {
             pendingDates.remove(date);
         }
+    }
+
+    public void removeLastDate() {
+        pendingDates.remove(lastDate);
+        lastDate = pendingDates.get(pendingDates.size() - 1);
     }
 }

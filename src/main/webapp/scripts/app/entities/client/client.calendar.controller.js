@@ -150,42 +150,80 @@
         function freezeDate(date) {
             Overlay.on();
             Pass.freezeDate({clientId: vm.client.id, date: date.date}, function (data) {
-                Alerts.addSuccessAlert('Se ha congelado el día ' + dateFilter(date.date) + ' de ' + vm.client.name);
-                //date.type = dateTypes.FROZEN;
-                //addPendingDate(date.date, data.lastDate, data.passType.activity.name);
-                addFrozenDate(date.date, data.lastDate, data.passType.activity.name);
-                $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
-            }, function (data) {
+                // Update dates
+                removeDate(date.date, date.type);
+                addDate(new Date(data.lastDate), data.passType.activity.name + ' Pendiente', dateTypes.PENDING);
+                addDate(date.date, data.passType.activity.name + ' - Congelada', dateTypes.FROZEN);
 
+                $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
+
+                Alerts.addSuccessAlert('Se ha congelado el día ' + dateFilter(date.date) + ' de ' + vm.client.name);
+            }, function () {
+                Overlay.off();
+                Alerts.addErrorAlert('Ha ocurrido un error y no se ha podido congelar la fecha seleccionada');
             });
         }
 
-        function consumeDate(date) {
+        function consumeDate(consumedDate) {
+            Overlay.on();
 
+            Pass.consumeDate({clientId: vm.client.id, date: consumedDate.date}, function (data) {
+
+                removeDate(consumedDate.date, consumedDate.type);
+                addDate(consumedDate.date, data.passType.activity.name + ' - Consumida', dateTypes.CONSUMED);
+                if(data.lastDate) {
+                    updateLastDate(new Date(data.lastDate));
+                }
+
+                $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
+
+                Alerts.addSuccessAlert('Se ha consumido el día ' + dateFilter(consumedDate.date) + ' de ' + vm.client.name);
+            }, function (data) {
+                Overlay.off();
+                Alerts.addHeaderErrorAlert(data);
+            });
         }
 
-        function addFrozenDate(frozenDate, newLastDate, description) {
-            frozenDate.type = dateTypes.FROZEN;
-            vm.passDates.forEach(function(pass) {
-                if(pass.type === dateTypes.PENDING) {
-                    var oldDateObj = pass.dates.filter(function(date) {
-                        if(date.date.getDate() === frozenDate.getDate()
-                            && date.date.getMonth() === frozenDate.getMonth()
-                            && date.date.getFullYear() === frozenDate.getFullYear()) {
+        function addDate(date, description, dateType) {
+            var found = false;
+            vm.passDates.forEach(function (pass) {
+                if (pass.type === dateType) {
+                    pass.dates.push({
+                        date: date,
+                        description: description
+                    });
+                    found = true;
+                }
+            });
+            if (!found) {
+                vm.passDates.push({
+                    dates: [{
+                        date: date,
+                        description: description
+                    }],
+                    type: dateType
+                });
+            }
+        }
+
+        function removeDate(targetDate, dateType) {
+            vm.passDates.forEach(function (pass) {
+                if (pass.type === dateType) {
+                    var target = pass.dates.filter(function (date) {
+                        if (date.date.isSameDay(targetDate)) {
                             return date;
                         }
                     });
-                    pass.dates.splice(pass.dates.indexOf(oldDateObj[0]), 1);
-                    pass.dates.push({
-                        date: new Date(newLastDate),
-                        description: description + ' - Pendiente'
-                    });
-                } else {
-                    if(pass.type === dateTypes.FROZEN) {
-                        pass.dates.push({
-                            date: frozenDate,
-                            description: description + ' - Congelada'
-                        });
+                    pass.dates.splice(pass.dates.indexOf(target[0]), 1);
+                }
+            });
+        }
+
+        function updateLastDate(lastDate) {
+            vm.passDates.forEach(function (pass) {
+                if (pass.type === dateTypes.PENDING) {
+                    if (pass.dates.length && !lastDate.isSameDay(pass.dates[pass.dates.length - 1].date)) {
+                        pass.dates.pop();
                     }
                 }
             });

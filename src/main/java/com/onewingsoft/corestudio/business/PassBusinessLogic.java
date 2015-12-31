@@ -101,6 +101,36 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         return pass;
     }
 
+    public Pass consumeDate(ClientDateDTO clientDateDTO) throws IllegalArgumentException {
+
+        Pass pass = repository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientDateDTO.getClientId(), clientDateDTO.getDate());
+
+        if(pass.getPendingSessions() > 0) {
+            pass.addConsumedDate(clientDateDTO.getDate());
+
+            if (pass.getPendingDates().contains(clientDateDTO.getDate())) {
+                pass.getPendingDates().remove(clientDateDTO.getDate());
+            } else {
+                if (pass.getFrozenDates().contains(clientDateDTO.getDate())) {
+                    pass.getFrozenDates().remove(clientDateDTO.getDate());
+                }
+                if (pass.getLastDate() != null) {
+                    pass.removeLastDate();
+                }
+            }
+
+            if (pass.getPendingSessions() == 0) {
+                // TODO create message
+            }
+
+            this.updateEntity(pass);
+
+            return pass;
+        } else {
+            throw new IllegalArgumentException("El cliente no tiene clases disponibles en el bono");
+        }
+    }
+
     @Override
     protected void validateEntity(Pass entity) {
         if (entity.getInitialDate() == null) {

@@ -10,6 +10,7 @@ angular.module("corestudioApp")
     .constant("PASS_ENDPOINT", "api/pass/:id")
     .constant("GET_PASSES_BY_CLIENT_ENDPOINT", "api/pass/getByClient/:clientId")
     .constant("GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT", "api/pass/getByClientAndYear/:clientId/:year")
-    .constant("FREEZE_DATE", "api/pass/freezeDate")
+    .constant("FREEZE_DATE_ENDPOINT", "api/pass/freezeDate")
+    .constant("CONSUME_DATE_ENDPOINT", "api/pass/consumeDate")
 
 ;

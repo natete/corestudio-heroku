@@ -85,8 +85,8 @@
                 vm.holidaysList[0].dates.push(holiday);
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
                 Alerts.addSuccessAlert('Se ha añadido el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
-            }, function (data, headers) {
-                Alerts.addErrorAlert();
+            }, function () {
+                Alerts.addErrorAlert('Ha habido un problema añandiendo el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
             });
         }
 
@@ -96,6 +96,8 @@
                 updated.description = holiday.description;
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
                 Alerts.addSuccessAlert('Se ha actualizado el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
+            }, function () {
+                Alerts.addErrorAlert('Ha habido un problema actualizando el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
             });
         }
 
@@ -107,7 +109,7 @@
                 $scope.$broadcast('deleted-date', deleted);
                 Alerts.addSuccessAlert('Se ha eliminado el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
             }, function () {
-                Alerts.addErrorAlert('Ha ocurrido un error eliminando la fecha');
+                Alerts.addErrorAlert('Ha ocurrido un error eliminando el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
             });
         }
 

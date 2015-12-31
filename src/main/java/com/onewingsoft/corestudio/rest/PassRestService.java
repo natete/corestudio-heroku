@@ -56,7 +56,7 @@ public class PassRestService extends BaseRestService<Pass> {
         super.deleteEntity(id);
     }
 
-    @RequestMapping(value = "freezeDate", method = RequestMethod.POST)
+    @RequestMapping(value = "/freezeDate", method = RequestMethod.POST)
     public ResponseEntity<Pass> freezeDate(@RequestBody ClientDateDTO clientDateDTO) {
         try {
             Pass result = passBusinessLogic.freezeDate(clientDateDTO);
@@ -69,6 +69,22 @@ public class PassRestService extends BaseRestService<Pass> {
             return ResponseEntity.badRequest().header(e.getMessage()).body(null);
         }
 
+    }
+
+    @RequestMapping(value = "/consumeDate", method = RequestMethod.POST)
+    public ResponseEntity<Pass> consumeDate(@RequestBody ClientDateDTO clientDateDTO) {
+        try {
+            Pass result = passBusinessLogic.consumeDate(clientDateDTO);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .body(result);
+        } catch (URISyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createAlert(e.getMessage(), null))
+                    .body(null);
+        }
     }
 
     @Override

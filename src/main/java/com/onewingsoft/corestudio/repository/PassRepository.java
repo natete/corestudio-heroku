@@ -23,4 +23,6 @@ public interface PassRepository extends PagingAndSortingRepository<Pass, Long> {
 
     @Query("SELECT p FROM Pass p WHERE p.client.id = :clientId AND (:date MEMBER OF p.consumedDates OR :date MEMBER OF p.frozenDates OR :date MEMBER OF p.pendingDates)")
     Pass findByClientIdAndDate(@Param("clientId") Long clientId, @Param("date") Date date);
+
+    Pass findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(Long clientId, Date date);
 }
