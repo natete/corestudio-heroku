@@ -8,14 +8,15 @@ import org.springframework.context.annotation.ComponentScan;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.util.TimeZone;
 
 @ComponentScan
 @EnableAutoConfiguration
 @SpringBootApplication
-public class Aplication extends SpringBootServletInitializer {
+public class Application extends SpringBootServletInitializer {
 
 	public static void main(String args[]) {
-		SpringApplication.run(Aplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Override
@@ -24,3 +25,4 @@ public class Aplication extends SpringBootServletInitializer {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
 	}
 }
+
