@@ -61,7 +61,7 @@
         
         function canBeFrozen() {
             var dateType = vm.selectedDate.type;
-            return dateType === dateTypes.CONSUMED || dateType === dateTypes.PENDING; 
+            return (dateType === dateTypes.CONSUMED && vm.selectedDate.groupDate) || dateType === dateTypes.PENDING;
         }
 
         function canBeReleased() {

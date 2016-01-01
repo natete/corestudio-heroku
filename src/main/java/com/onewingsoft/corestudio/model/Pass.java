@@ -5,10 +5,7 @@ import com.onewingsoft.corestudio.utils.Day;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -182,15 +179,56 @@ public class Pass extends BaseEntity {
     public void freezeDate(Date date) {
         addFrozenDate(date);
 
-        if (consumedDates.contains(date)) {
-            consumedDates.remove(date);
-        } else if (pendingDates.contains(date)) {
-            pendingDates.remove(date);
-        }
+        removeConsumedDate(date);
+        removePendingDate(date);
     }
 
     public void removeLastDate() {
         pendingDates.remove(lastDate);
         lastDate = pendingDates.get(pendingDates.size() - 1);
+    }
+
+    public void releaseDate(Date date) {
+        removeConsumedDate(date);
+        removeFrozenDate(date);
+    }
+
+    private void removeConsumedDate(Date date) {
+        if(consumedDates.contains(date)) {
+            consumedDates.remove(date);
+            Collections.sort(consumedDates);
+        }
+    }
+
+    private void removeFrozenDate(Date date) {
+        if(frozenDates.contains(date)) {
+            frozenDates.remove(date);
+            Collections.sort(frozenDates);
+        }
+    }
+
+    private void removePendingDate(Date date) {
+        if(pendingDates.contains(date)) {
+            pendingDates.remove(date);
+            Collections.sort(pendingDates);
+        }
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isGroupDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        for (Day day : group.getDays()) {
+            if(day.getValue() == cal.get(Calendar.DAY_OF_WEEK)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updateLastDate(Date date) {
+        addPendingDate(date);
+        lastDate = date;
     }
 }

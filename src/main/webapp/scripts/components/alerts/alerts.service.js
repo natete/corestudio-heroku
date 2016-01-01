@@ -27,11 +27,11 @@
         alerts.closeAlert = function (index) {
             alerts.list.splice(index, 1);
         };
-        alerts.addHeaderErrorAlert = function(responseData) {
-            alerts.addErrorAlert(responseData.headers()['x-corestudioapp-alert']);
+        alerts.addHeaderErrorAlert = function(headers) {
+            alerts.addErrorAlert(headers['x-corestudioapp-alert']);
         };
-        alerts.addHeaderSuccessAlert = function(responseData) {
-            alerts.addSuccessAlert(responseData.headers()['x-corestudioapp-alert']);
+        alerts.addHeaderSuccessAlert = function(headers) {
+            alerts.addSuccessAlert(headers['x-corestudioapp-alert']);
         };
 
         return alerts;

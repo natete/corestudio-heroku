@@ -109,11 +109,7 @@
             selectedDates.forEach(function (selectedType) {
                 if (selectedType.arrangedDates[monthNumber] !== undefined) {
                     selectedType.arrangedDates[monthNumber].forEach(function (date) {
-                        var day = month.days[date.date.getDate() + month.offset];
-                        day.type = selectedType.type;
-                        day.description = date.description;
-                        day.id = date.id;
-
+                        month.days[date.date.getDate() + month.offset] = date;
                     });
                 }
             });

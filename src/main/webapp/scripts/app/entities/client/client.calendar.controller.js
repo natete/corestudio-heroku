@@ -8,9 +8,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientCalendarController', ClientCalendarController);
 
-    ClientCalendarController.$inject = ['Alerts', 'Pass', '$scope', 'Overlay', 'Holiday', 'Client', '$stateParams', '$uibModal', 'dateFilter'];
+    ClientCalendarController.$inject = ['Alerts', 'Pass', '$scope', 'Overlay', 'Holiday', 'Client', '$stateParams', '$uibModal', 'dateFilter', 'DATE_TYPES'];
 
-    function ClientCalendarController(Alerts, Pass, $scope, Overlay, Holiday, Client, $stateParams, $uibModal, dateFilter) {
+    function ClientCalendarController(Alerts, Pass, $scope, Overlay, Holiday, Client, $stateParams, $uibModal, dateFilter, DATE_TYPES) {
         var vm = this;
 
         vm.yearsList = [];
@@ -20,12 +20,8 @@
         vm.updateCalendar = updateCalendar;
         vm.selectDate = selectDate;
 
-        var dateTypes = {
-            PENDING: 'pending-date',
-            FROZEN: 'frozen-date',
-            CONSUMED: 'consumed-date',
-            HOLIDAY: 'holiday'
-        };
+        var passes;
+        var holidays;
 
         activate();
 
@@ -49,19 +45,32 @@
         function updateCalendar(year) {
             Overlay.on();
             vm.passDates = [];
-            Pass.getByClientAndYear({clientId: vm.client.id, year: year}, function (data) {
-                if (data) {
-                    data.forEach(function (pass) {
-                        vm.passDates = vm.passDates.concat(processPass(pass));
-                    });
+            Pass.getByClientAndYear({clientId: vm.client.id, year: year}, function (responseData) {
+                if (responseData) {
+                    passes = responseData;
+                    processPasses(passes);
                 }
-                Holiday.query({id: year}, function (holidays) {
-                    vm.passDates.push({
-                        type: dateTypes.HOLIDAY,
-                        dates: holidays
-                    });
+                Holiday.query({id: year}, function (responseData) {
+                    holidays = responseData;
+                    addHolidays(holidays);
                     $scope.$broadcast('update-selected-dates', vm.passDates, year, Overlay.off);
                 });
+            });
+        }
+
+        function processPasses(passes) {
+            passes.forEach(function (pass) {
+                vm.passDates = vm.passDates.concat(processPass(pass));
+            });
+        }
+
+        function addHolidays(holidays) {
+            vm.passDates.push({
+                type: DATE_TYPES.HOLIDAY,
+                dates: holidays.map(function(holiday) {
+                    holiday.type = DATE_TYPES.HOLIDAY;
+                    return holiday;
+                })
             });
         }
 
@@ -70,33 +79,37 @@
             var description = pass.passType.activity.name;
             if (pass.consumedDates && pass.consumedDates.length) {
                 var consumedDates = {};
-                consumedDates.type = dateTypes.CONSUMED;
+                consumedDates.type = DATE_TYPES.CONSUMED;
                 consumedDates.dates = pass.consumedDates.map(function (date) {
                     return {
                         date: date,
-                        description: description + ' - Consumida'
+                        description: description + ' - Consumida',
+                        type: DATE_TYPES.CONSUMED,
+                        groupDate: pass.passType.activity.groupActivity
                     }
                 });
                 selectedDates.push(consumedDates);
             }
             if (pass.pendingDates && pass.pendingDates.length) {
                 var pendingDates = {};
-                pendingDates.type = dateTypes.PENDING;
+                pendingDates.type = DATE_TYPES.PENDING;
                 pendingDates.dates = pass.pendingDates.map(function (date) {
                     return {
                         date: date,
-                        description: description + ' - Pendiente'
+                        description: description + ' - Pendiente',
+                        type: DATE_TYPES.PENDING
                     }
                 });
                 selectedDates.push(pendingDates);
             }
             if (pass.frozenDates && pass.frozenDates.length) {
                 var frozenDates = {};
-                frozenDates.type = dateTypes.FROZEN;
+                frozenDates.type = DATE_TYPES.FROZEN;
                 frozenDates.dates = pass.frozenDates.map(function (date) {
                     return {
                         date: date,
-                        description: description + ' - Congelada'
+                        description: description + ' - Congelada',
+                        type: DATE_TYPES.FROZEN
                     }
                 });
                 selectedDates.push(frozenDates);
@@ -144,16 +157,24 @@
         }
 
         function releaseDate(date) {
+            Overlay.on();
+            Pass.releaseDate({clientId: vm.client.id, date: date.date}, function (responseData, headers) {
 
+                updatePass(responseData);
+
+                $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (responseData) {
+                Overlay.off();
+                Alerts.addHeaderErrorAlert(responseData.headers());
+            });
         }
 
         function freezeDate(date) {
             Overlay.on();
-            Pass.freezeDate({clientId: vm.client.id, date: date.date}, function (data) {
-                // Update dates
-                removeDate(date.date, date.type);
-                addDate(new Date(data.lastDate), data.passType.activity.name + ' Pendiente', dateTypes.PENDING);
-                addDate(date.date, data.passType.activity.name + ' - Congelada', dateTypes.FROZEN);
+            Pass.freezeDate({clientId: vm.client.id, date: date.date}, function (responseData) {
+
+                updatePass(responseData);
 
                 $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
 
@@ -167,13 +188,9 @@
         function consumeDate(consumedDate) {
             Overlay.on();
 
-            Pass.consumeDate({clientId: vm.client.id, date: consumedDate.date}, function (data) {
+            Pass.consumeDate({clientId: vm.client.id, date: consumedDate.date}, function (responseData) {
 
-                removeDate(consumedDate.date, consumedDate.type);
-                addDate(consumedDate.date, data.passType.activity.name + ' - Consumida', dateTypes.CONSUMED);
-                if(data.lastDate) {
-                    updateLastDate(new Date(data.lastDate));
-                }
+                updatePass(responseData);
 
                 $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
 
@@ -184,49 +201,17 @@
             });
         }
 
-        function addDate(date, description, dateType) {
-            var found = false;
-            vm.passDates.forEach(function (pass) {
-                if (pass.type === dateType) {
-                    pass.dates.push({
-                        date: date,
-                        description: description
-                    });
-                    found = true;
+        function updatePass(pass) {
+            var index = -1;
+            passes.forEach(function(value, i) {
+                if(pass.id === value.id) {
+                    index = i;
                 }
             });
-            if (!found) {
-                vm.passDates.push({
-                    dates: [{
-                        date: date,
-                        description: description
-                    }],
-                    type: dateType
-                });
-            }
-        }
-
-        function removeDate(targetDate, dateType) {
-            vm.passDates.forEach(function (pass) {
-                if (pass.type === dateType) {
-                    var target = pass.dates.filter(function (date) {
-                        if (date.date.isSameDay(targetDate)) {
-                            return date;
-                        }
-                    });
-                    pass.dates.splice(pass.dates.indexOf(target[0]), 1);
-                }
-            });
-        }
-
-        function updateLastDate(lastDate) {
-            vm.passDates.forEach(function (pass) {
-                if (pass.type === dateTypes.PENDING) {
-                    if (pass.dates.length && !lastDate.isSameDay(pass.dates[pass.dates.length - 1].date)) {
-                        pass.dates.pop();
-                    }
-                }
-            });
+            passes[index] = pass;
+            vm.passDates = [];
+            processPasses(passes);
+            addHolidays(holidays);
         }
     }
 })();

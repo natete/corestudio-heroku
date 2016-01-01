@@ -15,5 +15,10 @@
             && this.getFullYear() === date.getFullYear();
     }
 
+    Date.prototype.toJSON = function() {
+        this.setHours(0);
+        return this.toISOString();
+    }
+
 })();
 

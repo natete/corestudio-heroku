@@ -8,13 +8,13 @@
     angular.module('corestudioApp.pass')
         .factory('Pass', Pass);
 
-    Pass.$inject = ['$resource', 'PASS_ENDPOINT', 'GET_PASSES_BY_CLIENT_ENDPOINT', 'GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT', '$cacheFactory', 'FREEZE_DATE_ENDPOINT', 'CONSUME_DATE_ENDPOINT'];
+    Pass.$inject = ['$resource', '$cacheFactory', 'PASS_ENDPOINTS'];
 
-    function Pass($resource, PASS_ENDPOINT, GET_PASSES_BY_CLIENT_ENDPOINT, GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT, $cacheFactory, FREEZE_DATE_ENDPOINT, CONSUME_DATE_ENDPOINT) {
+    function Pass($resource, $cacheFactory, PASS_ENDPOINTS) {
 
         var cache = $cacheFactory('passCache');
 
-        return $resource(PASS_ENDPOINT, {}, {
+        return $resource(PASS_ENDPOINTS.PASS_ENDPOINT, {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
@@ -37,17 +37,17 @@
                 method: 'GET',
                 isArray: true,
                 cache: cache,
-                url: GET_PASSES_BY_CLIENT_ENDPOINT
+                url: PASS_ENDPOINTS.GET_PASSES_BY_CLIENT_ENDPOINT
             },
             'getByClientAndYear': {
                 method: 'GET',
                 isArray: true,
                 cache: cache,
-                url: GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT
+                url: PASS_ENDPOINTS.GET_PASSES_BY_CLIENT_AND_YEAR_ENDPOINT
             },
             'freezeDate': {
                 method: 'POST',
-                url: FREEZE_DATE_ENDPOINT,
+                url: PASS_ENDPOINTS.FREEZE_DATE_ENDPOINT,
                 interceptor: {
                     response: function (response) {
                         cache.removeAll();
@@ -57,7 +57,17 @@
             },
             'consumeDate': {
                 method: 'POST',
-                url: CONSUME_DATE_ENDPOINT,
+                url: PASS_ENDPOINTS.CONSUME_DATE_ENDPOINT,
+                interceptor: {
+                    response: function (response) {
+                        cache.removeAll();
+                        return response.data;
+                    }
+                }
+            },
+            'releaseDate': {
+                method: 'POST',
+                url: PASS_ENDPOINTS.RELEASE_DATE_ENDPOINT,
                 interceptor: {
                     response: function (response) {
                         cache.removeAll();

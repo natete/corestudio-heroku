@@ -87,6 +87,22 @@ public class PassRestService extends BaseRestService<Pass> {
         }
     }
 
+    @RequestMapping(value = "/releaseDate", method = RequestMethod.POST)
+    public ResponseEntity<Pass> releaseDate(@RequestBody ClientDateDTO clientDateDTO) {
+        try {
+            Pass result = passBusinessLogic.releaseDate(clientDateDTO);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .body(result);
+        } catch (URISyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createAlert(e.getMessage(), null))
+                    .body(null);
+        }
+    }
+
     @Override
     protected BaseBusinessLogic getBusinessLogic() {
         return this.passBusinessLogic;

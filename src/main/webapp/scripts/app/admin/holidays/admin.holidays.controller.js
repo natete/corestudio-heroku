@@ -8,9 +8,9 @@
     angular.module('corestudioApp.admin')
         .controller('HolidaysController', HolidaysController);
 
-    HolidaysController.$inject = ['$uibModal', '$filter', '$scope', 'Holiday', 'Alerts', 'Overlay'];
+    HolidaysController.$inject = ['$uibModal', '$filter', '$scope', 'Holiday', 'Alerts', 'Overlay', 'DATE_TYPES'];
 
-    function HolidaysController($uibModal, $filter, $scope, Holiday, Alerts, Overlay) {
+    function HolidaysController($uibModal, $filter, $scope, Holiday, Alerts, Overlay, DATE_TYPES) {
         var vm = this;
         vm.yearsList = [];
         vm.selectDate = selectDate;
@@ -70,7 +70,10 @@
             Holiday.query({id: year}, function (holidays) {
                 vm.holidaysList = [{
                     type: 'holiday',
-                    dates: holidays
+                    dates: holidays.map(function(holiday) {
+                        holiday.type = DATE_TYPES.HOLIDAY;
+                        return holiday;
+                    })
                 }];
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year, Overlay.off);
             }, function (data) {
