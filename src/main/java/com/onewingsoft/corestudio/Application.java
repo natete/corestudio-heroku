@@ -25,3 +25,4 @@ public class Application extends SpringBootServletInitializer {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
 	}
 }
+
