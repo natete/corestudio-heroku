@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -138,9 +139,11 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         cal.set(Calendar.MILLISECOND, 0);
         Date currentDate = cal.getTime();
 
-        LoggingUtil.writeInfoLog("\n\nScheduled task taking place on " + currentDate + "\n\n");
+        LoggingUtil.writeInfoLog("Scheduled task taking place on " + currentDate);
 
         Iterable<Pass> passes = repository.findByPendingDate(currentDate);
+
+        LoggingUtil.writeInfoLog("Updating " + ((Collection<?>) passes).size() + " passes");
 
         for (Pass pass : passes) {
             pass.getPendingDates().remove(currentDate);

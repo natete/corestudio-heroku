@@ -103,6 +103,11 @@ public class PassRestService extends BaseRestService<Pass> {
         }
     }
 
+    @RequestMapping(value = "/consumeCurrentDate", method = RequestMethod.GET)
+    public void consumeCurrentDate() {
+        passBusinessLogic.consumeCurrentDate();
+    }
+
     @Override
     protected BaseBusinessLogic getBusinessLogic() {
         return this.passBusinessLogic;
