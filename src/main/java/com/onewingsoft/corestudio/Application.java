@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import java.util.TimeZone;
 @ComponentScan
 @EnableAutoConfiguration
 @SpringBootApplication
+@EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String args[]) {
@@ -25,4 +27,3 @@ public class Application extends SpringBootServletInitializer {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
 	}
 }
-

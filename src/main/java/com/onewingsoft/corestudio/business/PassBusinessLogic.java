@@ -4,11 +4,14 @@ import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.PassRepository;
 import com.onewingsoft.corestudio.utils.Day;
+import com.onewingsoft.corestudio.utils.LoggingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -104,14 +107,62 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
 
         Pass pass = repository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientDateDTO.getClientId(), clientDateDTO.getDate());
 
-        if (pass.getPendingSessions() > 0) {
-            pass.addConsumedDate(clientDateDTO.getDate());
+        return consumePassDate(clientDateDTO.getDate(), pass);
+    }
 
-            if (pass.getPendingDates().contains(clientDateDTO.getDate())) {
-                pass.getPendingDates().remove(clientDateDTO.getDate());
-            } else {
+    public Pass releaseDate(ClientDateDTO clientDateDTO) {
+        Pass pass = repository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientDateDTO.getClientId(), clientDateDTO.getDate());
+
+        if (pass.isGroupPass()) {
+            if (pass.isGroupDate(clientDateDTO.getDate())) {
                 if (pass.getFrozenDates().contains(clientDateDTO.getDate())) {
-                    pass.getFrozenDates().remove(clientDateDTO.getDate());
+                    pass.removeLastDate();
+                }
+                pass.addPendingDate(clientDateDTO.getDate());
+            } else {
+                Date nextDate = findNextDate(pass.getLastDate(), pass);
+                pass.updateLastDate(nextDate);
+            }
+        }
+        pass.releaseDate(clientDateDTO.getDate());
+        this.updateEntity(pass);
+
+        return pass;
+    }
+
+    @Scheduled(cron = "0 0 */6 * * *")
+    public void consumeCurrentDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date currentDate = cal.getTime();
+
+        LoggingUtil.writeInfoLog("Scheduled task taking place on " + currentDate);
+
+        Iterable<Pass> passes = repository.findByPendingDate(currentDate);
+
+        LoggingUtil.writeInfoLog("Updating " + ((Collection<?>) passes).size() + " passes");
+
+        for (Pass pass : passes) {
+            pass.getPendingDates().remove(currentDate);
+            this.updateEntity(pass);
+            if (pass.getPendingSessions() == 0) {
+                // TODO create message
+            }
+        }
+    }
+
+    private Pass consumePassDate(Date currentDate, Pass pass) throws IllegalArgumentException {
+        if (pass.getPendingSessions() > 0) {
+            pass.addConsumedDate(currentDate);
+
+            if (pass.getPendingDates().contains(currentDate)) {
+                pass.getPendingDates().remove(currentDate);
+            } else {
+                if (pass.getFrozenDates().contains(currentDate)) {
+                    pass.getFrozenDates().remove(currentDate);
                     pass.removeLastDate();
                 }
             }
@@ -126,30 +177,6 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         } else {
             throw new IllegalArgumentException("El cliente no tiene clases disponibles en el bono");
         }
-    }
-
-    public Pass releaseDate(ClientDateDTO clientDateDTO) {
-        Pass pass = repository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientDateDTO.getClientId(), clientDateDTO.getDate());
-
-        if (pass.isGroupPass()) {
-            if (pass.isGroupDate(clientDateDTO.getDate())) {
-                if (pass.getFrozenDates().contains(clientDateDTO.getDate())) {
-                    pass.removeLastDate();
-                }
-//                pass.releaseDate(clientDateDTO.getDate());
-                pass.addPendingDate(clientDateDTO.getDate());
-            } else {
-//                pass.releaseDate(clientDateDTO.getDate());
-
-                Date nextDate = findNextDate(pass.getLastDate(), pass);
-
-                pass.updateLastDate(nextDate);
-            }
-        }
-        pass.releaseDate(clientDateDTO.getDate());
-        this.updateEntity(pass);
-
-        return pass;
     }
 
     @Override
