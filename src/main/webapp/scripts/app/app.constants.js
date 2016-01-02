@@ -22,5 +22,6 @@ angular.module("corestudioApp")
         HOLIDAY: 'holiday'
     })
     .constant("ACCOUNTS_ENDPOINT", "api/accounts/:year/:month")
+    .constant("PROFESSOR_ENDPOINT", "api/professor/:id")
 
 ;

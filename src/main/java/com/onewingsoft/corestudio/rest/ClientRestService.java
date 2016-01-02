@@ -12,28 +12,28 @@ import javax.validation.Valid;
 import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/clients")
 public class ClientRestService extends BaseRestService<Client> {
 
 	@Autowired
 	private ClientBusinessLogic clientBusinessLogic;
 
-	@RequestMapping(value = "/clients", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<ClientDTO> getAllClients() {
 		return clientBusinessLogic.getAllClients();
 	}
 
-	@RequestMapping(value = "/clients/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Client> getClient(@PathVariable Long id) {
 		return super.getEntity(id);
 	}
 
-	@RequestMapping(value = "/clients", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) throws URISyntaxException {
 		return super.saveEntity(client);
 	}
 
-	@RequestMapping(value = "/clients", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Client> updateClient(@Valid @RequestBody Client client) throws URISyntaxException {
 		return super.updateEntity(client);
 	}

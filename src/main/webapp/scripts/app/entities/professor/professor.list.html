@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-md-9">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-list-alt"></i> Lista de profesores
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row" ng-if="professorsListCtrl.displayData.length">
+    <div class="col-md-9">
+        <table st-table="professorsListCtrl.displayData" st-safe-src="professorsListCtrl.data" class="table  table-hover ">
+            <thead>
+            <tr>
+                <th></th>
+                <th class="pointer" st-sort="name">Nombre</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="professor in professorsListCtrl.displayData track by professor.id">
+                <td class="vertical-middle"><img src="assets/images/face.png" alt="fotoProfesor" class="img-circle img-responsive profile-small center-block"/></td>
+                <td class="vertical-middle">{{ professor.name + ' ' + professor.firstSurname}}</td>
+                <td class="text-center vertical-middle">
+                    <a class="btn btn-lg" ui-sref="professorsListCtrl.viewClient.personal({id: professor.id, permalink: '{{ professor | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-lg" ui-sref="professorsListCtrl.editClient({id: professor.id, permalink: '{{ professor | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<div class="row" ng-if="!professorsListCtrl.displayData.length">
+    <div class="col-md-9">
+        <h4 class="text-muted text-center">No hay profesores registrados</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 text-right">
+        <button ui-sref="professors.newProfessor" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

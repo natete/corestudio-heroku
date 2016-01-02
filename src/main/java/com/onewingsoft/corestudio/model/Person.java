@@ -1,9 +1,8 @@
 package com.onewingsoft.corestudio.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -131,5 +130,11 @@ public class Person extends BaseEntity {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@JsonIgnore
+	@Transient
+	public String getFullName() {
+		return name + " " + firstSurname;
 	}
 }

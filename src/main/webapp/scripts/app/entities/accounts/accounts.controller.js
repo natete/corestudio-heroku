@@ -77,6 +77,7 @@
 
         function getDateWithOffset(date, offset) {
             var newDate = new Date();
+            newDate.setFullYear(date.getFullYear());
             newDate.setMonth(date.getMonth() + offset);
             return newDate;
         }
