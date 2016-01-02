@@ -86,3 +86,7 @@ textarea {
 .strong {
   font-weight: bold;
 }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}

@@ -22,6 +22,6 @@ public class HolidayBusinessLogicTest {
         Holiday holiday = new Holiday();
         HolidayBusinessLogic holidayBL = new HolidayBusinessLogic();
 
-        holidayBL.saveHoliday(holiday);
+        holidayBL.createEntity(holiday);
     }
 }

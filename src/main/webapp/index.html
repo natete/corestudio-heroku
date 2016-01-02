@@ -31,9 +31,9 @@
 
 
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
-        <div class="alert-area" ng-cloak>
+        <div class="alert-area">
             <uib-alert class="animate-if" ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)">
-                {{alert.msg}}
+                <span class="ng-cloak">{{alert.msg}}</span>
             </uib-alert>
         </div>
         <div class="container-fluid">

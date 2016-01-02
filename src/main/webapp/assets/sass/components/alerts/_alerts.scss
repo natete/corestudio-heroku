@@ -1,7 +1,10 @@
 .alert-area {
-  position: absolute;
+  position: fixed;
   right: 25px;
   width: 500px;
-  margin-top:15px;
   z-index: 1000;
+
+  .alert-success, .alsert-error {
+    opacity: 0.9;
+  }
 }
