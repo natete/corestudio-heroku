@@ -1,5 +1,6 @@
 package com.onewingsoft.corestudio.repository;
 
+import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.model.PassType;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PassTypeRepository extends PagingAndSortingRepository<PassType, Long> {
+
+    Iterable<PassType> findByActivity(Activity activity);
 }

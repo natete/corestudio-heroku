@@ -147,6 +147,10 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
 
         for (Pass pass : passes) {
             pass.getPendingDates().remove(currentDate);
+            pass.addConsumedDate(currentDate);
+            if(!pass.isGroupPass()) {
+                pass.setLastDate(currentDate);
+            }
             this.updateEntity(pass);
             if (pass.getPendingSessions() == 0) {
                 // TODO create message
@@ -154,17 +158,21 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         }
     }
 
-    private Pass consumePassDate(Date currentDate, Pass pass) throws IllegalArgumentException {
+    private Pass consumePassDate(Date date, Pass pass) throws IllegalArgumentException {
         if (pass.getPendingSessions() > 0) {
-            pass.addConsumedDate(currentDate);
+            pass.addConsumedDate(date);
 
-            if (pass.getPendingDates().contains(currentDate)) {
-                pass.getPendingDates().remove(currentDate);
+            if (pass.getPendingDates().contains(date)) {
+                pass.getPendingDates().remove(date);
             } else {
-                if (pass.getFrozenDates().contains(currentDate)) {
-                    pass.getFrozenDates().remove(currentDate);
+                if (pass.getFrozenDates().contains(date)) {
+                    pass.getFrozenDates().remove(date);
                     pass.removeLastDate();
                 }
+            }
+
+            if(!pass.isGroupPass()) {
+                pass.setLastDate(date);
             }
 
             if (pass.getPendingSessions() == 0) {

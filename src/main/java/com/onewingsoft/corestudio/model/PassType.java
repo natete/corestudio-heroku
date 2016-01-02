@@ -51,4 +51,9 @@ public class PassType extends BaseEntity {
     public boolean isGroupActivity() {
         return this.activity.isGroupActivity();
     }
+
+    @Override
+    public String toString() {
+        return activity.getName() + " - " + numberOfSessions + " sesiones";
+    }
 }

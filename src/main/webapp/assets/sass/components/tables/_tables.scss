@@ -18,6 +18,20 @@
   @extend .font-awesome-icon;
 }
 
+table.table.table-light {
+  thead {
+    background-color: white;
+    color: black;
+  }
+  tbody {
+    tr{
+      td {
+        border-bottom: 1px solid #ddd;
+      }
+    }
+  }
+}
+
 table.table {
   thead {
     background-color: $corestudio-black;

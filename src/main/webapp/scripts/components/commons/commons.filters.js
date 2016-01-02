@@ -8,7 +8,8 @@
     angular.module('corestudioApp')
         .filter('siNo', siNo)
         .filter('translateDays', translateDays)
-        .filter('translateLevel', translateLevel);
+        .filter('translateLevel', translateLevel)
+        .filter('toUnderscore', toUnderscore);
 
     function siNo() {
         return function (input) {
@@ -42,9 +43,15 @@
                 LOW: 'Bajo',
                 MEDIUM: 'Medio',
                 HIGH: 'Alto'
-            }
+            };
 
             return levelsMapper[input];
+        }
+    }
+
+    function toUnderscore() {
+        return function (input) {
+            return input.replace(/\s/g, '_');
         }
     }
 })();

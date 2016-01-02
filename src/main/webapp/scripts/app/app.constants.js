@@ -21,5 +21,6 @@ angular.module("corestudioApp")
         CONSUMED: 'consumed-date',
         HOLIDAY: 'holiday'
     })
+    .constant("ACCOUNTS_ENDPOINT", "api/accounts/:year/:month")
 
 ;

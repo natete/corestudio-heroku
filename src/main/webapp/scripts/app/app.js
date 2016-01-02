@@ -14,7 +14,8 @@
         'corestudioApp.currency',
         'corestudioApp.group',
         'corestudioApp.modals',
-        'corestudioApp.pass'
+        'corestudioApp.pass',
+        'corestudioApp.accounts'
     ]);
 
 
