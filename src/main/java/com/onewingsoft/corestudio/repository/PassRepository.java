@@ -1,6 +1,8 @@
 package com.onewingsoft.corestudio.repository;
 
+import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.model.Pass;
+import com.onewingsoft.corestudio.model.PassType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +30,10 @@ public interface PassRepository extends PagingAndSortingRepository<Pass, Long> {
 
     @Query("SELECT p FROM Pass p WHERE :date MEMBER OF p.pendingDates")
     Iterable<Pass> findByPendingDate(@Param("date") Date date);
+
+//    @Query("SELECT p FROM Pass p WHERE p.passType = :passType AND p.initialDate <= :initialDate AND p.lastDate >= :date")
+//    Iterable<Pass> findUsedPass(@Param("passType") PassType passType, @Param("initialDate") Date initalDate);
+
+    @Query("SELECT p FROM Pass p WHERE (((year(p.initialDate) = :year) AND month(p.initialDate) = :month) OR (year(p.lastDate) = :year) AND month(p.lastDate) = :month)")
+    Iterable<Pass> findUsedPasses(@Param("year") int year, @Param("month") int month);
 }

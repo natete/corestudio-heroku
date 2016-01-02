@@ -30,23 +30,19 @@
         ////////
 
         function activate() {
-            if($state.is('clients.newClient')) {
+            if ($state.is('clients.newClient')) {
                 vm.area = 'Nuevo cliente';
                 vm.classArea = 'fa-eye';
-            } else if($state.is('clients.editClient')) {
+            } else if ($state.is('clients.editClient')) {
                 vm.area = 'Editar cliente';
                 vm.classArea = 'fa-pencil-square-o';
             }
-            if($stateParams.id !== undefined) {
-                if($stateParams.client === undefined) {
-                    Client.get({ id: $stateParams.id }, function (client) {
-                        vm.client = parseDates(client);
-                    }, function () {
-                        Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
-                    });
-                } else {
-                    vm.client = $stateParams.client;
-                }
+            if ($stateParams.id !== undefined) {
+                Client.get({id: $stateParams.id}, function (client) {
+                    vm.client = parseDates(client);
+                }, function () {
+                    Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
+                });
             }
         }
 
@@ -67,10 +63,10 @@
         }
 
         function saveClient() {
-            Client.save(vm.client, function(client) {
+            Client.save(vm.client, function (client) {
                 $state.go('clients');
                 Alerts.addSuccessAlert('Se ha guardado el cliente ' + client.name + ' ' + client.firstSurname);
-            }, function(client) {
+            }, function (client) {
                 Alerts.addErrorAlert('Se ha producido un error guardando el client');
             });
         }
@@ -79,7 +75,7 @@
             Client.update(vm.client, function (client) {
                 Alerts.addSuccessAlert('Se ha actualizado el cliente ' + client.name + ' ' + client.firstSurname);
                 $state.go('clients');
-            }, function() {
+            }, function () {
                 Alerts.addErrorAlert('Se ha producido un error actualizando el cliente ' + client.name + ' ' + client.firstSurname);
             });
         }

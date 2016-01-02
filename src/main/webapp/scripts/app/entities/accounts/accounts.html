@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header"><i class="fa fa-calculator"></i> Contabilidad</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-list-alt"></i> Detalles por actividad
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <ul class="list-inline">
+            <li>
+                 <button class="btn btn-default" ng-click="accountsCtrl.previousMonth()"><i class="fa fa-chevron-left" ></i></button>
+            </li>
+            <li>
+                <div class="form-group text-left">
+                    <label for="selectDate">Seleccione el año y el mes</label>
+                    <input class="form-control text-center" id="selectDate" type="text"
+                           ng-model="accountsCtrl.selectedDate" uib-datepicker-popup="MMMM - yyyy"
+                           datepicker-mode="'month'"
+                           is-open="accountsCtrl.opened" ng-click="accountsCtrl.opened = !accountsCtrl.opened"
+                           datepicker-options="{minMode: 'month'}"
+                           ng-change="accountsCtrl.getAccounts()"/>
+                </div>
+            </li>
+            <li>
+                <button class="btn btn-default" ng-click="accountsCtrl.nextMonth()"><i class="fa fa-chevron-right"></i></button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading" data-toggle="collapse" data-target="#total">
+                <h4 class="no-margin">Total</h4>
+            </div>
+            <div class="collapse in" id="total">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6 text-right">
+                            <strong>Número de sesiones:</strong>
+                        </div>
+                        <div class="col-xs-6">
+                            {{accountsCtrl.getTotalSessions()}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 text-right">
+                            <strong>Total:</strong>
+                        </div>
+                        <div class="col-xs-6">
+                            {{accountsCtrl.getTotalAmount() / 100 | currency}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-repeat="account in accountsCtrl.accounts">
+    <div class="col-xs-8 col-xs-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading pointer" data-toggle="collapse" data-target="#{{account.type | toUnderscore}}">
+                <h4 class="no-margin">
+                    {{account.type}}<span class="pull-right">{{account.totalIncomes / 100 | currency}}</span>
+                </h4>
+            </div>
+            <div class="collapse in" id="{{account.type | toUnderscore}}">
+                <div class="panel-body">
+                    <div class="row" ng-repeat="activityAccount in account.activitiesAccounts">
+                        <div class="col-xs-12">
+                            <h4 class="page-header pointer" data-toggle="collapse" data-target="#{{activityAccount.activityName | toUnderscore}}">
+                                {{activityAccount.activityName}}
+                                <span class="pull-right">{{activityAccount.activityIncomes / 100 | currency}}</span>
+                            </h4>
+
+                            <div class="row collapse in" id="{{activityAccount.activityName | toUnderscore}}">
+                                <div class="col-xs-10 col-xs-offset-1">
+                                    <table class="table table-light table-hover" st-table="activityAccount.passTypeAccounts">
+                                        <thead>
+                                        <tr>
+                                            <th st-sort="passTypeName" class="text-center pointer">Tipo de bono</th>
+                                            <th st-sort="numberOfSessions" class="text-center pointer">Número de sesiones</th>
+                                            <th st-sort="incomes" class="text-center pointer">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="passTypeAccount in activityAccount.passTypeAccounts">
+                                            <td class="vertical-middle">{{passTypeAccount.passTypeName}}</td>
+                                            <td class="vertical-middle text-center">{{passTypeAccount.numberOfSessions}}
+                                            </td>
+                                            <td class="vertical-middle text-right">{{passTypeAccount.incomes / 100 | currency}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

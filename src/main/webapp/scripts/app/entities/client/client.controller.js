@@ -16,12 +16,18 @@
         vm.data = {};
         vm.displayData = [].concat(vm.data);
 
+        vm.isConsumedPass = isConsumedPass;
+
         activate();
 
         ////////////////
 
         function activate() {
             vm.data = Client.query();
+        }
+
+        function isConsumedPass(lastDate) {
+            return new Date(lastDate) < new Date();
         }
     }
 })();

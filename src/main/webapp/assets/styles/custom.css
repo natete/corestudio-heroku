@@ -11738,6 +11738,15 @@ textarea {
   padding: 5px 15px;
   margin-bottom: 15px; }
 
+.no-margin {
+  margin: 0; }
+
+.pointer {
+  cursor: pointer; }
+
+.strong {
+  font-weight: bold; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;
@@ -11752,6 +11761,15 @@ textarea {
 
 .st-sort-descent:before {
   content: "\f107"; }
+
+table.table.table-light thead {
+  background-color: white;
+  color: black; }
+  table.table.table-light thead th.st-sort-ascent:before, table.table.table-light thead th.st-sort-descent:before {
+    color: black; }
+
+table.table.table-light tbody tr td {
+  border-bottom: 1px solid #ddd; }
 
 table.table thead {
   background-color: #2b2b2b;

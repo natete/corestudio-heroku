@@ -1,36 +1,57 @@
 package com.onewingsoft.corestudio.business;
 
+import com.onewingsoft.corestudio.dto.ClientDTO;
+import com.onewingsoft.corestudio.model.Client;
+import com.onewingsoft.corestudio.model.Pass;
+import com.onewingsoft.corestudio.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
-import com.onewingsoft.corestudio.model.Client;
-import com.onewingsoft.corestudio.repository.ClientRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class ClientBusinessLogic {
+public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
 
-	@Autowired
-	private ClientRepository clientRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
-	public Iterable<Client> getAllClients() {
-		return clientRepository.findAll();
-	}
+    @Autowired
+    PassBusinessLogic passBusinessLogic;
 
-	public Client getClient(Long clientId) {
-		return clientRepository.findOne(clientId);
-	}
+    public Iterable<ClientDTO> getAllClients() {
+        Iterable<Client> clients = super.getAllEntities();
+        List<ClientDTO> result = new ArrayList<>();
 
-	public Client createClient(Client client) {
-		return clientRepository.save(client);
-	}
+        for (Client client : clients) {
+            ClientDTO dto = new ClientDTO();
+            dto.setId(client.getId());
+            dto.setName(client.getName());
+            dto.setFirstSurname(client.getFirstSurname());
+            Pass currentPass = passBusinessLogic.getCurrentPass(client.getId());
+            if (currentPass != null) {
+                dto.setLastDate(currentPass.getLastDate());
+                dto.setPendingSessions(currentPass.getPendingSessions());
+            }
+            result.add(dto);
+        }
 
-	public Client updateClient(Client client) throws IllegalArgumentException {
-		Client persistedClient = this.getClient(client.getId());
-		if (persistedClient == null) {
-			throw new IllegalArgumentException("El cliente que trata de editar no exite");
-		} else {
-			Client result = clientRepository.save(client);
-			return result;
-		}
-	}
+        return result;
+    }
+
+    @Override
+    protected Client processEntity(Client client) {
+        return client;
+    }
+
+    @Override
+    protected void validateEntity(Client client) throws IllegalArgumentException {
+
+    }
+
+    @Override
+    protected PagingAndSortingRepository getRepository() {
+        return clientRepository;
+    }
 }

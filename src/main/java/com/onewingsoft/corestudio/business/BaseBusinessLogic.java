@@ -30,7 +30,7 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
     public T updateEntity(final T entity) throws IllegalArgumentException {
         this.validateEntity(entity);
         BaseEntity persistedEntity = (BaseEntity) this.getRepository().findOne(entity.getId());
-        if(persistedEntity == null) {
+        if (persistedEntity == null) {
             throw new IllegalArgumentException("La entidad que quiere actualizar no existe");
         } else {
             return (T) this.getRepository().save(entity);

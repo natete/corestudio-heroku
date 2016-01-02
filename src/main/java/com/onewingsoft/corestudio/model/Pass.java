@@ -231,4 +231,10 @@ public class Pass extends BaseEntity {
         addPendingDate(date);
         lastDate = date;
     }
+
+    @Transient
+    @JsonIgnore
+    public Long getPricePerSession() {
+        return Math.round((double)price / passType.getNumberOfSessions());
+    }
 }
