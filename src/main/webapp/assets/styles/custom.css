@@ -11747,6 +11747,9 @@ textarea {
 .strong {
   font-weight: bold; }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;
@@ -11832,11 +11835,12 @@ horizontal-calendar table.table > tbody > tr > td.day {
       line-height: 26px; }
 
 .alert-area {
-  position: absolute;
+  position: fixed;
   right: 25px;
   width: 500px;
-  margin-top: 15px;
   z-index: 1000; }
+  .alert-area .alert-success, .alert-area .alsert-error {
+    opacity: 0.9; }
 
 .animate-if.ng-enter, .animate-if.ng-leave {
   -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
