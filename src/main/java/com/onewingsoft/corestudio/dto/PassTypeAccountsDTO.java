@@ -6,8 +6,21 @@ package com.onewingsoft.corestudio.dto;
  */
 public class PassTypeAccountsDTO {
 
+    private String passTypeName;
     private Integer numberOfSessions = 0;
     private Long incomes = 0L;
+
+    public PassTypeAccountsDTO(String passTypeName) {
+        this.passTypeName = passTypeName;
+    }
+
+    public String getPassTypeName() {
+        return passTypeName;
+    }
+
+    public void setPassTypeName(String passTypeName) {
+        this.passTypeName = passTypeName;
+    }
 
     public Integer getNumberOfSessions() {
         return numberOfSessions;
@@ -32,4 +45,5 @@ public class PassTypeAccountsDTO {
     public void addToIncomes(Long value) {
         incomes += value;
     }
+
 }

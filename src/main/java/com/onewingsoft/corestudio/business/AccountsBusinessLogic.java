@@ -1,8 +1,6 @@
 package com.onewingsoft.corestudio.business;
 
 import com.onewingsoft.corestudio.dto.AccountsDTO;
-import com.onewingsoft.corestudio.dto.ActivityAccountsDTO;
-import com.onewingsoft.corestudio.dto.PassTypeAccountsDTO;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.PassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,23 +46,24 @@ public class AccountsBusinessLogic {
 
     private void processPass(int month, AccountsDTO accounting, Pass pass) {
         Calendar cal = Calendar.getInstance();
-        ActivityAccountsDTO activityAccounts = accounting.getActivityAccounts(pass.getPassType().getActivity().getName());
-        if(activityAccounts == null) {
-            activityAccounts = new ActivityAccountsDTO();
-            accounting.putActivityAccount(pass.getPassType().getActivity().getName(),activityAccounts);
-        }
-
-        PassTypeAccountsDTO account = activityAccounts.getAccount(pass.getPassType().toString());
-        if (account == null) {
-            account = new PassTypeAccountsDTO();
-            activityAccounts.putAccount(pass.getPassType().toString(), account);
-        }
+//        ActivityAccountsDTO activityAccounts = accounting.getActivityAccounts(pass.getPassType().getActivity().getName());
+//        if(activityAccounts == null) {
+//            activityAccounts = new ActivityAccountsDTO();
+//            accounting.putActivityAccount(pass.getPassType().getActivity().getName(),activityAccounts);
+//        }
+//
+//        PassTypeAccountsDTO account = activityAccounts.getAccount(pass.getPassType().toString());
+//        if (account == null) {
+//            account = new PassTypeAccountsDTO();
+//            activityAccounts.putAccount(pass.getPassType().toString(), account);
+//        }
 
         for (Date date : pass.getConsumedDates()) {
             cal.setTime(date);
             if(cal.get(Calendar.MONTH) + 1 == month) {
-                account.increaseNumberOfSessions();
-                account.addToIncomes(pass.getPricePerSession());
+                accounting.addPassTypeAccount(pass.getPassType().getActivity().getName(), pass.getPassType().toString(), pass.getPricePerSession());
+//                account.increaseNumberOfSessions();
+//                account.addToIncomes(pass.getPricePerSession());
             }
         }
     }

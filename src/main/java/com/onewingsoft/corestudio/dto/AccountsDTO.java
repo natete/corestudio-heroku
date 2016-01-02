@@ -1,7 +1,9 @@
 package com.onewingsoft.corestudio.dto;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -10,10 +12,10 @@ import java.util.Map;
 public class AccountsDTO {
 
     private String type;
-    private Map<String, ActivityAccountsDTO> map;
+    private List<ActivityAccountsDTO> activitiesAccounts;
 
     public AccountsDTO(String type) {
-        this.map = new HashMap<>();
+        this.activitiesAccounts = new ArrayList<>();
         this.type = type;
     }
 
@@ -25,19 +27,45 @@ public class AccountsDTO {
         this.type = type;
     }
 
-    public Map<String, ActivityAccountsDTO> getMap() {
-        return map;
+    public List<ActivityAccountsDTO> getActivitiesAccounts() {
+        return activitiesAccounts;
     }
 
-    public void setMap(Map<String, ActivityAccountsDTO> map) {
-        this.map = map;
+    public void setActivitiesAccounts(List<ActivityAccountsDTO> activitiesAccounts) {
+        this.activitiesAccounts = activitiesAccounts;
     }
 
-    public ActivityAccountsDTO getActivityAccounts(String activity) {
-        return map.get(activity);
+    public void addPassTypeAccount(String activity, String passType, Long incomes) {
+        ActivityAccountsDTO activityAccounts = this.getActivityAccounts(activity);
+        activityAccounts.addPassTypeAccount(passType, incomes);
     }
 
-    public void putActivityAccount(String activity, ActivityAccountsDTO accounts) {
-        map.put(activity, accounts);
+    @JsonIgnore
+    private ActivityAccountsDTO getActivityAccounts(String activity) {
+        for (ActivityAccountsDTO activitiesAccount : activitiesAccounts) {
+            if (activity.equals(activitiesAccount.getActivityName())) {
+                return activitiesAccount;
+            }
+        }
+        ActivityAccountsDTO result = new ActivityAccountsDTO(activity);
+        activitiesAccounts.add(result);
+        return result;
     }
+
+    public Long getTotalIncomes() {
+        Long result = 0L;
+        for (ActivityAccountsDTO activitiesAccount : activitiesAccounts) {
+            result += activitiesAccount.getActivityIncomes();
+        }
+        return result;
+    }
+
+    public Integer getTotalSessions() {
+        Integer result = 0;
+        for (ActivityAccountsDTO activitiesAccount : activitiesAccounts) {
+            result += activitiesAccount.getActivitySessions();
+        }
+        return result;
+    }
+
 }

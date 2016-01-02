@@ -8,16 +8,17 @@
     angular.module('corestudioApp.accounts')
         .controller('AccountsController', AccountsController);
 
-    AccountsController.$inject = ['Accounts'];
+    AccountsController.$inject = ['Accounts', '$scope'];
 
-    function AccountsController(Accounts) {
+    function AccountsController(Accounts, $scope) {
 
         var vm = this;
 
-        vm.getTotalActivity = getTotalActivity;
-        vm.getTotalAccount = getTotalAccount;
         vm.getTotalSessions = getTotalSessions;
         vm.getTotalAmount = getTotalAmount;
+        vm.getAccounts = getAccounts;
+        vm.previousMonth = previousMonth;
+        vm.nextMonth = nextMonth;
 
         activate();
 
@@ -26,6 +27,10 @@
         function activate() {
             vm.selectedDate = new Date();
 
+            vm.getAccounts();
+        }
+
+        function getAccounts() {
             Accounts.query({
                 year: vm.selectedDate.getFullYear(),
                 month: vm.selectedDate.getMonth() + 1
@@ -34,24 +39,6 @@
             }, function (responseData) {
 
             });
-
-
-        }
-
-        function getTotalActivity(activity) {
-            var total = 0;
-            for (var passType in activity) {
-                total += activity[passType].incomes;
-            }
-            return total / 100;
-        }
-
-        function getTotalAccount(account) {
-            var total = 0;
-            for (var activity in account) {
-                total += getTotalActivity(account[activity].map);
-            }
-            return total;
         }
 
         function getTotalSessions() {
@@ -59,28 +46,8 @@
 
             if(vm.accounts) {
                 vm.accounts.forEach(function(account) {
-                    total += getTotalAccountSessions(account.map);
+                    total += account.totalSessions;
                 });
-            }
-
-            return total;
-        }
-
-        function getTotalAccountSessions(account) {
-            var total = 0;
-
-            for(var activity in account) {
-                total += getTotalActivitySessions(account[activity].map);
-            }
-
-            return total;
-        }
-
-        function getTotalActivitySessions(activity) {
-            var total = 0;
-
-            for (var passType in activity) {
-                total += activity[passType].numberOfSessions;
             }
 
             return total;
@@ -91,11 +58,27 @@
 
             if(vm.accounts) {
                 vm.accounts.forEach(function(account) {
-                    total += getTotalAccount(account.map);
+                    total += account.totalIncomes;
                 });
             }
 
             return total;
+        }
+
+        function previousMonth() {
+            vm.selectedDate = getDateWithOffset(vm.selectedDate, -1);
+            vm.getAccounts();
+        }
+
+        function nextMonth() {
+            vm.selectedDate = getDateWithOffset(vm.selectedDate, 1);
+            vm.getAccounts();
+        }
+
+        function getDateWithOffset(date, offset) {
+            var newDate = new Date();
+            newDate.setMonth(date.getMonth() + offset);
+            return newDate;
         }
     }
 })();

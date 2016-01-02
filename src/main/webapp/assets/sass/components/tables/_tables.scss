@@ -8,12 +8,12 @@
   padding-right: 0.5em;
 }
 
-.st-sort-ascent:before{
+.st-sort-ascent:before {
   content: "\f106";
   @extend .font-awesome-icon;
 }
 
-.st-sort-descent:before{
+.st-sort-descent:before {
   content: "\f107";
   @extend .font-awesome-icon;
 }
@@ -22,9 +22,12 @@ table.table.table-light {
   thead {
     background-color: white;
     color: black;
+    th.st-sort-ascent:before, th.st-sort-descent:before {
+      color: black;
+    }
   }
   tbody {
-    tr{
+    tr {
       td {
         border-bottom: 1px solid #ddd;
       }

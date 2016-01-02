@@ -16,6 +16,7 @@
     <div class="col-xs-12 text-center">
         <ul class="list-inline">
             <li>
+                 <button class="btn btn-default" ng-click="accountsCtrl.previousMonth()"><i class="fa fa-chevron-left" ></i></button>
             </li>
             <li>
                 <div class="form-group text-left">
@@ -24,9 +25,12 @@
                            ng-model="accountsCtrl.selectedDate" uib-datepicker-popup="MMMM - yyyy"
                            datepicker-mode="'month'"
                            is-open="accountsCtrl.opened" ng-click="accountsCtrl.opened = !accountsCtrl.opened"
-                           datepicker-options="{minMode: 'month'}"/>
+                           datepicker-options="{minMode: 'month'}"
+                           ng-change="accountsCtrl.getAccounts()"/>
                 </div>
-
+            </li>
+            <li>
+                <button class="btn btn-default" ng-click="accountsCtrl.nextMonth()"><i class="fa fa-chevron-right"></i></button>
             </li>
         </ul>
     </div>
@@ -52,7 +56,7 @@
                             <strong>Total:</strong>
                         </div>
                         <div class="col-xs-6">
-                            {{accountsCtrl.getTotalAmount() | currency}}
+                            {{accountsCtrl.getTotalAmount() / 100 | currency}}
                         </div>
                     </div>
                 </div>
@@ -66,63 +70,40 @@
         <div class="panel panel-info">
             <div class="panel-heading pointer" data-toggle="collapse" data-target="#{{account.type | toUnderscore}}">
                 <h4 class="no-margin">
-                    {{account.type}}<span class="pull-right">{{accountsCtrl.getTotalAccount(account.map) | currency}}</span>
+                    {{account.type}}<span class="pull-right">{{account.totalIncomes / 100 | currency}}</span>
                 </h4>
             </div>
             <div class="collapse in" id="{{account.type | toUnderscore}}">
                 <div class="panel-body">
-                    <div class="row" ng-repeat="(activityKey, activityValue) in account.map">
+                    <div class="row" ng-repeat="activityAccount in account.activitiesAccounts">
                         <div class="col-xs-12">
-                            <h4 class="page-header pointer" data-toggle="collapse" data-target="#{{activityKey | toUnderscore}}">
-                                {{activityKey}}
-                                <span class="pull-right">{{accountsCtrl.getTotalActivity(activityValue.map) | currency}}</span>
+                            <h4 class="page-header pointer" data-toggle="collapse" data-target="#{{activityAccount.activityName | toUnderscore}}">
+                                {{activityAccount.activityName}}
+                                <span class="pull-right">{{activityAccount.activityIncomes / 100 | currency}}</span>
                             </h4>
 
-                            <div class="row collapse in" id="{{activityKey | toUnderscore}}">
+                            <div class="row collapse in" id="{{activityAccount.activityName | toUnderscore}}">
                                 <div class="col-xs-10 col-xs-offset-1">
-                                    <table class="table table-light table-hover" st-table="activityValue.map">
+                                    <table class="table table-light table-hover" st-table="activityAccount.passTypeAccounts">
                                         <thead>
                                         <tr>
-                                            <th st-sort="" class="text-center">Tipo de bono</th>
-                                            <th st-sort="" class="text-center">Número de sesiones</th>
-                                            <th st-sort="" class="text-center">Total</th>
+                                            <th st-sort="passTypeName" class="text-center pointer">Tipo de bono</th>
+                                            <th st-sort="numberOfSessions" class="text-center pointer">Número de sesiones</th>
+                                            <th st-sort="incomes" class="text-center pointer">Total</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="(passTypeKey, passTypeValue) in activityValue.map">
-                                            <td class="vertical-middle">{{passTypeKey}}</td>
-                                            <td class="vertical-middle text-center">{{passTypeValue.numberOfSessions}}
+                                        <tr ng-repeat="passTypeAccount in activityAccount.passTypeAccounts">
+                                            <td class="vertical-middle">{{passTypeAccount.passTypeName}}</td>
+                                            <td class="vertical-middle text-center">{{passTypeAccount.numberOfSessions}}
                                             </td>
-                                            <td class="vertical-middle text-right">{{passTypeValue.incomes / 100 | currency}}
+                                            <td class="vertical-middle text-right">{{passTypeAccount.incomes / 100 | currency}}
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <!--<div class="row" ng-repeat="(passTypeKey, passTypeValue) in activityValue.map">-->
-                            <!--<div class="col-xs-10 col-xs-offset-1">-->
-
-                            <!--<div class="row">-->
-                            <!--<h4 class="col-xs-4">{{passTypeKey}}</h4>-->
-
-                            <!--<div class="col-xs-4 text-center">-->
-                            <!--<strong>Número de sesiones:</strong>-->
-                            <!--</div>-->
-                            <!--<div class="col-xs-6">-->
-                            <!--{{passTypeValue.numberOfSessions}}-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="row">-->
-                            <!--<div class="col-xs-6 text-right">-->
-                            <!--<strong>Total cobrado:</strong>-->
-                            <!--</div>-->
-                            <!--<div class="col-xs-6">-->
-                            <!--{{passTypeValue.incomes / 100 | currency}}-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
                         </div>
                     </div>
                 </div>

@@ -11762,6 +11762,8 @@ textarea {
 table.table.table-light thead {
   background-color: white;
   color: black; }
+  table.table.table-light thead th.st-sort-ascent:before, table.table.table-light thead th.st-sort-descent:before {
+    color: black; }
 
 table.table.table-light tbody tr td {
   border-bottom: 1px solid #ddd; }
