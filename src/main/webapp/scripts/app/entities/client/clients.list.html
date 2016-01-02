@@ -13,9 +13,9 @@
             <thead>
             <tr>
                 <th></th>
-                <th st-sort="name">Nombre</th>
-                <th st-sort="pendingClases">Clases pendientes</th>
-                <th st-sort="dueDate">Fecha fin de bono</th>
+                <th class="pointer" st-sort="name">Nombre</th>
+                <th class="pointer text-center" st-sort="pendingSessions">Clases pendientes</th>
+                <th class="pointer text-center" st-sort="lastDate">Fecha fin de bono</th>
                 <th class="text-center">Acciones</th>
             </tr>
             </thead>
@@ -23,11 +23,11 @@
             <tr ng-repeat="client in clients.displayData track by client.id">
                 <td class="vertical-middle"><img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small center-block"/></td>
                 <td class="vertical-middle">{{ client.name + ' ' + client.firstSurname }}</td>
-                <td class="vertical-middle"></td>
-                <td class="vertical-middle"></td>
+                <td class="vertical-middle text-center" ng-class="{'text-danger': client.pendingSessions === 0}">{{ client.pendingSessions }}</td>
+                <td class="vertical-middle text-center" ng-class="{'text-danger strong': clients.isConsumedPass(client.lastDate)}">{{client.lastDate | date:'dd/MM/yyyy'}}</td>
                 <td class="text-center vertical-middle">
-                    <a class="btn btn-lg" ui-sref="clients.viewClient.personal({id: client.id, permalink: '{{ client | permalink | replaceAccents }}', client: client})"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}', client: client})"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-lg" ui-sref="clients.viewClient.personal({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-lg" ui-sref="clients.editClient({id: client.id, permalink: '{{ client | permalink | replaceAccents }}'})"><i class="fa fa-pencil"></i></a>
                 </td>
             </tr>
             </tbody>

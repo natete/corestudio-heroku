@@ -213,4 +213,8 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
     protected PagingAndSortingRepository getRepository() {
         return this.repository;
     }
+
+    public Pass getCurrentPass(Long clientId) {
+        return repository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientId, new Date());
+    }
 }

@@ -22,7 +22,15 @@
                     return data;
                 }
             },
-            'update': {method: 'PUT'},
+            'update': {
+                method: 'PUT',
+                interceptor: {
+                    response: function (response) {
+                        cache.removeAll();
+                        return response.data;
+                    }
+                }
+            },
             'save': {
                 method: 'POST',
                 interceptor: {

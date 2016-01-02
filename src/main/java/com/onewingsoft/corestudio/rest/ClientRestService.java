@@ -1,69 +1,60 @@
 package com.onewingsoft.corestudio.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.onewingsoft.corestudio.business.BaseBusinessLogic;
+import com.onewingsoft.corestudio.business.ClientBusinessLogic;
+import com.onewingsoft.corestudio.dto.ClientDTO;
+import com.onewingsoft.corestudio.model.Client;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.onewingsoft.corestudio.business.ClientBusinessLogic;
-import com.onewingsoft.corestudio.model.Client;
-import com.onewingsoft.corestudio.utils.HeaderUtil;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api")
-public class ClientRestService {
+public class ClientRestService extends BaseRestService<Client> {
 
 	@Autowired
 	private ClientBusinessLogic clientBusinessLogic;
 
 	@RequestMapping(value = "/clients", method = RequestMethod.GET)
-	public Iterable<Client> getAllClients() {
+	public Iterable<ClientDTO> getAllClients() {
 		return clientBusinessLogic.getAllClients();
 	}
 
 	@RequestMapping(value = "/clients/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Client> getClient(@PathVariable Long id) {
-		Client client = clientBusinessLogic.getClient(id);
-		if (null != client) {
-			return ResponseEntity.ok().body(client);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return super.getEntity(id);
 	}
 
 	@RequestMapping(value = "/clients", method = RequestMethod.POST)
 	public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) throws URISyntaxException {
-
-		if (client.getId() != null) {
-			return ResponseEntity.badRequest().header("Un nuevo cliente no puede tener valor de identificador")
-					.body(null);
-		} else {
-			Client result = clientBusinessLogic.createClient(client);
-			return ResponseEntity.created(new URI("/api/clients/" + result.getId()))
-					.headers(HeaderUtil.createEntityCreationAlert("cliente", result.getId().toString())).body(result);
-		}
+		return super.saveEntity(client);
 	}
 
 	@RequestMapping(value = "/clients", method = RequestMethod.PUT)
 	public ResponseEntity<Client> updateClient(@Valid @RequestBody Client client) throws URISyntaxException {
+		return super.updateEntity(client);
+	}
 
-		Client result = null;
-		try {
-			result = clientBusinessLogic.updateClient(client);
-			return ResponseEntity.created(new URI("/api/clients/" + result.getId()))
-					.headers(HeaderUtil.createEntityUpdateAlert("cliente", result.getId().toString())).body(result);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.badRequest().header(e.getMessage())
-					.body(null);
-		}
+	@Override
+	protected BaseBusinessLogic getBusinessLogic() {
+		return clientBusinessLogic;
+	}
+
+	@Override
+	protected String getUri() {
+		return "/api/clients/";
+	}
+
+	@Override
+	protected String getEntityName() {
+		return " cliente ";
+	}
+
+	@Override
+	protected String getParameter(Client entity) {
+		return entity.getName() + " " + entity.getFirstSurname();
 	}
 }

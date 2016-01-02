@@ -35,10 +35,10 @@
                 templateUrl: 'scripts/app/entities/client/client.details.html',
                 //abstract: true,
                 controller: 'ClientTabsController',
-                controllerAs: 'tabs',
-                params: {
-                    client: undefined
-                }
+                controllerAs: 'tabs'
+                //params: {
+                //    client: undefined
+                //}
             })
             .state('clients.viewClient.personal', {
                 url: '/personal',
@@ -60,10 +60,10 @@
                 url: '/:id/:permalink/edit',
                 templateUrl: 'scripts/app/entities/client/client.form.html',
                 controller: 'ClientFormController',
-                controllerAs: 'clientForm',
-                params: {
-                    client: undefined
-                }
+                controllerAs: 'clientForm'
+                //params: {
+                //    client: undefined
+                //}
             });
     }
 })();

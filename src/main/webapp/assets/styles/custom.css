@@ -11744,6 +11744,9 @@ textarea {
 .pointer {
   cursor: pointer; }
 
+.strong {
+  font-weight: bold; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;

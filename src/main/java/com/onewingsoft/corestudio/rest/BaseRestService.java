@@ -19,6 +19,15 @@ public abstract class BaseRestService<T extends BaseEntity> {
         return (Iterable<T>) this.getBusinessLogic().getAllEntities();
     }
 
+    protected ResponseEntity<T> getEntity(Long id) {
+        T entity = (T) this.getBusinessLogic().getEntity(id);
+        if (null != entity) {
+            return ResponseEntity.ok().body(entity);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     protected ResponseEntity<T> saveEntity(T entity) {
         try {
             T result = (T) this.getBusinessLogic().createEntity(entity);
