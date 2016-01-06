@@ -1,11 +1,9 @@
 package com.onewingsoft.corestudio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -22,8 +20,7 @@ import java.util.Locale;
 @Table(name = "monthlySession")
 public class MonthlySession extends BaseEntity {
 
-    @Column
-    @NotNull
+    @ManyToOne
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
@@ -37,8 +34,8 @@ public class MonthlySession extends BaseEntity {
     @Max(11)
     private Integer month;
 
-    @Column
     @NotNull
+    @Column
     private Integer numberOfSessions;
 
     @JsonIgnore
@@ -46,6 +43,7 @@ public class MonthlySession extends BaseEntity {
         return professor;
     }
 
+    @JsonProperty
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }

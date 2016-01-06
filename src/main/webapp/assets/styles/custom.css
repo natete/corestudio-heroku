@@ -11750,6 +11750,9 @@ textarea {
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important; }
 
+.right-bordered {
+  border-right: 1px solid #5bc0de; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;

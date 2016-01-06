@@ -4,13 +4,13 @@ package com.onewingsoft.corestudio.dto;
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 01/01/16.
  */
-public class PassTypeAccountsDTO {
+public class PassTypeIncomesDTO {
 
     private String passTypeName;
     private Integer numberOfSessions = 0;
     private Long incomes = 0L;
 
-    public PassTypeAccountsDTO(String passTypeName) {
+    public PassTypeIncomesDTO(String passTypeName) {
         this.passTypeName = passTypeName;
     }
 

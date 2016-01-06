@@ -15,4 +15,7 @@ public interface MonthlySessionRepository extends PagingAndSortingRepository<Mon
 
     @Query("SELECT m FROM MonthlySession m WHERE m.professor.id = :professorId AND m.year = :year")
     Iterable<MonthlySession> findByProfessorIdAndYear(@Param("professorId") Long professorId, @Param("year") Integer year);
+
+    @Query("SELECT m FROM MonthlySession m WHERE m.professor.id = :professorId AND m.year = :year AND m.month = :month")
+    MonthlySession findByProfessorIdAndYearAndMonth(@Param("professorId") Long professorId, @Param("year") Integer year, @Param("month") Integer month);
 }

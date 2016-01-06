@@ -35,7 +35,7 @@
                 vm.classArea = 'fa-pencil';
 
                 Professor.get({id: $stateParams.id}, function (responseData) {
-                    vm.professor = responseData;
+                    vm.professor = parseDates(responseData);
                     vm.passwordConfirm = vm.professor.passwordHash;
                 }, function (response) {
                     Alerts.addHeaderErrorAlert(response.headers());
@@ -65,6 +65,16 @@
                     });
                 }
             }
+        }
+
+        function parseDates(professor) {
+            if (professor.birthdate) {
+                professor.birthdate = new Date(professor.birthdate);
+            }
+            if (professor.admissionDate) {
+                professor.admissionDate = new Date(professor.admissionDate);
+            }
+            return professor;
         }
     }
 

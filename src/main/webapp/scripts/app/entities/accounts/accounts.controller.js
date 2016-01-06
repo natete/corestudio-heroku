@@ -8,15 +8,19 @@
     angular.module('corestudioApp.accounts')
         .controller('AccountsController', AccountsController);
 
-    AccountsController.$inject = ['Accounts'];
+    AccountsController.$inject = ['Accounts', 'Alerts'];
 
-    function AccountsController(Accounts) {
+    function AccountsController(Accounts, Alerts) {
 
         var vm = this;
 
-        vm.getTotalSessions = getTotalSessions;
-        vm.getTotalAmount = getTotalAmount;
+        vm.SALARY_PER_SESSION = 16;
+
+        vm.getTotalIncomesSessions = getTotalIncomesSessions;
+        vm.getTotalIncomesAmount = getTotalIncomesAmount;
         vm.getAccounts = getAccounts;
+        vm.getTotalExpenses = getTotalExpenses;
+        vm.getTotalSalariesAmount = getTotalSalariesAmount;
         vm.previousMonth = previousMonth;
         vm.nextMonth = nextMonth;
 
@@ -36,16 +40,16 @@
                 month: vm.selectedDate.getMonth() + 1
             }, function (responseData) {
                 vm.accounts = responseData;
-            }, function (responseData) {
-
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
-        function getTotalSessions() {
+        function getTotalIncomesSessions() {
             var total = 0;
 
-            if(vm.accounts) {
-                vm.accounts.forEach(function(account) {
+            if(vm.accounts && vm.accounts.incomes) {
+                vm.accounts.incomes.forEach(function(account) {
                     total += account.totalSessions;
                 });
             }
@@ -53,17 +57,37 @@
             return total;
         }
 
-        function getTotalAmount() {
+        function getTotalIncomesAmount() {
             var total = 0;
 
-            if(vm.accounts) {
-                vm.accounts.forEach(function(account) {
+            if(vm.accounts && vm.accounts.incomes) {
+                vm.accounts.incomes.forEach(function(account) {
                     total += account.totalIncomes;
                 });
             }
 
+            return total / 100;
+        }
+
+        function getTotalExpenses() {
+            var total = 0;
+
+            total += vm.getTotalSalariesAmount();
+
             return total;
         }
+
+        function getTotalSalariesAmount() {
+            var total = 0;
+
+            if(vm.accounts && vm.accounts.salaries) {
+                vm.accounts.salaries.forEach(function(salary) {
+                   total += salary.numberOfSessions * vm.SALARY_PER_SESSION;
+                });
+            }
+            return total;
+        }
+
 
         function previousMonth() {
             vm.selectedDate = getDateWithOffset(vm.selectedDate, -1);
