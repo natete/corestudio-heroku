@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/admin/activities")
-public class ActivityRestClient extends BaseRestService<Activity> {
+public class ActivityRestService extends BaseRestService<Activity> {
 
     @Autowired
     private ActivityBusinessLogic activityBusinessLogic;

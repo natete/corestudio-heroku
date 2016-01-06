@@ -1,18 +1,18 @@
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
- * @since 08/12/15.
+ * @since 06/01/16.
  */
 (function () {
     'use strict';
 
     angular.module('corestudioApp.admin')
-        .factory('Activity', Activity);
+        .factory('Expense', Expense);
 
-    Activity.$inject = ['$resource', 'ACTIVITIES_ENDPOINT'];
+    Expense.$inject = ['$resource', 'EXPENSES_ENDPOINT'];
 
-    function Activity($resource, ACTIVITIES_ENDPOINT) {
-        return $resource(ACTIVITIES_ENDPOINT, {}, {
-            'query': {
+    function Expense($resource, EXPENSES_ENDPOINT) {
+         return $resource(EXPENSES_ENDPOINT, {}, {
+             'query': {
                 method: 'GET',
                 isArray: true
             },
@@ -28,13 +28,8 @@
             },
             'save': {
                 method: 'POST'
-            },
-            'getGroupActivities': {
-                method: 'GET',
-                isArray: true,
-                url: 'api/admin/activities/getGroupActivities'
             }
-        });
+         });
     }
 
 })();

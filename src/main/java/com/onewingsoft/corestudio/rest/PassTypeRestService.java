@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api/admin/passTypes")
-public class PassTypeRestClient extends BaseRestService<PassType> {
+public class PassTypeRestService extends BaseRestService<PassType> {
 
     @Autowired
     private PassTypeBusinessLogic businessLogic;
