@@ -38,5 +38,4 @@ public class Client extends Person {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-
 }

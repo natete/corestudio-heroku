@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.utils.Day;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
 import java.util.*;
 
 /**
@@ -236,5 +237,11 @@ public class Pass extends BaseEntity {
     @JsonIgnore
     public Long getPricePerSession() {
         return Math.round((double)price / passType.getNumberOfSessions());
+    }
+
+    @Override
+    public String toString() {
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, new Locale("es", "ES"));
+        return passType.toString() + " fecha de inicio: " + formatter.format(initialDate);
     }
 }

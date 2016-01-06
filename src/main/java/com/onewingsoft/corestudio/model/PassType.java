@@ -56,4 +56,5 @@ public class PassType extends BaseEntity {
     public String toString() {
         return activity.getName() + " - " + numberOfSessions + " sesiones";
     }
+
 }

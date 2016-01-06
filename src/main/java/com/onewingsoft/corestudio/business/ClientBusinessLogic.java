@@ -20,8 +20,9 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
     @Autowired
     PassBusinessLogic passBusinessLogic;
 
-    public Iterable<ClientDTO> getAllClients() {
-        Iterable<Client> clients = super.getAllEntities();
+    @Override
+    public Iterable<ClientDTO> getAllEntities() {
+        Iterable<Client> clients = (Iterable<Client>) super.getAllEntities();
         List<ClientDTO> result = new ArrayList<>();
 
         for (Client client : clients) {

@@ -67,7 +67,7 @@
 
         function updateHolidaysList(year) {
             Overlay.on();
-            Holiday.query({id: year}, function (holidays) {
+            Holiday.query({year: year}, function (holidays) {
                 vm.holidaysList = [{
                     type: 'holiday',
                     dates: holidays.map(function(holiday) {
@@ -76,7 +76,7 @@
                     })
                 }];
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year, Overlay.off);
-            }, function (data) {
+            }, function () {
                 Overlay.off();
                 Alerts.addErrorAlert('Error accediendo a la lista de festivos');
             });
@@ -87,32 +87,32 @@
                 holiday.type = 'holiday';
                 vm.holidaysList[0].dates.push(holiday);
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
-                Alerts.addSuccessAlert('Se ha añadido el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
-            }, function () {
-                Alerts.addErrorAlert('Ha habido un problema añandiendo el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function updateDate(date) {
-            Holiday.update(date, function (holiday) {
+            Holiday.update(date, function (holiday, headers) {
                 var updated = $filter('filter')(vm.holidaysList[0].dates, {id: holiday.id}, true)[0];
                 updated.description = holiday.description;
                 $scope.$broadcast('update-selected-dates', vm.holidaysList, vm.year);
-                Alerts.addSuccessAlert('Se ha actualizado el festivo ' + $filter('date')(holiday.date, 'dd/MM/yyyy'));
-            }, function () {
-                Alerts.addErrorAlert('Ha habido un problema actualizando el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function deleteDate(date) {
-            Holiday.delete({id: date.id}, function () {
+            Holiday.delete({id: date.id}, function (data, headers) {
                 var deleted = $filter('filter')(vm.holidaysList[0].dates, {id: date.id}, true)[0];
                 var index = vm.holidaysList[0].dates.indexOf(deleted);
                 vm.holidaysList[0].dates.splice(index, 1);
                 $scope.$broadcast('deleted-date', deleted);
-                Alerts.addSuccessAlert('Se ha eliminado el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
-            }, function () {
-                Alerts.addErrorAlert('Ha ocurrido un error eliminando el festivo ' + $filter('date')(date.date, 'dd/MM/yyyy'));
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 

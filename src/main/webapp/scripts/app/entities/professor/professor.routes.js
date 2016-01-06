@@ -29,7 +29,31 @@
                 templateUrl: 'scripts/app/entities/professor/professor.form.html',
                 controller: 'ProfessorFormController',
                 controllerAs: 'professorFormCtrl'
-            });
+            })
+            .state('professors.editProfessor', {
+                url: '/:id/:permalink/edit',
+                templateUrl: 'scripts/app/entities/professor/professor.form.html',
+                controller: 'ProfessorFormController',
+                controllerAs: 'professorFormCtrl'
+            })
+            .state('professors.viewProfessor', {
+                url: '/:id/:permalink/view',
+                templateUrl: 'scripts/app/entities/professor/professor.details.html',
+                controller: 'ProfessorTabsController',
+                controllerAs: 'tabs'
+            })
+            .state('professors.viewProfessor.personal', {
+                url: '/personal',
+                templateUrl: 'scripts/app/entities/professor/professor.personal.html'
+            })
+            .state('professors.viewProfessor.sessions', {
+                url: '/sessions',
+                templateUrl: 'scripts/app/entities/professor/professor.sessions.html',
+                controller: 'ProfessorSessionsController',
+                controllerAs: 'sessionsCtrl'
+
+            })
+        ;
     }
 
 })();

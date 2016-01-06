@@ -14,6 +14,7 @@
         return $resource(HOLIDAYS_ENDPOINT, {}, {
             'query': {
                 method: 'GET',
+                url: 'api/admin/holidays/getByYear/:year',
                 isArray: true,
                 cache: true
             },

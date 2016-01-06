@@ -8,9 +8,9 @@
     angular.module('corestudioApp.accounts')
         .controller('AccountsController', AccountsController);
 
-    AccountsController.$inject = ['Accounts', '$scope'];
+    AccountsController.$inject = ['Accounts'];
 
-    function AccountsController(Accounts, $scope) {
+    function AccountsController(Accounts) {
 
         var vm = this;
 

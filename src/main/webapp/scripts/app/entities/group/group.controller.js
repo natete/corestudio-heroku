@@ -8,7 +8,7 @@
     angular.module('corestudioApp.group')
         .controller('GroupController', GroupController);
 
-    GroupController.$inject = ['Alerts', '$uibModal', 'Config', 'Group', 'translateDaysFilter']
+    GroupController.$inject = ['Alerts', '$uibModal', 'Config', 'Group', 'translateDaysFilter'];
 
     function GroupController(Alerts, $uibModal, Config, Group, translateDaysFilter) {
 
@@ -62,21 +62,22 @@
         }
 
         function createGroup(group) {
-            Group.save(group, function(data) {
+            Group.save(group, function(data, headers) {
                 vm.data.push(data);
-                Alerts.addSuccessAlert('Se ha creado el grupo ' + translateDaysFilter(group.days) + ' a las ' + data.hour);
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error creando el grupo');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function updateGroup(group) {
-            var index = vm.data.indexOf(group);
-            Group.update(group, function (data) {
+            var index = vm.data.indexOfId(group.id);
+            Group.update(group, function (data, headers) {
                 vm.data[index] = data;
-                Alerts.addSuccessAlert('Se ha actualizado el grupo ' + translateDaysFilter(group.days) + ' a las ' + data.hour)
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error actualizando el grupo');
+                vm.displayData[index] = data;
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             })
         }
 
@@ -99,12 +100,12 @@
 
             modalInstance.result.then(function (result) {
                 if(result === 'OK') {
-                    var index = vm.data.indexOf(group);
-                    Group.delete({id: group.id}, function () {
+                    var index = vm.data.indexOfId(group.id);
+                    Group.delete({id: group.id}, function (data, headers) {
                         vm.data.splice(index, 1);
-                        Alerts.addSuccessAlert('Se ha eliminado el grupo de ' + translateDaysFilter(group.days) + ' a las ' + group.hour + '?');
-                    }, function () {
-                        Alerts.addErrorAlert('Se ha producido un error eliminando el grupo');
+                        Alerts.addHeaderSuccessAlert(headers());
+                    }, function (response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
                     });
                 }
             });

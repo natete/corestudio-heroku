@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-eye"></i> Detalles del profesor
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row client-header">
+    <div class="col-md-9">
+        <div class="row vertical-align">
+            <div class="col-md-3">
+                <img src="assets/images/face.png" class="img-circle img-responsive profile-size">
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Nombre</label>
+
+                            <div>{{tabs.professor.name}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Primer apellido</label>
+
+                            <div>{{tabs.professor.firstSurname}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Segundo apellido</label>
+
+                            <div>{{tabs.professor.secondSurname}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 dynamic-tabs">
+        <uib-tabset justified="true">
+            <uib-tab ng-repeat="tab in tabs.tabs" heading="{{tab.title}}" select="tabs.go(tab.route)"
+                     active="tab.active">
+            </uib-tab>
+        </uib-tabset>
+        <div ui-view class="dynamic-tab-content"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a class="btn btn-default" ui-sref="professors.list">Volver</a>
+    </div>
+</div>

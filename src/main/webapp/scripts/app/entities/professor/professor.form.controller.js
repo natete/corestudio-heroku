@@ -33,10 +33,12 @@
             } else if ($state.is('professors.editProfessor')) {
                 vm.area = 'Editar profesor';
                 vm.classArea = 'fa-pencil';
+
                 Professor.get({id: $stateParams.id}, function (responseData) {
                     vm.professor = responseData;
-                }, function (responseData) {
-                    Alerts.addHeaderErrorAlert(responseData);
+                    vm.passwordConfirm = vm.professor.passwordHash;
+                }, function (response) {
+                    Alerts.addHeaderErrorAlert(response.headers());
                 });
             }
         }
@@ -48,11 +50,18 @@
                 Alerts.addErrorAlert("El formulario contiene datos erróneos")
             } else {
                 if ($state.is('professors.newProfessor')) {
-                    Professor.save(vm.professor, function(responseData) {
+                    Professor.save(vm.professor, function(responseData, headers) {
                         $state.go('professors');
-                        Alerts.addHeaderSuccessAlert(responseData.headers());
-                    }, function(responseData) {
-                        Alerts.addHeaderErrorAlert(responseData);
+                        Alerts.addHeaderSuccessAlert(headers());
+                    }, function(response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
+                    });
+                } else {
+                    Professor.update(vm.professor, function(responseData, headers) {
+                        $state.go('professors');
+                        Alerts.addHeaderSuccessAlert(headers());
+                    }, function(response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
                     });
                 }
             }

@@ -61,4 +61,15 @@ public class Group extends BaseEntity {
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(activity.toString())
+                .append(" ")
+                .append(days.toString())
+                .append(hour + ":00");
+
+        return result.toString();
+    }
 }

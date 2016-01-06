@@ -43,7 +43,7 @@
                 url: '/payments',
                 templateUrl: 'scripts/app/entities/client/client.pass.html',
                 controller: 'ClientPassController',
-                controllerAs: 'vm'
+                controllerAs: 'passCtrl'
             })
             .state('clients.viewClient.calendar', {
                 url: '/calendar',

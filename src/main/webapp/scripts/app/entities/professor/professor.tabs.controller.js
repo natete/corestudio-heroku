@@ -5,12 +5,12 @@
 (function () {
     'use strict';
 
-    angular.module('corestudioApp.client')
-        .controller('ClientTabsController', ClientTabsController);
+    angular.module('corestudioApp.professor')
+        .controller('ProfessorTabsController', ProfessorTabsController);
 
-    ClientTabsController.$inject = ['Client', '$stateParams', '$state', '$scope'];
+    ProfessorTabsController.$inject = ['Professor', '$stateParams', '$state', '$scope'];
 
-    function ClientTabsController(Client, $stateParams, $state, $scope) {
+    function ProfessorTabsController(Professor, $stateParams, $state, $scope) {
         var vm = this;
 
         vm.go = go;
@@ -24,20 +24,19 @@
 
             if ($stateParams.id !== undefined) {
                 if ($stateParams.client === undefined) {
-                    Client.get({id: $stateParams.id}, function (client) {
-                        vm.client = parseDates(client);
+                    Professor.get({id: $stateParams.id}, function (professor) {
+                        vm.professor = parseDates(professor);
                     }, function (response) {
                         Alerts.addHeaderErrorAlert(response.headers());
                     });
                 } else {
-                    vm.client = $stateParams.client;
+                    vm.professor = $stateParams.professor;
                 }
             }
 
             vm.tabs = [
-                { title: 'Personal', route: 'clients.viewClient.personal', active: false },
-                { title: 'Pagos', route: 'clients.viewClient.passes', active: false },
-                { title: 'Calendario', route: 'clients.viewClient.calendar', active: false }
+                { title: 'Personal', route: 'professors.viewProfessor.personal', active: false },
+                { title: 'Sesiones', route: 'professors.viewProfessor.sessions', active: false }
             ]
         }
 
@@ -55,14 +54,14 @@
             return $state.is(route);
         }
 
-        function parseDates(client) {
-            if (client.birthdate) {
-                client.birthdate = new Date(client.birthdate);
+        function parseDates(professor) {
+            if (professor.birthdate) {
+                professor.birthdate = new Date(professor.birthdate);
             }
-            if (client.admissionDate) {
-                client.admissionDate = new Date(client.admissionDate);
+            if (professor.admissionDate) {
+                professor.admissionDate = new Date(professor.admissionDate);
             }
-            return client;
+            return professor;
         }
     }
 

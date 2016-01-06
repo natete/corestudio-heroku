@@ -28,4 +28,9 @@ public enum Day {
     public String getShortName() {
         return shortName;
     }
+
+    @Override
+    public String toString() {
+        return shortName;
+    }
 }

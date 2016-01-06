@@ -48,4 +48,9 @@ public class Activity extends BaseEntity {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,56 +14,77 @@ import java.net.URISyntaxException;
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 22/12/15.
  */
+@RestController
 public abstract class BaseRestService<T extends BaseEntity> {
 
-    protected Iterable<T> getAll() {
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<?> getAll() {
         return (Iterable<T>) this.getBusinessLogic().getAllEntities();
     }
 
-    protected ResponseEntity<T> getEntity(Long id) {
-        T entity = (T) this.getBusinessLogic().getEntity(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getEntity(@PathVariable Long id) {
+        Object entity = this.getBusinessLogic().getEntity(id);
         if (null != entity) {
             return ResponseEntity.ok().body(entity);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert("La entidad buscada no existe"))
+                    .body(null);
         }
     }
 
-    protected ResponseEntity<T> saveEntity(T entity) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> saveEntity(@RequestBody T entity) {
         try {
-            T result = (T) this.getBusinessLogic().createEntity(entity);
-            return ResponseEntity.created(new URI(this.getUri() + result.getId()))
-                    .headers(HeaderUtil.createEntityCreationAlert(this.getEntityName(), this.getParameter(result)))
+            Object result = this.getBusinessLogic().createEntity(entity);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.createEntityAlert(this.getMessage(result)))
                     .body(result);
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().header(e.getMessage()).body(null);
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert(e.getMessage()))
+                    .body(null);
         }
     }
 
-    protected ResponseEntity<T> updateEntity(T entity) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> updateEntity(@RequestBody T entity) {
         try {
-            T result = (T) this.getBusinessLogic().updateEntity(entity);
-            return ResponseEntity.created(new URI(this.getUri() + result.getId()))
-                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+            Object result = this.getBusinessLogic().updateEntity(entity);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.updateEntityAlert(this.getMessage(result)))
                     .body(result);
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().header(e.getMessage()).body(null);
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert(e.getMessage()))
+                    .body(null);
         }
     }
 
-    protected void deleteEntity(Long id) {
-        this.getBusinessLogic().deleteEntity(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteEntity(@PathVariable Long id) {
+        try {
+            Object result = this.getBusinessLogic().deleteEntity(id);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.deleteEntityAlert(this.getMessage(result)))
+                    .body(null);
+        } catch (URISyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert(e.getMessage()))
+                    .body(null);
+        }
     }
 
     protected abstract BaseBusinessLogic getBusinessLogic();
 
     protected abstract String getUri();
 
-    protected abstract String getEntityName();
-
-    protected abstract String getParameter(T entity);
+    protected abstract String getMessage(Object entity);
 }

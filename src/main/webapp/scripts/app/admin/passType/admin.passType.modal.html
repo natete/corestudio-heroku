@@ -7,7 +7,7 @@
         <div class="form-group" show-errors>
             <label for="activity" class="control-label">Selecciones la actividad</label>
             <select name="activity" id="activity" class="form-control" ng-model="modal.passType.activity"
-                    ng-options="activity.name for activity in modal.activities track by activity.id" required></select>
+                    ng-options="item.activity as item.activity.name for item in modal.activities" required></select>
         </div>
         <div class="form-group" show-errors>
             <label for="numberOfSessions" class="control-label">Número de sesiones</label>

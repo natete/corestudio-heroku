@@ -20,7 +20,8 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
     @Autowired
     private ActivityRepository activityRepository;
 
-    public Iterable<ActivityDTO> getAllDtos() {
+    @Override
+    public Iterable<ActivityDTO> getAllEntities() {
         Iterable<Activity> activities = activityRepository.findAll();
         List<ActivityDTO> dtos = new ArrayList<>();
         for (Activity activity: activities) {
@@ -30,12 +31,14 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
         return dtos;
     }
 
-    public ActivityDTO saveActivity(final Activity activity) throws IllegalArgumentException {
-        return new ActivityDTO(super.createEntity(activity));
+    @Override
+    public ActivityDTO createEntity(final Activity activity) throws IllegalArgumentException {
+        return new ActivityDTO((Activity) super.createEntity(activity));
     }
 
-    public ActivityDTO updateActivity(final Activity activity) throws IllegalArgumentException {
-        return new ActivityDTO(super.updateEntity(activity));
+    @Override
+    public ActivityDTO updateEntity(final Activity activity) throws IllegalArgumentException {
+        return new ActivityDTO((Activity) super.updateEntity(activity));
     }
 
     public Iterable<Activity> getGroupActivities() {

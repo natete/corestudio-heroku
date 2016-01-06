@@ -19,6 +19,10 @@ public class HolidayBusinessLogic extends BaseBusinessLogic<Holiday> {
     @Autowired
     private HolidayRepository holidayRepository;
 
+    public Iterable<Holiday> getByYear(final Integer year) {
+        return holidayRepository.findByYear(year);
+    }
+
     public boolean isHoliday(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

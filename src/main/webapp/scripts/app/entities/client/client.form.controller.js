@@ -61,20 +61,20 @@
         }
 
         function saveClient() {
-            Client.save(vm.client, function (client) {
+            Client.save(vm.client, function (client, headers) {
                 $state.go('clients');
-                Alerts.addSuccessAlert('Se ha guardado el cliente ' + client.name + ' ' + client.firstSurname);
-            }, function (client) {
-                Alerts.addErrorAlert('Se ha producido un error guardando el client');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function updateClient() {
-            Client.update(vm.client, function (client) {
-                Alerts.addSuccessAlert('Se ha actualizado el cliente ' + client.name + ' ' + client.firstSurname);
+            Client.update(vm.client, function (client, headers) {
+                Alerts.addHeaderSuccessAlert(headers());
                 $state.go('clients');
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error actualizando el cliente ' + client.name + ' ' + client.firstSurname);
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 

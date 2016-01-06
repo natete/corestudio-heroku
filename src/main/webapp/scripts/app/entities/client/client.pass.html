@@ -1,28 +1,32 @@
-<table class="table table-hover" st-table="vm.displayData" st-safe-src="vm.data" ng-if="vm.data.length">
+<table class="table table-hover" st-table="passCtrl.displayData" st-safe-src="passCtrl.data" ng-if="passCtrl.data.length">
     <thead>
     <tr>
         <th class="text-center sortable-header" st-sort="paymentDate">Fecha de pago</th>
         <th class="text-center sortable-header" st-sort="initialDate">Fecha de inicio</th>
+        <th class="text-center sortable-header" st-sort="activity">Actividad</th>
         <th class="text-center sortable-header" st-sort="numberOfSessions">Sesiones</th>
-        <th class="text-center sortable-header" st-sort="vm.getPendingSessions">Pendientes</th>
+        <th class="text-center sortable-header" st-sort="passCtrl.getPendingSessions">Pendientes</th>
         <th class="text-center sortable-header" st-sort="lastDate">Fecha fin</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="pass in vm.displayData track by pass.id">
+    <tr ng-repeat="pass in passCtrl.displayData track by pass.id">
         <td class="vertical-middle text-center">{{pass.paymentDate | date:'dd/MM/yyyy'}}</td>
         <td class="vertical-middle text-center">{{pass.initialDate | date:'dd/MM/yyyy'}}</td>
+        <td class="vertical-middle text-center">{{pass.passType.activity.name}}</td>
         <td class="vertical-middle text-center">{{pass.passType.numberOfSessions}}</td>
-        <td class="vertical-middle text-center">{{vm.getPendingSessions(pass)}}</td>
+        <td class="vertical-middle text-center">{{passCtrl.getPendingSessions(pass)}}</td>
         <td class="vertical-middle text-center">{{pass.lastDate | date:'dd/MM/yyyy'}}</td>
-        <td class="vertical-middle text-center"></td>
+        <td class="vertical-middle text-center">
+            <a class="btn btn-lg" ng-click="passCtrl.openModal(pass)"><i class="fa fa-pencil"></i></a>
+        </td>
     </tr>
     </tbody>
 </table>
-<h4 class="text-muted text-center" ng-if="!vm.data.length">El cliente no tiene pagos registrados</h4>
+<h4 class="text-muted text-center" ng-if="!passCtrl.data.length">El cliente no tiene pagos registrados</h4>
 <div class="row">
     <div class="col-md-12 text-right">
-        <button ng-click="vm.openModal()" class="btn btn-circle"><i class="fa fa-plus"></i></button>
+        <button ng-click="passCtrl.openModal()" class="btn btn-circle"><i class="fa fa-plus"></i></button>
     </div>
 </div>

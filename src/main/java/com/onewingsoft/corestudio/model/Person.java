@@ -137,4 +137,9 @@ public class Person extends BaseEntity {
 	public String getFullName() {
 		return name + " " + firstSurname;
 	}
+
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }

@@ -12,7 +12,11 @@
 
     function Activity($resource, ACTIVITIES_ENDPOINT) {
         return $resource(ACTIVITIES_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {
+                method: 'GET',
+                //url: 'api/admin/activities/getAllDtos',
+                isArray: true
+            },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -20,17 +24,18 @@
                     return data;
                 }
             },
-            'update': {method: 'PUT'},
-            'save': {method: 'POST'},
+            'update': {
+                method: 'PUT',
+                //url:'api/admin/activities/put'
+            },
+            'save': {
+                method: 'POST',
+                //url:'api/admin/activities/post'
+            },
             'getGroupActivities': {
                 method: 'GET',
                 isArray: true,
                 url: 'api/admin/activities/getGroupActivities'
-            },
-            'getAllDtos': {
-                method: 'GET',
-                isArray: true,
-                url: 'api/admin/activities/getAllDtos'
             }
         });
     }

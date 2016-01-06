@@ -8,9 +8,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientCalendarController', ClientCalendarController);
 
-    ClientCalendarController.$inject = ['Alerts', 'Pass', '$scope', 'Overlay', 'Holiday', 'Client', '$stateParams', '$uibModal', 'dateFilter', 'DATE_TYPES'];
+    ClientCalendarController.$inject = ['Alerts', 'Pass', '$scope', 'Overlay', 'Holiday', 'Client', '$stateParams', '$uibModal', 'DATE_TYPES'];
 
-    function ClientCalendarController(Alerts, Pass, $scope, Overlay, Holiday, Client, $stateParams, $uibModal, dateFilter, DATE_TYPES) {
+    function ClientCalendarController(Alerts, Pass, $scope, Overlay, Holiday, Client, $stateParams, $uibModal, DATE_TYPES) {
         var vm = this;
 
         vm.yearsList = [];
@@ -37,8 +37,8 @@
             Client.get({id: $stateParams.id}, function (data) {
                 vm.client = data;
                 updateCalendar(vm.year);
-            }, function () {
-                Alerts.addErrorAlert("El cliente solicitado no existe");
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
@@ -50,7 +50,7 @@
                     passes = responseData;
                     processPasses(passes);
                 }
-                Holiday.query({id: year}, function (responseData) {
+                Holiday.query({year: year}, function (responseData) {
                     holidays = responseData;
                     addHolidays(holidays);
                     $scope.$broadcast('update-selected-dates', vm.passDates, year, Overlay.off);
@@ -164,40 +164,40 @@
 
                 $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
                 Alerts.addHeaderSuccessAlert(headers());
-            }, function (responseData) {
+            }, function (response) {
                 Overlay.off();
-                Alerts.addHeaderErrorAlert(responseData.headers());
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function freezeDate(date) {
             Overlay.on();
-            Pass.freezeDate({clientId: vm.client.id, date: date.date}, function (responseData) {
+            Pass.freezeDate({clientId: vm.client.id, date: date.date}, function (responseData, headers) {
 
                 updatePass(responseData);
 
                 $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
 
-                Alerts.addSuccessAlert('Se ha congelado el día ' + dateFilter(date.date) + ' de ' + vm.client.name);
-            }, function () {
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
                 Overlay.off();
-                Alerts.addErrorAlert('Ha ocurrido un error y no se ha podido congelar la fecha seleccionada');
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function consumeDate(consumedDate) {
             Overlay.on();
 
-            Pass.consumeDate({clientId: vm.client.id, date: consumedDate.date}, function (responseData) {
+            Pass.consumeDate({clientId: vm.client.id, date: consumedDate.date}, function (responseData, headers) {
 
                 updatePass(responseData);
 
                 $scope.$broadcast('update-selected-dates', vm.passDates, vm.year, Overlay.off);
 
-                Alerts.addSuccessAlert('Se ha consumido el día ' + dateFilter(consumedDate.date) + ' de ' + vm.client.name);
-            }, function (data) {
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
                 Overlay.off();
-                Alerts.addHeaderErrorAlert(data);
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
