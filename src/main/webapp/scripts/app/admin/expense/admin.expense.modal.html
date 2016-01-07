@@ -11,7 +11,7 @@
                 <input type="text" class="form-control" id="expenseDate" name="expenseDate"
                        uib-datepicker-popup
                        is-open="modal.expenseDatepicker.opened"
-                       ng-model="modal.expense.date"
+                       ng-model="modal.expense.expenseDate"
                        ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/" required>
                 <span class="btn btn-default input-group-addon"
                       ng-click="modal.expenseDatepicker.opened = true">
@@ -19,15 +19,39 @@
                 </span>
             </div>
         </div>
-        <div class="form-group has-feedback">
-            <label for="frequency">Frecuencia</label>
-            <select name="frequency" id="frequency" ng-model="modal.expense.amount">
-
-            </select>
+        <div class="form-group has-feedback" show-errors>
+            <label for="description" class="control-label">Concepto</label>
+            <input type="text" id="description" name="description" class="form-control" ng-model="modal.expense.description" required>
         </div>
         <div class="form-group has-feedback">
+            <label for="frequency">Frecuencia</label>
+            <select name="frequency" id="frequency" ng-model="modal.expense.frequency"
+                    ng-options="key as value for (key, value) in modal.frequencies"
+                    ng-change="modal.updateEndDate()" class="form-control" required>
+            </select>
+        </div>
+        <div class="form-group animate-if" ng-if="modal.expense.frequency && (modal.expense.frequency != 'EXCEPTIONAL')">
+            <label for="endDate" class="control-label">Fecha de final</label>
+
+            <div class="input-group">
+                <input type="text" class="form-control" id="endDate" name="endDate"
+                       uib-datepicker-popup
+                       is-open="modal.endDateDatepicker.opened"
+                       ng-model="modal.expense.endDate"
+                       ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/"
+                       placeholder="Vacío para fecha final abierta">
+                <span class="btn btn-default input-group-addon"
+                      ng-click="modal.endDateDatepicker.opened = true">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="form-group has-feedback" show-errors="{showSuccess: false}" >
             <label for="amount" class="control-label">Cantidad</label>
-            <input type="number" class="form-control" name="amount" id="amount" ng-model="modal.expense.amount">
+            <div class="input-group">
+                <input type="number" class="form-control" name="amount" id="amount" ng-model="modal.expense.money" required min="0">
+                <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+            </div>
         </div>
     </form>
 </div>

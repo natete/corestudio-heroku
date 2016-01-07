@@ -28,7 +28,7 @@ public class Pass extends BaseEntity {
 
     @Column
     @NotNull
-    private Integer price;
+    private Long price;
 
     @ManyToOne
     @JoinColumn(name = "passType_id")
@@ -74,12 +74,32 @@ public class Pass extends BaseEntity {
         this.initialDate = initialDate;
     }
 
-    public Integer getPrice() {
+    @JsonIgnore
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    @JsonIgnore
+    public void setPrice(Long price) {
         this.price = price;
+    }
+
+    /**
+     * Returns persisted Long price converted to double adding decimals
+     * @return price with decimals
+     */
+    @Transient
+    public double getMoney() {
+        return (double) price / 100;
+    }
+
+    /**
+     * Sets the price removing the decimals to convert it to Long
+     * @param price price with decimals
+     */
+    @Transient
+    public void setMoney(double price) {
+        this.price = Math.round(price * 100);
     }
 
     public PassType getPassType() {

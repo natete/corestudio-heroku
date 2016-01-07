@@ -64,12 +64,12 @@
                         <label for="price" class="control-label">Precio</label>
 
                         <div class="input-group">
-                            <input type="number" currency id="price" name="price" class="form-control" ng-model="modal.pass.price" required>
+                            <input type="number" id="price" name="price" class="form-control" ng-model="modal.pass.money" required>
                             <span class="btn btn-default input-group-addon">
                               <i class="fa fa-eur"></i>
                             </span>
                         </div>
-                        <div ng-messages="passForm.price.$error" class="help-block" role="alert">
+                        <div ng-messages="passForm.money.$error" class="help-block" role="alert">
                             <div ng-messages-include="scripts/components/errors/errors.html"></div>
                         </div>
                     </div>

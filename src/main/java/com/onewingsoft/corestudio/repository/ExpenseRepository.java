@@ -10,5 +10,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ExpenseRepository extends PagingAndSortingRepository<Expense, Long> {
-    Iterable<Expense> findOrderByDateDesc();
 }

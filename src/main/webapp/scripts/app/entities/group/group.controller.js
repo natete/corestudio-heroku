@@ -29,7 +29,7 @@
 
             Group.query({}, function(data) {
                 vm.data = data;
-            })
+            });
         }
 
         function openModal(group) {

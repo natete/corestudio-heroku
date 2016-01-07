@@ -8,9 +8,9 @@
     angular.module('corestudioApp.admin')
         .controller('ExpenseController', ExpenseController);
 
-    ExpenseController.$inject = ['Expense', 'Alerts', '$uibModal'];
+    ExpenseController.$inject = ['Expense', 'Alerts', '$uibModal', 'Config'];
 
-    function ExpenseController(Expense, Alerts, $uibModal) {
+    function ExpenseController(Expense, Alerts, $uibModal, Config) {
         var vm = this;
 
         vm.regularExpenses = [];
@@ -28,16 +28,28 @@
             }, function(response) {
                 Alerts.addHeaderErrorAlert(response.headers());
             });
+
+            Config.query({}, function(data) {
+               vm.config = data;
+            });
         }
 
-        function processExpensees(expenses) {
+        function processExpenses(expenses) {
             expenses.forEach(function(expense) {
                 if(expense.frequency === 'EXCEPTIONAL') {
-                    vm.expenses.push(expense);
+                    vm.expenses.push(processExpense(expense));
                 } else {
-                    vm.regularExpenses.push(expense);
+                    vm.regularExpenses.push(processExpense(expense));
                 }
             });
+        }
+
+        function processExpense(expense) {
+            expense.expenseDate = new Date(expense.expenseDate);
+            if(expense.endDate) {
+                expense.endDate = new Date(expense.endDate);
+            }
+            return expense;
         }
 
         function openModal(expense) {
@@ -49,6 +61,9 @@
                 resolve: {
                     expense: function() {
                         return angular.copy(expense);
+                    },
+                    frequencies: function() {
+                        return vm.config.frequencies;
                     }
                 }
             });
@@ -56,14 +71,39 @@
             modalInstance.result.then(function(result) {
                 switch (result.action) {
                     case 'SAVE':
+                        saveExpense(result.expense);
                         break;
                     case 'UPDATE':
+                        updateExpense(result.expense);
                         break;
                     default:
                         break;
                 }
-            })
+            });
         }
+
+        function saveExpense(expense) {
+            Expense.save(expense, function(responseData, headers) {
+                if(expense.frequency === 'EXCEPTIONAL') {
+                    vm.expenses.push(expense);
+                } else {
+                    vm.regularExpenses.push(expense);
+                }
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function(response) {
+               Alerts.addHeaderErrorAlert(response.headers());
+            });
+        }
+
+        function updateExpense(expense) {
+            Expense.update(expense, function(responseData, headers) {
+
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function(response) {
+                Alerts.addHeaderErrorAlert(response.headers());
+            });
+        }
+
     }
 })();
 

@@ -55,9 +55,9 @@ public class IncomesDTO {
     public Long getTotalIncomes() {
         Long result = 0L;
         for (ActivityIncomesDTO activitiesIncome : activitiesIncomes) {
-            result += activitiesIncome.getActivityIncomes();
+            result += activitiesIncome.getActivityIncomes() * 100;
         }
-        return result;
+        return result / 100;
     }
 
     public Integer getTotalSessions() {

@@ -66,7 +66,7 @@
                 });
             }
 
-            return total / 100;
+            return total;
         }
 
         function getTotalExpenses() {

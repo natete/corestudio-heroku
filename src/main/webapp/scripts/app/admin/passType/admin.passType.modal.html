@@ -19,13 +19,13 @@
         <div class="form-group" show-errors="{showFeedback: false}">
             <label for="basePrice" class="control-label">Precio base</label>
             <div class="input-group">
-                <input currency type="number" id="basePrice" name="basePrice" ng-model="modal.passType.basePrice"
+                <input type="number" id="basePrice" name="basePrice" ng-model="modal.passType.money"
                        required class="form-control" step="1" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
                 <span class="btn btn-default input-group-addon">
                     <i class="fa fa-eur"></i>
                 </span>
             </div>    
-            <div ng-messages="passTypeForm.basePrice.$error" class="help-block" role="alert">
+            <div ng-messages="passTypeForm.money.$error" class="help-block" role="alert">
                 <div ng-messages-include="scripts/components/errors/errors.html"></div>
             </div>
         </div>

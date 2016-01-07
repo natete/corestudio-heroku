@@ -11877,6 +11877,10 @@ horizontal-calendar table.table > tbody > tr > td.day {
   border-radius: 0 0 10px 10px;
   margin-bottom: 15px; }
 
+.spaced-tab-content {
+  margin-bottom: 15px;
+  padding-top: 30px; }
+
 .client-header {
   maargin-bottom: 15px; }
 

@@ -30,6 +30,18 @@
 
             Activity.query({}, function (data) {
                 vm.activities = data;
+                if(vm.passType.activity) {
+                    var index = -1;
+
+                    for (var i = 0; i < vm.activities.length; i++) {
+                        if(vm.activities[i].activity.id === vm.passType.activity.id) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    vm.passType.activity = vm.activities[index].activity;
+                }
             });
         }
 

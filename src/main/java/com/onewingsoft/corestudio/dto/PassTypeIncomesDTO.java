@@ -31,7 +31,7 @@ public class PassTypeIncomesDTO {
     }
 
     public Long getIncomes() {
-        return incomes;
+        return incomes / 100;
     }
 
     public void setIncomes(Long incomes) {
