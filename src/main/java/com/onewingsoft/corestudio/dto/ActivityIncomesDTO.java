@@ -53,12 +53,17 @@ public class ActivityIncomesDTO {
         return result;
     }
 
+    @JsonIgnore
     public Long getActivityIncomes() {
         Long result = 0L;
         for (PassTypeIncomesDTO passTypeIncomes : this.passTypeIncomes) {
-            result += passTypeIncomes.getIncomes() * 100;
+            result += passTypeIncomes.getIncomes();
         }
-        return result / 100;
+        return result;
+    }
+
+    public double getMoney() {
+        return (double) getActivityIncomes() / 100;
     }
 
     public Integer getActivitySessions() {

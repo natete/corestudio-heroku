@@ -1,5 +1,7 @@
 package com.onewingsoft.corestudio.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 01/01/16.
@@ -30,8 +32,13 @@ public class PassTypeIncomesDTO {
         this.numberOfSessions = numberOfSessions;
     }
 
+    @JsonIgnore
     public Long getIncomes() {
-        return incomes / 100;
+        return incomes;
+    }
+
+    public double getMoney() {
+        return (double) incomes / 100;
     }
 
     public void setIncomes(Long incomes) {

@@ -8,9 +8,9 @@
     angular.module('corestudioApp.accounts')
         .controller('AccountsController', AccountsController);
 
-    AccountsController.$inject = ['Accounts', 'Alerts'];
+    AccountsController.$inject = ['Accounts', 'Alerts', 'Config'];
 
-    function AccountsController(Accounts, Alerts) {
+    function AccountsController(Accounts, Alerts, Config) {
 
         var vm = this;
 
@@ -21,6 +21,7 @@
         vm.getAccounts = getAccounts;
         vm.getTotalExpenses = getTotalExpenses;
         vm.getTotalSalariesAmount = getTotalSalariesAmount;
+        vm.getTotalExpensesAmount = getTotalExpensesAmount;
         vm.previousMonth = previousMonth;
         vm.nextMonth = nextMonth;
 
@@ -42,6 +43,10 @@
                 vm.accounts = responseData;
             }, function (response) {
                 Alerts.addHeaderErrorAlert(response.headers());
+            });
+
+            Config.query({}, function(responseData) {
+                vm.frequencies = responseData.frequencies;
             });
         }
 
@@ -72,7 +77,7 @@
         function getTotalExpenses() {
             var total = 0;
 
-            total += vm.getTotalSalariesAmount();
+            total += vm.getTotalSalariesAmount() + vm.getTotalExpensesAmount();
 
             return total;
         }
@@ -83,6 +88,17 @@
             if(vm.accounts && vm.accounts.salaries) {
                 vm.accounts.salaries.forEach(function(salary) {
                    total += salary.numberOfSessions * vm.SALARY_PER_SESSION;
+                });
+            }
+            return total;
+        }
+
+        function getTotalExpensesAmount() {
+            var total = 0;
+
+            if(vm.accounts && vm.accounts.expenses) {
+                vm.accounts.expenses.forEach(function(expense) {
+                    total += expense.money;
                 });
             }
             return total;
