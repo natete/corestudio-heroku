@@ -1,17 +1,15 @@
 package com.onewingsoft.corestudio.business;
 
-import com.onewingsoft.corestudio.dto.ProfessorDTO;
+import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Professor;
 import com.onewingsoft.corestudio.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * Business logic to manage Professor.
+ *
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 02/01/16.
  */
@@ -21,32 +19,27 @@ public class ProfessorBusinessLogic extends BaseBusinessLogic<Professor> {
     @Autowired
     private ProfessorRepository professorRepository;
 
-    public Iterable<ProfessorDTO> getAllDtos() {
-        List<ProfessorDTO> result = new ArrayList<>();
-
-        Iterable<Professor> professors = professorRepository.findAll();
-
-        for (Professor professor : professors) {
-            ProfessorDTO dto = new ProfessorDTO();
-            dto.setName(professor.getFullName());
+    /**
+     * @see BaseBusinessLogic#validateEntity(BaseEntity).
+     */
+    @Override
+    protected void validateEntity(Professor professor) throws IllegalArgumentException {
+        if (professor.getName() == null) {
+            throw new IllegalArgumentException("Un profesor debe tener un nombre");
         }
-
-        return result;
+        if (professor.getFirstSurname() == null) {
+            throw new IllegalArgumentException("Un profesor debe tener un primer apellido");
+        }
+        if (professor.getFirstPhone() == null) {
+            throw new IllegalArgumentException("Un profesor debe tener al menos un teléfono principal");
+        }
     }
 
+    /**
+     * @see BaseBusinessLogic#getRepository().
+     */
     @Override
-    protected Professor processEntity(Professor professor) {
-        professor.setPasswordHash((new BCryptPasswordEncoder()).encode(professor.getPasswordHash()));
-        return professor;
-    }
-
-    @Override
-    protected void validateEntity(Professor entity) throws IllegalArgumentException {
-
-    }
-
-    @Override
-    protected PagingAndSortingRepository getRepository() {
+    protected PagingAndSortingRepository<Professor, Long> getRepository() {
         return professorRepository;
     }
 }

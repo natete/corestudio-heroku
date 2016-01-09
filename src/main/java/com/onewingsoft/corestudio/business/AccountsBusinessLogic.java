@@ -109,7 +109,7 @@ public class AccountsBusinessLogic {
      *
      * @param year  the year to retrieve data.
      * @param month the month to retrieve data.
-     * @return {@Link List} of {@Link SalaryDTO} containing the salaries for the given year and month.
+     * @return {@link List} of {@link SalaryDTO} containing the salaries for the given year and month.
      */
     private List<SalaryDTO> getSalaries(int year, int month) {
         List<SalaryDTO> salaries = new ArrayList<>();

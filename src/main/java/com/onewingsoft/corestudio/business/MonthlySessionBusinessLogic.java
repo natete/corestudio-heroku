@@ -1,5 +1,6 @@
 package com.onewingsoft.corestudio.business;
 
+import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.MonthlySession;
 import com.onewingsoft.corestudio.repository.MonthlySessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 /**
+ * Business logic to manage the sessions a professor gives per month
+ *
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 06/01/16.
  */
@@ -16,15 +19,20 @@ public class MonthlySessionBusinessLogic extends BaseBusinessLogic<MonthlySessio
     @Autowired
     private MonthlySessionRepository monthlySessionRepository;
 
-    public Iterable<MonthlySession> getSessionsByClientAndYear(final Long professorId, final Integer year) {
+    /**
+     * Retrieve the sessions the given professor has imparted the given year.
+     *
+     * @param professorId the professor whose sessions have to be retrieved.
+     * @param year        the year.
+     * @return the list of {@link MonthlySession} of the given professor for the given year.
+     */
+    public Iterable<MonthlySession> getSessionsByProfessorAndYear(final Long professorId, final Integer year) {
         return monthlySessionRepository.findByProfessorIdAndYear(professorId, year);
     }
 
-    @Override
-    protected MonthlySession processEntity(MonthlySession entity) {
-        return entity;
-    }
-
+    /**
+     * @see BaseBusinessLogic#validateEntity(BaseEntity).
+     */
     @Override
     protected void validateEntity(MonthlySession monthlySession) throws IllegalArgumentException {
         if (monthlySession.getProfessor() == null) {
@@ -36,13 +44,16 @@ public class MonthlySessionBusinessLogic extends BaseBusinessLogic<MonthlySessio
         if (monthlySession.getYear() == null) {
             throw new IllegalArgumentException("El año seleccionado tiene un valor inválido");
         }
-        if(monthlySession.getNumberOfSessions() == null || monthlySession.getNumberOfSessions() < 0) {
+        if (monthlySession.getNumberOfSessions() == null || monthlySession.getNumberOfSessions() < 0) {
             throw new IllegalArgumentException("El número de sesiones tiene un valor inválido");
         }
     }
 
+    /**
+     * @see BaseBusinessLogic#getRepository().
+     */
     @Override
-    protected PagingAndSortingRepository getRepository() {
+    protected PagingAndSortingRepository<MonthlySession, Long> getRepository() {
         return monthlySessionRepository;
     }
 }

@@ -22,7 +22,7 @@ public class MonthlySessionRestService extends BaseRestService<MonthlySession> {
 
     @RequestMapping(value = "/{professorId}/{year}", method = RequestMethod.GET)
     public Iterable<MonthlySession> getByProfessorAndYear(@PathVariable final Long professorId, @PathVariable final Integer year) {
-        return monthlySessionBusinessLogic.getSessionsByClientAndYear(professorId, year);
+        return monthlySessionBusinessLogic.getSessionsByProfessorAndYear(professorId, year);
     }
 
     @Override

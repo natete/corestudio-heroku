@@ -1,6 +1,7 @@
 package com.onewingsoft.corestudio.business;
 
 import com.onewingsoft.corestudio.dto.ClientDTO;
+import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Client;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.ClientRepository;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Business logic to manage clients.
+ */
 @Service
 public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
 
@@ -20,6 +24,10 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
     @Autowired
     PassBusinessLogic passBusinessLogic;
 
+    /**
+     * @see BaseBusinessLogic#getAllEntities().
+     * @return list of {@link ClientDTO} that includes pass information.
+     */
     @Override
     public Iterable<ClientDTO> getAllEntities() {
         Iterable<Client> clients = (Iterable<Client>) super.getAllEntities();
@@ -41,18 +49,27 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
         return result;
     }
 
-    @Override
-    protected Client processEntity(Client client) {
-        return client;
-    }
-
+    /**
+     * @see BaseBusinessLogic#validateEntity(BaseEntity).
+     */
     @Override
     protected void validateEntity(Client client) throws IllegalArgumentException {
-
+        if(client.getName() == null) {
+            throw new IllegalArgumentException("Un cliente debe tener un nombre");
+        }
+        if(client.getFirstSurname() == null) {
+            throw new IllegalArgumentException("Un cliente debe tener un primer apellido");
+        }
+        if(client.getFirstPhone() == null) {
+            throw new IllegalArgumentException("Un cliente debe tener al menos un teléfono principal");
+        }
     }
 
+    /**
+     * @see BaseBusinessLogic#getRepository().
+     */
     @Override
-    protected PagingAndSortingRepository getRepository() {
+    protected PagingAndSortingRepository<Client, Long> getRepository() {
         return clientRepository;
     }
 }

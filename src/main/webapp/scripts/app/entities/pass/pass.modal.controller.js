@@ -32,6 +32,7 @@
                     vm.updateGroups();
                     vm.pass.initialDate = new Date(vm.pass.initialDate);
                     vm.pass.paymentDate = new Date(vm.pass.paymentDate);
+                    vm.warn = 'Esta acción reiniciará todas las fechas del bono';
                 } else {
                     vm.pass = {};
                     vm.pass.paymentDate = new Date();
@@ -50,7 +51,7 @@
                 }
             });
 
-            vm.pass.price = vm.pass.passType.basePrice;
+            vm.pass.money = vm.pass.passType.money;
         }
 
         function savePass() {
