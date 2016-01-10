@@ -13,8 +13,8 @@
     function GroupController(Alerts, $uibModal, Config, Group, translateDaysFilter) {
 
         var vm = this;
-        vm.displayData = [].concat(vm.data);
 
+        vm.search = search;
         vm.openModal = openModal;
         vm.deleteGroup = deleteGroup;
 
@@ -26,9 +26,18 @@
             Config.query({}, function(data) {
                 vm.config = data;
             });
+        }
 
-            Group.query({}, function(data) {
-                vm.data = data;
+        function search(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            Group.query(pageRequest, function(responseData) {
+                vm.data = responseData.content;
+                tableState.pagination.numberOfPages = responseData.totalPages;
             });
         }
 
@@ -74,7 +83,6 @@
             var index = vm.data.indexOfId(group.id);
             Group.update(group, function (data, headers) {
                 vm.data[index] = data;
-                vm.displayData[index] = data;
                 Alerts.addHeaderSuccessAlert(headers());
             }, function (response) {
                 Alerts.addHeaderErrorAlert(response.headers());

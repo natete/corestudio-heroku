@@ -7,10 +7,12 @@ import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
 import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -26,8 +28,8 @@ public class PassRestService extends BaseRestService<Pass> {
     private PassBusinessLogic passBusinessLogic;
 
     @RequestMapping(value = "/getByClient/{clientId}", method = RequestMethod.GET)
-    public Iterable<Pass> getByClient(@PathVariable final Long clientId) {
-        return passBusinessLogic.getByClient(clientId);
+    public Page<Pass> getByClient(@PathVariable final Long clientId, @PathParam("page") int page, @PathParam("size") int size, @PathParam("sortBy") String sortBy, @PathParam("direction") String direction) {
+        return passBusinessLogic.getByClient(clientId, page, size, sortBy, direction);
     }
 
     @RequestMapping(value = "/getByClientAndYear/{clientId}/{year}", method = RequestMethod.GET)

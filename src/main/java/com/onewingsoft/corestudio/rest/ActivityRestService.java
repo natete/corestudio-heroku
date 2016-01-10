@@ -8,6 +8,7 @@ import com.onewingsoft.corestudio.utils.CorestudioException;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
 import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,8 +31,8 @@ public class ActivityRestService extends BaseRestService<Activity> {
     private ActivityBusinessLogic activityBusinessLogic;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Iterable<ActivityDTO> getAllDtos() {
-        return activityBusinessLogic.getAllDtos();
+    public Page<ActivityDTO> getAllDtos(int page, int size, String sortBy, String direction) {
+        return activityBusinessLogic.getAllDtos(page, size, sortBy, direction);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

@@ -25,7 +25,7 @@
                 WEDNESDAY: 'Miércoles',
                 THURSDAY: 'Jueves',
                 FRIDAY: 'Viernes',
-                SATURDAY: 'Aábado',
+                SATURDAY: 'Sábado',
                 SUNDAY: 'Domingo'
             };
 

@@ -13,8 +13,7 @@
     function ClientPassController(Pass, $stateParams, $uibModal, Alerts, Client) {
         var vm = this;
 
-        vm.displayData = [].concat(vm.data);
-
+        vm.search = search;
         vm.openModal = openModal;
         vm.getPendingSessions = getPendingSessions;
 
@@ -26,9 +25,19 @@
             }, function(response) {
                 Alerts.addHeaderErrorAlert(response.headers());
             });
-            Pass.getByClient({clientId: $stateParams.id}, function (data) {
-                vm.data = data;
-                vm.displayData = [].concat(vm.data);
+        }
+
+        function search(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            pageRequest.clientId = $stateParams.id;
+            Pass.getByClient(pageRequest, function (responseData) {
+                vm.data = responseData.content;
+                tableState.pagination.numberOfPages = responseData.totalPages;
             }, function(response) {
                 Alerts.addHeaderErrorAlert(response.headers());
             });

@@ -1,6 +1,9 @@
 package com.onewingsoft.corestudio.repository;
 
 import com.onewingsoft.corestudio.model.Expense;
+import com.onewingsoft.corestudio.utils.Frequency;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +24,8 @@ public interface ExpenseRepository extends PagingAndSortingRepository<Expense, L
 
     @Query("SELECT e FROM Expense e WHERE e.frequency <> 'EXCEPTIONAL' AND (e.expenseDate <= :initialDate) AND (e.endDate >= :date OR e.endDate IS NULL)")
     Iterable<Expense> findActiveRegularExpenseByDate(@Param("initialDate") Date initialDate, @Param("date")Date date);
+
+    Page<Expense> findByFrequency(@Param("frequency") Frequency frequency, Pageable pageRequest);
+
+    Page<Expense> findByFrequencyNot(@Param("frequency") Frequency exceptional, Pageable pageRequest);
 }

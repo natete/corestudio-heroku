@@ -13,8 +13,7 @@
     function Message($resource, MESSAGE_ENDPOINT) {
         return $resource(MESSAGE_ENDPOINT, {id: '@id'}, {
             'query': {
-                method: 'GET',
-                isArray: true
+                method: 'GET'
             },
             'delete': {method: 'DELETE'},
             'update': {method: 'PUT'}

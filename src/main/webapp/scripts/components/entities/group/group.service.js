@@ -12,7 +12,7 @@
 
     function Group($resource, GROUP_ENDPOINT) {
         return $resource(GROUP_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {method: 'GET'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

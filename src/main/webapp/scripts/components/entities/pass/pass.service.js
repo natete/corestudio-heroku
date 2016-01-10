@@ -14,8 +14,8 @@
 
         var cache = $cacheFactory('passCache');
 
-        return $resource(PASS_ENDPOINTS.PASS_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+        return $resource(PASS_ENDPOINTS.PASS_ENDPOINT, {clientId: '@clientId'}, {
+            'query': {method: 'GET'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -35,7 +35,6 @@
             },
             'getByClient': {
                 method: 'GET',
-                isArray: true,
                 cache: cache,
                 url: PASS_ENDPOINTS.GET_PASSES_BY_CLIENT_ENDPOINT
             },

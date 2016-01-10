@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.business.ClientBusinessLogic;
 import com.onewingsoft.corestudio.dto.ClientDTO;
 import com.onewingsoft.corestudio.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +18,8 @@ public class ClientRestService extends BaseRestService<Client> {
     private ClientBusinessLogic clientBusinessLogic;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Iterable<ClientDTO> getAllClients() {
-        return clientBusinessLogic.getAllDtos();
+    public Page<ClientDTO> getAllClients(int page, int size, String sortBy, String direction) {
+        return clientBusinessLogic.getAllDtos(page, size, sortBy, direction);
     }
 
     @Override

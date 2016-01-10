@@ -13,8 +13,7 @@
     function Expense($resource, EXPENSES_ENDPOINT) {
         return $resource(EXPENSES_ENDPOINT, {}, {
             'query': {
-                method: 'GET',
-                isArray: true
+                method: 'GET'
             },
             'get': {
                 method: 'GET',
@@ -28,6 +27,10 @@
             },
             'save': {
                 method: 'POST'
+            },
+            'findByFrequency': {
+                url: 'api/admin/expenses/getByFrequency',
+                method: 'GET'
             }
         });
     }

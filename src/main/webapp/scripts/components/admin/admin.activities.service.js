@@ -14,8 +14,7 @@
         return $resource(ACTIVITIES_ENDPOINT, {}, {
             'query': {
                 url: 'api/admin/activities/getAll',
-                method: 'GET',
-                isArray: true
+                method: 'GET'
             },
             'get': {
                 method: 'GET',

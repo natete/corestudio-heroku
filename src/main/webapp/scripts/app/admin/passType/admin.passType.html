@@ -2,25 +2,25 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-ticket "></i> Tipos de abono
+                <i class="fa fa-ticket "></i> Tipos de bono
             </li>
         </ol>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-9">
-        <table class="table table-hover" st-table="passTypes.displayData" st-safe-src="passTypes.data">
+        <table class="table table-hover" st-table="passTypes.data" st-pipe="passTypes.search">
             <thead>
             <tr>
-                <th class="text-center sortable-header" st-sort="activity">Actividad</th>
+                <th>Actividad</th>
                 <th class="text-center sortable-header" st-sort="numberOfSessions">Número de sesiones</th>
-                <th class="text-center sortable-header" st-sort="money">Precio base</th>
+                <th class="text-center sortable-header" st-sort="basePrice">Precio base</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="passType in passTypes.displayData">
-                <td class="vertical-middle text-center">{{passType.activity.name}}</td>
+            <tr ng-repeat="passType in passTypes.data">
+                <td class="vertical-middle">{{passType.activity.name}}</td>
                 <td class="vertical-middle text-center">{{passType.numberOfSessions}}</td>
                 <td class="vertical-middle text-center">{{passType.money | currency}}</td>
                 <td class="vertical-middle text-center">
@@ -39,6 +39,11 @@
                 </td>
             </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.repository.ActivityRepository;
 import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +28,24 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
      * Return all activities as a dto to include the number of related groups.
      *
      * @return all {@link ActivityDTO}
+     * @see BaseBusinessLogic#getAllEntities(int page, int size, String sortBy, String direction).
      */
-    public Iterable<ActivityDTO> getAllDtos() {
-        Iterable<Activity> activities = activityRepository.findAll();
+    public Page<ActivityDTO> getAllDtos(int page, int size, String sortBy, String direction) {
+
+        Sort sort = null;
+        if (sortBy != null) {
+            sort = new Sort(Sort.Direction.fromString(direction), sortBy);
+        }
+        Pageable pageRequest = new PageRequest(page, size, sort);
+
+        Page<Activity> activities = activityRepository.findAll(pageRequest);
         List<ActivityDTO> dtos = new ArrayList<>();
-        for (Activity activity : activities) {
+        for (Activity activity : activities.getContent()) {
             ActivityDTO dto = new ActivityDTO(activity);
             dtos.add(dto);
         }
-        return dtos;
+        Page<ActivityDTO> pageDTO = new PageImpl<>(dtos, pageRequest, activities.getTotalElements());
+        return pageDTO;
     }
 
     /**

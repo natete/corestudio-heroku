@@ -9,17 +9,17 @@
 </div>
 <div class="row">
     <form name="activitiesForm" class="col-xs-9">
-        <table st-table="activities.displayData" st-safe-src="activities.data" class="table">
+        <table st-table="activities.data" st-pipe="activities.search" class="table">
             <thead>
             <tr>
-                <th class="text-center" st-sort="name">Actividad</th>
+                <th>Actividad</th>
                 <th class="text-center">Actividad grupal</th>
-                <th class="text-center" st-sort="relatedGroups">Grupos vinculados</th>
+                <th class="text-center">Grupos vinculados</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="activity in activities.displayData">
+            <tr ng-repeat="activity in activities.data">
                 <td class="vertical-middle text-center">
                     <div class="form-group" show-errors="{showFeedback: false}">
                         <input type="text" name="name" ng-model="activity.activity.name" ng-disabled="!activity.editing"
@@ -58,6 +58,11 @@
                 </td>
             </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+                </tr>
+            </tfoot>
         </table>
 
     </form>

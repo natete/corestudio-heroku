@@ -21,7 +21,7 @@
         };
 
         return $resource(PROFESSOR_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {method: 'GET'},
             'get': {
                 method: 'GET',
                 cache: cache,

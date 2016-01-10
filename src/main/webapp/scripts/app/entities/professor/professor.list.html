@@ -7,18 +7,18 @@
         </ol>
     </div>
 </div>
-<div class="row" ng-if="professorsListCtrl.displayData.length">
+<div class="row" ng-show="professorsListCtrl.data.length">
     <div class="col-md-9">
-        <table st-table="professorsListCtrl.displayData" st-safe-src="professorsListCtrl.data" class="table  table-hover ">
+        <table st-table="professorsListCtrl.data" st-pipe="professorsListCtrl.search" class="table table-hover ">
             <thead>
             <tr>
                 <th></th>
-                <th class="pointer" st-sort="name">Nombre</th>
+                <th class="sortable-header" st-sort="name" st-sort-default="true">Nombre</th>
                 <th class="text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="professor in professorsListCtrl.displayData track by professor.id">
+            <tr ng-repeat="professor in professorsListCtrl.data track by professor.id">
                 <td class="vertical-middle"><img src="assets/images/face.png" alt="fotoProfesor" class="img-circle img-responsive profile-small center-block"/></td>
                 <td class="vertical-middle">{{ professor.name + ' ' + professor.firstSurname}}</td>
                 <td class="text-center vertical-middle">
@@ -27,12 +27,16 @@
                 </td>
             </tr>
             </tbody>
-
+            <tfoot>
+            <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+            </tr>
+            </tfoot>
         </table>
 
     </div>
 </div>
-<div class="row" ng-if="!professorsListCtrl.displayData.length">
+<div class="row" ng-if="!professorsListCtrl.data.length">
     <div class="col-md-9">
         <h4 class="text-muted text-center">No hay profesores registrados</h4>
     </div>

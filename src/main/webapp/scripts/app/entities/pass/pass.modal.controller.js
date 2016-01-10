@@ -25,8 +25,8 @@
         ///////////////////////
 
         function activate() {
-            PassType.query({}, function (data) {
-                vm.passTypes = data;
+            PassType.query({}, function (responseData) {
+                vm.passTypes = responseData.content;
                 if(params.pass) {
                     vm.pass = params.pass;
                     vm.updateGroups();

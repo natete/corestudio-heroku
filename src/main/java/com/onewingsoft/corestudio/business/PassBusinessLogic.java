@@ -10,6 +10,10 @@ import com.onewingsoft.corestudio.utils.Day;
 import com.onewingsoft.corestudio.utils.LoggerUtil;
 import com.onewingsoft.corestudio.utils.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -94,8 +98,14 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
      * @param clientId the client whose passes have to be retrieved.
      * @return the list of {@link Pass} of the given client.
      */
-    public Iterable<Pass> getByClient(Long clientId) {
-        return passRepository.findByClientId(clientId);
+    public Page<Pass> getByClient(Long clientId, int page, int size, String sortBy, String direction) {
+        Sort sort = null;
+        if (sortBy != null) {
+            sort = new Sort(Sort.Direction.fromString(direction), sortBy);
+        }
+        Pageable pageRequest = new PageRequest(page, size, sort);
+
+        return passRepository.findByClientId(clientId, pageRequest);
     }
 
     /**

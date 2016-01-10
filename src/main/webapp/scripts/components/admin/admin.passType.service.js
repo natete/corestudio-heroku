@@ -12,7 +12,7 @@
 
     function PassType($resource, PASS_TYPES_ENDPOINT) {
         return $resource(PASS_TYPES_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {method: 'GET'},
             'get': {
                 method: 'GET',
                 transformResponse: function(data) {

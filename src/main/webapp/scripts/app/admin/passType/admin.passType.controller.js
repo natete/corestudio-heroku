@@ -14,18 +14,21 @@
         var vm = this;
 
         vm.data = [];
-        vm.displayData = [].concat(vm.data);
 
+        vm.search = search;
         vm.openModal = openModal;
         vm.deletePassType = deletePassType;
 
-        activate();
-
-        ////////////////////////////
-
-        function activate() {
-            PassType.query({}, function (data) {
-                vm.data = data;
+        function search(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            PassType.query(pageRequest, function (responseData) {
+                vm.data = responseData.content;
+                tableState.pagination.numberOfPages = responseData.totalPages;
             });
         }
 

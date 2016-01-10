@@ -18,13 +18,13 @@
 <div class="tab-content spaced-tab-content ">
     <div role="tabpanel" class="tab-pane active fade in" id="exceptionalExpenses">
         <h4 class="text-muted text-center" ng-if="!expensesCtrl.expenses.length">No hay gastos registrados registrados</h4>
-        <div class="col-xs-8 col-xs-offset-2" ng-if="expensesCtrl.expenses.length">
-            <table class="table table-hover table-condensed" st-table="expensesCtrl.expenses">
+        <div class="col-xs-8 col-xs-offset-2" ng-show="expensesCtrl.expenses.length">
+            <table class="table table-hover table-condensed" st-table="expensesCtrl.expenses" st-pipe="expensesCtrl.searchExceptional">
                 <thead>
                 <tr>
                     <th st-sort="description" class="pointer">Concepto</th>
                     <th st-sort="expenseDate" class="pointer text-center">Fecha</th>
-                    <th st-sort="money" class="pointer text-center">Cantidad</th>
+                    <th st-sort="amount" class="pointer text-center">Cantidad</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -39,21 +39,26 @@
                     </td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+                </tr>
+                </tfoot>
             </table>
         </div>
 
     </div>
     <div role="tabpanel"  class="tab-pane fade" id="regularExpenses">
         <div class="col-xs-8 col-xs-offset-2">
-            <h4 class="text-muted animate-if text-center" ng-if="!expensesCtrl.regularExpenses.length">No hay gastos periódicos registrados</h4>
-            <table class="table table-hover table-condensed animate-if" st-table="expensesCtrl.regularExpenses" ng-if="expensesCtrl.regularExpenses.length">
+            <h4 class="text-muted animate-if text-center" ng-show="!expensesCtrl.regularExpenses.length">No hay gastos periódicos registrados</h4>
+            <table class="table table-hover table-condensed animate-if" st-table="expensesCtrl.regularExpenses" ng-show="expensesCtrl.regularExpenses.length" st-pipe="expensesCtrl.searchRegular">
                 <thead>
                 <tr>
                     <th st-sort="description" class="pointer">Concepto</th>
                     <th st-sort="frequency" class="pointer">Frecuencia</th>
                     <th st-sort="expenseDate" class="pointer text-center">Fecha</th>
                     <th st-sort="endDate" class="pointer text-center">Fecha final</th>
-                    <th st-sort="money" class="pointer text-center">Cantidad</th>
+                    <th st-sort="amount" class="pointer text-center">Cantidad</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -70,6 +75,11 @@
                     </td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>

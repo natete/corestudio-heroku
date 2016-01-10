@@ -15,8 +15,7 @@
         return $resource(CLIENT_ENDPOINT, {}, {
             'query': {
                 url: 'api/clients/getAll',
-                method: 'GET',
-                isArray: true
+                method: 'GET'
             },
             'get': {
                 method: 'GET',

@@ -9,18 +9,18 @@
 </div>
 <div class="row">
     <div class="col-md-9">
-        <table st-table="clients.displayData" st-safe-src="clients.data" class="table  table-hover ">
+        <table st-table="clients.data" st-pipe="clients.search" class="table  table-hover ">
             <thead>
             <tr>
                 <th></th>
-                <th class="pointer" st-sort="name">Nombre</th>
-                <th class="pointer text-center" st-sort="pendingSessions">Clases pendientes</th>
-                <th class="pointer text-center" st-sort="lastDate">Fecha fin de bono</th>
+                <th class="sortable-header" st-sort="name">Nombre</th>
+                <th class="text-center">Clases pendientes</th>
+                <th class="text-center">Fecha fin de bono</th>
                 <th class="text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="client in clients.displayData track by client.id">
+            <tr ng-repeat="client in clients.data track by client.id">
                 <td class="vertical-middle"><img src="assets/images/face.png" alt="fotoCliente" class="img-circle img-responsive profile-small center-block"/></td>
                 <td class="vertical-middle">{{ client.name + ' ' + client.firstSurname }}</td>
                 <td class="vertical-middle text-center" ng-class="{'text-danger': client.pendingSessions === 0}">{{ client.pendingSessions }}</td>
@@ -31,7 +31,11 @@
                 </td>
             </tr>
             </tbody>
-
+            <tfoot>
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+                </tr>
+            </tfoot>
         </table>
 
     </div>

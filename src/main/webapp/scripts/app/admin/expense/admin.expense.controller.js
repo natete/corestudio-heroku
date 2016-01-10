@@ -8,14 +8,16 @@
     angular.module('corestudioApp.admin')
         .controller('ExpenseController', ExpenseController);
 
-    ExpenseController.$inject = ['Expense', 'Alerts', '$uibModal', 'Config'];
+    ExpenseController.$inject = ['Expense', 'Alerts', '$uibModal', 'Config', 'Overlay'];
 
-    function ExpenseController(Expense, Alerts, $uibModal, Config) {
+    function ExpenseController(Expense, Alerts, $uibModal, Config, Overlay) {
         var vm = this;
 
         vm.regularExpenses = [];
         vm.expenses = [];
 
+        vm.searchExceptional = searchExceptional;
+        vm.searchRegular = searchRegular;
         vm.openModal = openModal;
 
 
@@ -23,18 +25,51 @@
         activate();
 
         function activate() {
-            Expense.query({}, function(responseData) {
-                processExpenses(responseData);
-            }, function(response) {
-                Alerts.addHeaderErrorAlert(response.headers());
-            });
-
             Config.query({}, function(data) {
                vm.config = data;
             });
         }
 
+        function searchRegular(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            pageRequest.frequency = 'REGULAR';
+            Overlay.on();
+            Expense.findByFrequency(pageRequest, function(responseData) {
+                vm.regularExpenses = responseData.content;
+                tableState.pagination.numberOfPages = responseData.totalPages;
+                Overlay.off();
+            }, function(response) {
+                Alerts.addHeaderErrorAlert(response.headers());
+                Overlay.off();
+            });
+        }
+
+        function searchExceptional(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            pageRequest.frequency = 'EXCEPTIONAL';
+            Overlay.on();
+            Expense.findByFrequency(pageRequest, function(responseData) {
+                vm.expenses = responseData.content;
+                tableState.pagination.numberOfPages = responseData.totalPages;
+                Overlay.off();
+            }, function(response) {
+                Alerts.addHeaderErrorAlert(response.headers());
+                Overlay.off();
+            });
+        }
+
         function processExpenses(expenses) {
+            vm.expenses = [];
             expenses.forEach(function(expense) {
                 if(expense.frequency === 'EXCEPTIONAL') {
                     vm.expenses.push(processExpense(expense));

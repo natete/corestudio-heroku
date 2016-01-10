@@ -5,10 +5,12 @@ import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.utils.CorestudioException;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
 import com.onewingsoft.corestudio.utils.LoggerUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -20,8 +22,8 @@ import java.net.URISyntaxException;
 public abstract class BaseRestService<T extends BaseEntity> {
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<T> getAll() {
-        return (Iterable<T>) this.getBusinessLogic().getAllEntities();
+    public Page<T> getAll(@PathParam("page") Integer page, @PathParam("size") Integer size, @PathParam("sortBy") String sortBy, @PathParam("direction") String direction) {
+        return this.getBusinessLogic().getAllEntities(page, size, sortBy, direction);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

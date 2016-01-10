@@ -4,6 +4,10 @@ import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.utils.CorestudioException;
 import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
@@ -16,11 +20,22 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
 
     /**
      * Retrieves all entities of the given T class.
-     *
-     * @return {@link Iterable} of entities.
+     * @param page the page number to be returned.
+     * @param size the maximum results.
+     * @param sortBy the sort condition.
+     * @param direction the sort direction.
+     * @return {@link Page} of entities.
      */
-    public Iterable<T> getAllEntities() {
-        return this.getRepository().findAll();
+    public Page<T> getAllEntities(Integer page, Integer size, String sortBy, String direction) {
+        Sort sort = null;
+        if (sortBy != null) {
+            sort = new Sort(Sort.Direction.fromString(direction), sortBy);
+        }
+        Pageable pageRequest = null;
+        if(page != null) {
+            pageRequest = new PageRequest(page, size, sort);
+        }
+        return this.getRepository().findAll(pageRequest);
     }
 
     /**

@@ -14,8 +14,9 @@
         var vm = this;
 
         vm.data = [];
-        vm.displayData = [].concat(vm.data);
 
+
+        vm.search = search;
         vm.addActivity = addActivity;
         vm.cancelEdition = cancelEdition;
         vm.saveActivity = saveActivity;
@@ -27,8 +28,21 @@
         /////////////////////////
 
         function activate() {
-            Activity.query({}, function(data) {
-                vm.data = data;
+            //Activity.query({page: 0, size: 10}, function(data) {
+            //    vm.data = data.content;
+            //});
+        }
+
+        function search(tableState) {
+            var pagination = tableState.pagination;
+            var pageRequest = {};
+            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.size = pagination.number || 10;
+            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
+            Activity.query(pageRequest, function(response) {
+                vm.data = response.content;
+                tableState.pagination.numberOfPages = response.totalPages;
             });
         }
 

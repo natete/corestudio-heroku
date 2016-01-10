@@ -1,6 +1,8 @@
 package com.onewingsoft.corestudio.repository;
 
 import com.onewingsoft.corestudio.model.Pass;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,7 @@ import java.util.Date;
 @Repository
 public interface PassRepository extends PagingAndSortingRepository<Pass, Long> {
 
-    Iterable<Pass> findByClientId(Long clientId);
+    Page<Pass> findByClientId(Long clientId, Pageable pageable);
 
     @Query("SELECT p FROM Pass p WHERE p.client.id = :clientId AND (year(p.initialDate) = :year OR year(p.lastDate) = :year)")
     Iterable<Pass> findByClientIdAndYear(@Param("clientId") Long clientId, @Param("year") Integer year);

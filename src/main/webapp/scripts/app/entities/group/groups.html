@@ -15,18 +15,18 @@
 
 <div class="row">
     <div class="col-md-9">
-        <table st-table="groups.displayData" st-safe-src="groups.data" class="table  table-hover ">
+        <table st-table="groups.data" st-pipe="groups.search" class="table table-hover ">
             <thead>
             <tr>
-                <th st-sort="days" class="text-center">Días</th>
-                <th st-sort="hour" class="text-center">Hora</th>
-                <th st-sort="level" class="text-center">Nivel</th>
-                <th st-sort="activity" class="text-center">Actividad</th>
-                <th class="text-center">Acciones</th>
+                <th st-sort="days" class="text-center sortable-header">Días</th>
+                <th st-sort="hour" class="text-center sortable-header">Hora</th>
+                <th st-sort="level" class="text-center sortable-header">Nivel</th>
+                <th class="text-center">Actividad</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="group in groups.displayData track by group.id">
+            <tr ng-repeat="group in groups.data track by group.id">
                 <td class="vertical-middle text-center">{{ group.days | daysArray }}</td>
                 <td class="vertical-middle text-center">{{ group.hour | hour }}</td>
                 <td class="vertical-middle text-center">{{ group.level | level }}</td>
@@ -47,7 +47,11 @@
                 </td>
             </tr>
             </tbody>
-
+            <tfoot>
+            <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4"></td>
+            </tr>
+            </tfoot>
         </table>
 
     </div>
