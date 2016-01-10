@@ -24,10 +24,8 @@
     "font-awesome": "fontawesome#~4.4.0",
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
-    "angular-material": "~0.11.4",
     "angular-cookies": "~1.4.7",
     "angular-resource": "~1.4.7",
-    "angular-ui-grid": "~3.0.7",
     "angular-smart-table": "~2.1.4",
     "angular-bootstrap-show-errors": "~2.3.0",
     "angular-messages": "~1.4.7",
@@ -35,9 +33,6 @@
     "angular-locale_es-es": "*",
     "angular-animate": "~1.4.8",
     "angular-treasure-overlay-spinner": "~1.1.0",
-    "moment": "~2.10.6",
     "checklist-model": "~0.8.0",
-    "sockjs": "~0.3.4",
-    "stomp-websocket": "~2.3.4"
   }
 }

@@ -18,14 +18,6 @@
         vm.search = search;
         vm.isConsumedPass = isConsumedPass;
 
-        activate();
-
-        ////////////////
-
-        function activate() {
-            vm.data = Client.query();
-        }
-
         function search(tableState) {
             var pagination = tableState.pagination;
             var pageRequest = {};
