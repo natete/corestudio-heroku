@@ -68,25 +68,6 @@
             });
         }
 
-        function processExpenses(expenses) {
-            vm.expenses = [];
-            expenses.forEach(function(expense) {
-                if(expense.frequency === 'EXCEPTIONAL') {
-                    vm.expenses.push(processExpense(expense));
-                } else {
-                    vm.regularExpenses.push(processExpense(expense));
-                }
-            });
-        }
-
-        function processExpense(expense) {
-            expense.expenseDate = new Date(expense.expenseDate);
-            if(expense.endDate) {
-                expense.endDate = new Date(expense.endDate);
-            }
-            return expense;
-        }
-
         function openModal(expense) {
             var modalInstance = $uibModal.open({
                templateUrl: 'scripts/app/admin/expense/admin.expense.modal.html',

@@ -26,7 +26,7 @@
         function activate() {
             if(expense) {
                 vm.title = 'Editar gasto';
-                vm.expense = expense;
+                vm.expense = processExpense(expense);
             } else {
                 vm.title = 'Guardar gasto';
                 vm.expense = { expenseDate: new Date() };
@@ -49,6 +49,14 @@
                     });
                 }
             }
+        }
+
+        function processExpense(expense) {
+            expense.expenseDate = new Date(expense.expenseDate);
+            if(expense.endDate) {
+                expense.endDate = new Date(expense.endDate);
+            }
+            return expense;
         }
 
         function dismiss() {
