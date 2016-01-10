@@ -2,11 +2,21 @@ package com.onewingsoft.corestudio.rest;
 
 import com.onewingsoft.corestudio.business.ActivityBusinessLogic;
 import com.onewingsoft.corestudio.business.BaseBusinessLogic;
+import com.onewingsoft.corestudio.dto.ActivityDTO;
 import com.onewingsoft.corestudio.model.Activity;
+import com.onewingsoft.corestudio.utils.CorestudioException;
+import com.onewingsoft.corestudio.utils.HeaderUtil;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -18,6 +28,47 @@ public class ActivityRestService extends BaseRestService<Activity> {
 
     @Autowired
     private ActivityBusinessLogic activityBusinessLogic;
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public Iterable<ActivityDTO> getAllDtos() {
+        return activityBusinessLogic.getAllDtos();
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResponseEntity<ActivityDTO> createActivity(@RequestBody Activity activity) {
+        try {
+            ActivityDTO activityDTO = activityBusinessLogic.createActivity(activity);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.createEntityAlert(this.getMessage(activityDTO)))
+                    .body(activityDTO);
+        } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (CorestudioException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert(e.getMessage()))
+                    .body(null);
+        }
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public ResponseEntity<ActivityDTO> updateActivity(@RequestBody Activity activity) {
+        try {
+            ActivityDTO activityDTO = activityBusinessLogic.updateActivity(activity);
+            return ResponseEntity.created(new URI(this.getUri()))
+                    .headers(HeaderUtil.updateEntityAlert(this.getMessage(activityDTO)))
+                    .body(activityDTO);
+        } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (CorestudioException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.errorAlert(e.getMessage()))
+                    .body(null);
+        }
+    }
 
     @RequestMapping(value = "/getGroupActivities", method = RequestMethod.GET)
     public Iterable<Activity> getGroupActivities() {

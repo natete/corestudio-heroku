@@ -2,10 +2,13 @@ package com.onewingsoft.corestudio.business;
 
 import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.BaseEntity;
+import com.onewingsoft.corestudio.model.CoreMessage;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.PassRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import com.onewingsoft.corestudio.utils.Day;
-import com.onewingsoft.corestudio.utils.LoggingUtil;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
+import com.onewingsoft.corestudio.utils.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,28 +30,37 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
     @Autowired
     private PassRepository passRepository;
 
-    private final int WEEK_DAYS = 7;
+    private static final int WEEK_DAYS = 7;
 
     @Autowired
     private HolidayBusinessLogic holidayBusinessLogic;
+
+    @Autowired
+    private MessageBusinessLogic messageBusinessLogic;
 
     /**
      * Creates a Pass and sets the dates pending dates if it is a group pass.
      *
      * @param pass the pass to be persisted.
      * @return the persisted {@link Pass}
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
     @Override
-    public Pass createEntity(Pass pass) throws IllegalArgumentException {
+    public Pass createEntity(Pass pass) throws CorestudioException {
         if (pass.getId() == null) {
             this.validateEntity(pass);
-            pass = processEntity(pass);
-            pass = passRepository.save(pass);
-            LoggingUtil.writeInfoLog("Created pass " + pass.toString());
-            return pass;
+            processEntity(pass);
+            Pass persistedPass = passRepository.save(pass);
+
+            // Send a message to inform of the pass creation
+            CoreMessage message = new CoreMessage("Se ha registrado un bono a nombre de: " + persistedPass.getClient());
+            message.setPriority(Priority.INFO);
+            messageBusinessLogic.createMessage(message);
+
+            LoggerUtil.writeInfoLog("Created pass " + persistedPass.toString());
+            return persistedPass;
         } else {
-            throw new IllegalArgumentException("Un nuevo registro no debe tener id");
+            throw new CorestudioException("Un nuevo registro no debe tener id");
         }
     }
 
@@ -57,19 +69,22 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
      *
      * @param pass the pass to be updated.
      * @return the updated {@link Pass}
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
     @Override
-    public Pass updateEntity(Pass pass) throws IllegalArgumentException {
+    public Pass updateEntity(Pass pass) throws CorestudioException {
         this.validateEntity(pass);
-        pass = this.processEntity(pass);
+        processEntity(pass);
         Pass persistedEntity = passRepository.findOne(pass.getId());
         if (persistedEntity == null) {
-            throw new IllegalArgumentException("La entidad que quiere actualizar no existe");
+            throw new CorestudioException("La entidad que quiere actualizar no existe");
         } else {
-            pass = passRepository.save(pass);
-            LoggingUtil.writeInfoLog("Updated pass " + pass.toString());
-            return pass;
+            Pass persistedPass = passRepository.save(pass);
+            CoreMessage message = new CoreMessage("Se ha modificado un bono a nombre de: " + persistedPass.getClient());
+            message.setPriority(Priority.INFO);
+            messageBusinessLogic.createMessage(message);
+            LoggerUtil.writeInfoLog("Updated pass " + pass.toString());
+            return persistedPass;
         }
     }
 
@@ -100,7 +115,7 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
      * @param pass the pass to be processed.
      * @return the processed {@link Pass}.
      */
-    private Pass processEntity(Pass pass) {
+    private void processEntity(Pass pass) {
         if (pass.isGroupPass()) {
             // Clears all dates
             pass.getConsumedDates().clear();
@@ -121,7 +136,6 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
 
             pass.setLastDate(lastDate);
         }
-        return pass;
     }
 
     /**
@@ -188,8 +202,19 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         pass.updateLastDate(nextDate);
 
         passRepository.save(pass);
-        LoggingUtil.writeInfoLog("Frozen date: " +clientDateDTO.getDate() + " for " + pass.getClient().toString());
+        LoggerUtil.writeInfoLog("Frozen date: " + getDatePassInfo(clientDateDTO, pass));
         return pass;
+    }
+
+    /**
+     * Creates a String to append to the logging message.
+     *
+     * @param clientDateDTO the client to retrieve the info.
+     * @param pass          the pass to retrieve the info.
+     * @return the message to be appended.
+     */
+    private String getDatePassInfo(ClientDateDTO clientDateDTO, Pass pass) {
+        return clientDateDTO.getDate() + " for " + pass.getClient().toString();
     }
 
     /**
@@ -198,7 +223,7 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
      * @param clientDateDTO client and date to be consumed.
      * @return the modified Pass.
      */
-    public Pass consumeDate(ClientDateDTO clientDateDTO) throws IllegalArgumentException {
+    public Pass consumeDate(ClientDateDTO clientDateDTO) throws CorestudioException {
 
         Pass pass = passRepository.findFirstByClientIdAndInitialDateLessThanEqualOrderByInitialDateDesc(clientDateDTO.getClientId(), clientDateDTO.getDate());
 
@@ -218,15 +243,13 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
                 pass.setLastDate(clientDateDTO.getDate());
             }
 
-            if (pass.getPendingSessions() == 0) {
-                // TODO create message
-            }
+            sendMessages(pass);
 
             passRepository.save(pass);
-            LoggingUtil.writeInfoLog("Consumed date: " +clientDateDTO.getDate() + " for " + pass.getClient().toString());
+            LoggerUtil.writeInfoLog("Consumed date: " + pass.getClient().toString());
             return pass;
         } else {
-            throw new IllegalArgumentException("El cliente no tiene clases disponibles en el bono");
+            throw new CorestudioException("El cliente no tiene clases disponibles en el bono");
         }
     }
 
@@ -253,7 +276,7 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         }
         pass.releaseDate(clientDateDTO.getDate());
         passRepository.save(pass);
-        LoggingUtil.writeInfoLog("Released date: " +clientDateDTO.getDate() + " for " + pass.getClient().toString());
+        LoggerUtil.writeInfoLog("Released date: " + pass.getClient().toString());
         return pass;
     }
 
@@ -271,11 +294,11 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
         cal.set(Calendar.MILLISECOND, 0);
         Date currentDate = cal.getTime();
 
-        LoggingUtil.writeInfoLog("Scheduled task taking place on " + currentDate);
+        LoggerUtil.writeInfoLog("Scheduled task taking place on " + currentDate);
 
         Iterable<Pass> passes = passRepository.findByPendingDate(currentDate);
 
-        LoggingUtil.writeInfoLog("Updating " + ((Collection<?>) passes).size() + " passes");
+        LoggerUtil.writeInfoLog("Updating " + ((Collection<?>) passes).size() + " passes");
 
         for (Pass pass : passes) {
             pass.getPendingDates().remove(currentDate);
@@ -284,9 +307,24 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
                 pass.setLastDate(currentDate);
             }
             passRepository.save(pass);
-            if (pass.getPendingSessions() == 0) {
-                // TODO create message
-            }
+            sendMessages(pass);
+        }
+    }
+
+    /**
+     * Sends messages to inform if the pass is expired or about to explire.
+     *
+     * @param pass the pass about which the messages must be sent.
+     */
+    private void sendMessages(Pass pass) {
+        if (pass.getPendingSessions() == 0) {
+            CoreMessage message = new CoreMessage("El bono a nombre de: " + pass.getClient() + " ha expirado");
+            message.setPriority(Priority.DANGER);
+            messageBusinessLogic.createMessage(message);
+        } else if (pass.getPendingSessions() <= 2) {
+            CoreMessage message = new CoreMessage("El bono a nombre de: " + pass.getClient() + " está a punto de expirar. " + pass.getPendingSessions() + " sesiones pendientes.");
+            message.setPriority(Priority.WARN);
+            messageBusinessLogic.createMessage(message);
         }
     }
 
@@ -294,24 +332,24 @@ public class PassBusinessLogic extends BaseBusinessLogic<Pass> {
      * @see BaseBusinessLogic#validateEntity(BaseEntity).
      */
     @Override
-    protected void validateEntity(Pass entity) {
+    protected void validateEntity(Pass entity) throws CorestudioException {
         if (entity.getInitialDate() == null) {
-            throw new IllegalArgumentException("Un bono debe tener una fecha de inicio");
+            throw new CorestudioException("Un bono debe tener una fecha de inicio");
         }
         if (entity.getPaymentDate() == null) {
-            throw new IllegalArgumentException("Un bono debe tener una fecha de pago");
+            throw new CorestudioException("Un bono debe tener una fecha de pago");
         }
         if (entity.getPrice() == null || entity.getPrice() <= 0) {
-            throw new IllegalArgumentException("Un bono debe tener un precio");
+            throw new CorestudioException("Un bono debe tener un precio");
         }
         if (entity.getClient() == null) {
-            throw new IllegalArgumentException("Un bono debe pertenecer a un cliente");
+            throw new CorestudioException("Un bono debe pertenecer a un cliente");
         }
         if (entity.getPassType() == null) {
-            throw new IllegalArgumentException("Un bono debe ser de un tipo");
+            throw new CorestudioException("Un bono debe ser de un tipo");
         }
         if (entity.getPassType().isGroupActivity() && entity.getGroup() == null) {
-            throw new IllegalArgumentException("Este tipo de bono debe tener un grupo asociado");
+            throw new CorestudioException("Este tipo de bono debe tener un grupo asociado");
         }
     }
 

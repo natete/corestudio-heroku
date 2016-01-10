@@ -1,7 +1,8 @@
 package com.onewingsoft.corestudio.business;
 
 import com.onewingsoft.corestudio.model.BaseEntity;
-import com.onewingsoft.corestudio.utils.LoggingUtil;
+import com.onewingsoft.corestudio.utils.CorestudioException;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -18,7 +19,7 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
      *
      * @return {@link Iterable} of entities.
      */
-    public Iterable<?> getAllEntities() {
+    public Iterable<T> getAllEntities() {
         return this.getRepository().findAll();
     }
 
@@ -37,16 +38,16 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
      *
      * @param entity the entity to be persisted.
      * @return An object that represents the persisted entity. It is an object to enable extension.
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
-    public Object createEntity(T entity) throws IllegalArgumentException {
+    public T createEntity(T entity) throws CorestudioException {
         if (entity.getId() == null) {
             this.validateEntity(entity);
-            entity = this.getRepository().save(entity);
-            LoggingUtil.writeInfoLog("Created entity " + entity.toString());
-            return entity;
+            T persistedEntity = this.getRepository().save(entity);
+            LoggerUtil.writeInfoLog("Created entity " + persistedEntity.toString());
+            return persistedEntity;
         } else {
-            throw new IllegalArgumentException("Un nuevo registro no debe tener id");
+            throw new CorestudioException("Un nuevo registro no debe tener id");
         }
     }
 
@@ -55,16 +56,16 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
      *
      * @param entity the entity to be updated.
      * @return An object that represents the updated entity. It is an object to enable extension.
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
-    public Object updateEntity(final T entity) throws IllegalArgumentException {
+    public T updateEntity(final T entity) throws CorestudioException {
         this.validateEntity(entity);
         T persistedEntity = this.getRepository().findOne(entity.getId());
         if (persistedEntity == null) {
-            throw new IllegalArgumentException("La entidad que quiere actualizar no existe");
+            throw new CorestudioException("La entidad que quiere actualizar no existe");
         } else {
             persistedEntity = this.getRepository().save(entity);
-            LoggingUtil.writeInfoLog("Updated entity " + entity.toString());
+            LoggerUtil.writeInfoLog("Updated entity " + entity.toString());
             return persistedEntity;
         }
     }
@@ -74,16 +75,18 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
      *
      * @param id the id of the entity to be deleted.
      * @return The deleted entity.
-     * @throws IllegalArgumentException if the entity does not exist.
+     * @throws CorestudioException if the entity does not exist.
      */
-    public T deleteEntity(final Long id) throws IllegalArgumentException {
+    public T deleteEntity(final Long id) throws CorestudioException {
         try {
             T entity = getEntity(id);
             this.getRepository().delete(id);
-            LoggingUtil.writeInfoLog("Deleted entity " + entity.toString());
+            LoggerUtil.writeInfoLog("Deleted entity " + entity.toString());
             return entity;
         } catch (EmptyResultDataAccessException e) {
-            throw new IllegalArgumentException("La entidad que quiere eliminar no existe");
+            String message = "La entidad que quiere eliminar no existe";
+            LoggerUtil.writeErrorLog(message, e);
+            throw new CorestudioException(message);
         }
     }
 
@@ -91,9 +94,9 @@ public abstract class BaseBusinessLogic<T extends BaseEntity> {
      * Validates the given entity.
      *
      * @param entity the entity to be validated.
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
-    protected abstract void validateEntity(T entity) throws IllegalArgumentException;
+    protected abstract void validateEntity(T entity) throws CorestudioException;
 
     /**
      * Get the repository to perform database actions.

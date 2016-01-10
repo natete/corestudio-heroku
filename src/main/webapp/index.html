@@ -27,7 +27,7 @@
 
 <div id="wrapper">
     <!-- Navigation -->
-    <div ng-include="'scripts/components/navbar/navbar.html'"></div>
+    <div ng-include="'scripts/app/navbar/navbar.html'"></div>
 
 
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
@@ -101,8 +101,11 @@
 <script src="scripts/app/entities/professor/professor.sessions.controller.js"></script>
 <script src="scripts/app/admin/expense/admin.expense.controller.js"></script>
 <script src="scripts/app/admin/expense/admin.expense.modal.controller.js"></script>
+<script src="scripts/app/message/message.module.js"></script>
+<script src="scripts/app/message/message.routes.js"></script>
+<script src="scripts/app/message/message.controller.js"></script>
+<script src="scripts/app/navbar/navbar.controller.js"></script>
 
-<script src="scripts/components/navbar/navbar.controller.js"></script>
 <script src="scripts/components/alerts/alerts.service.js"></script>
 <script src="scripts/components/overlay/overlay.service.js"></script>
 <script src="scripts/components/entities/client/client.service.js"></script>
@@ -128,6 +131,7 @@
 <script src="scripts/components/password/password.directive.js"></script>
 <script src="scripts/components/entities/professor/professor.monthlySession.service.js"></script>
 <script src="scripts/components/admin/admin.expense.service.js"></script>
+<script src="scripts/components/message/message.service.js"></script>
 
 </body>
 

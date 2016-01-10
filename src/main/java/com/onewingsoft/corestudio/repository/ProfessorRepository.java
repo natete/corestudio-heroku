@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProfessorRepository extends PagingAndSortingRepository<Professor, Long> {
-	
-	Professor findByUsername(String username);
 
+    Professor findByUsername(String username);
 }

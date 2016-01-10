@@ -10,7 +10,7 @@
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider) {
         $stateProvider
             .state('admin', {
                 url: '/admin',

@@ -9,6 +9,14 @@ public class ProfessorDTO {
     private String name;
     private Integer pendingSessions;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

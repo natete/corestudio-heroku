@@ -13,6 +13,7 @@
     function Activity($resource, ACTIVITIES_ENDPOINT) {
         return $resource(ACTIVITIES_ENDPOINT, {}, {
             'query': {
+                url: 'api/admin/activities/getAll',
                 method: 'GET',
                 isArray: true
             },
@@ -24,9 +25,11 @@
                 }
             },
             'update': {
+                url: 'api/admin/activities/update',
                 method: 'PUT'
             },
             'save': {
+                url: 'api/admin/activities/save',
                 method: 'POST'
             },
             'getGroupActivities': {

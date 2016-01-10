@@ -3,6 +3,7 @@ package com.onewingsoft.corestudio.business;
 import com.onewingsoft.corestudio.dto.ActivityDTO;
 import com.onewingsoft.corestudio.model.Activity;
 import com.onewingsoft.corestudio.repository.ActivityRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,7 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
      *
      * @return all {@link ActivityDTO}
      */
-    @Override
-    public Iterable<ActivityDTO> getAllEntities() {
+    public Iterable<ActivityDTO> getAllDtos() {
         Iterable<Activity> activities = activityRepository.findAll();
         List<ActivityDTO> dtos = new ArrayList<>();
         for (Activity activity : activities) {
@@ -43,10 +43,9 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
      *
      * @param activity the activity to be persisted.
      * @return {@link ActivityDTO} the activity persisted.
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
-    @Override
-    public ActivityDTO createEntity(final Activity activity) throws IllegalArgumentException {
+    public ActivityDTO createActivity(final Activity activity) throws CorestudioException {
         return new ActivityDTO((Activity) super.createEntity(activity));
     }
 
@@ -55,10 +54,9 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
      *
      * @param activity the activity to be updated.
      * @return {@link ActivityDTO} the activity updated.
-     * @throws IllegalArgumentException if validation fails.
+     * @throws CorestudioException if validation fails.
      */
-    @Override
-    public ActivityDTO updateEntity(final Activity activity) throws IllegalArgumentException {
+    public ActivityDTO updateActivity(final Activity activity) throws CorestudioException {
         return new ActivityDTO((Activity) super.updateEntity(activity));
     }
 
@@ -72,9 +70,9 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
     }
 
     @Override
-    protected void validateEntity(Activity entity) throws IllegalArgumentException {
+    protected void validateEntity(Activity entity) throws CorestudioException {
         if (entity.getName() == null) {
-            throw new IllegalArgumentException("El nombre es necesario");
+            throw new CorestudioException("El nombre es necesario");
         }
     }
 

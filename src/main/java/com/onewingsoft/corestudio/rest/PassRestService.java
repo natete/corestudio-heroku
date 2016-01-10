@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.business.PassBusinessLogic;
 import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,10 @@ public class PassRestService extends BaseRestService<Pass> {
                     .headers(HeaderUtil.createAlert("Se ha congelado la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest().header(e.getMessage()).body(null);
         }
 
@@ -57,8 +60,10 @@ public class PassRestService extends BaseRestService<Pass> {
                     .headers(HeaderUtil.createAlert("Se ha consumido la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.createAlert(e.getMessage()))
                     .body(null);
@@ -73,8 +78,10 @@ public class PassRestService extends BaseRestService<Pass> {
                     .headers(HeaderUtil.createAlert("Se ha liberado la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.createAlert(e.getMessage()))
                     .body(null);

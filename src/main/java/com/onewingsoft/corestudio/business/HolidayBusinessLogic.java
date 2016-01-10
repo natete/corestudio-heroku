@@ -3,6 +3,7 @@ package com.onewingsoft.corestudio.business;
 import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Holiday;
 import com.onewingsoft.corestudio.repository.HolidayRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -49,9 +50,9 @@ public class HolidayBusinessLogic extends BaseBusinessLogic<Holiday> {
      * @see BaseBusinessLogic#validateEntity(BaseEntity).
      */
     @Override
-    protected void validateEntity(Holiday holiday) throws IllegalArgumentException {
+    protected void validateEntity(Holiday holiday) throws CorestudioException {
         if (holiday.getDate() == null) {
-            throw new IllegalArgumentException("La fecha es necesaria");
+            throw new CorestudioException("La fecha es necesaria");
         }
     }
 

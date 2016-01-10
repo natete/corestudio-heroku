@@ -11,8 +11,8 @@
     Expense.$inject = ['$resource', 'EXPENSES_ENDPOINT'];
 
     function Expense($resource, EXPENSES_ENDPOINT) {
-         return $resource(EXPENSES_ENDPOINT, {}, {
-             'query': {
+        return $resource(EXPENSES_ENDPOINT, {}, {
+            'query': {
                 method: 'GET',
                 isArray: true
             },
@@ -29,7 +29,7 @@
             'save': {
                 method: 'POST'
             }
-         });
+        });
     }
 
 })();

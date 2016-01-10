@@ -1,0 +1,25 @@
+.read-message {
+  opacity: 0.6;
+}
+
+.message-icon {
+  font-size: 30px;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.message-area {
+  display: inline-block;
+}
+
+.message-body {
+  font-weight: bold;
+}
+
+.message-actions {
+  font-size: 25px;
+  opacity: 0.8;
+  &:first-child {
+    margin-right: 15px;
+  }
+}

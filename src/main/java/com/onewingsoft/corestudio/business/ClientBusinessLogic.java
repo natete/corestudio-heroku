@@ -5,6 +5,7 @@ import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Client;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.repository.ClientRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,11 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
     PassBusinessLogic passBusinessLogic;
 
     /**
-     * @see BaseBusinessLogic#getAllEntities().
      * @return list of {@link ClientDTO} that includes pass information.
+     * @see BaseBusinessLogic#getAllEntities().
      */
-    @Override
-    public Iterable<ClientDTO> getAllEntities() {
-        Iterable<Client> clients = (Iterable<Client>) super.getAllEntities();
+    public Iterable<ClientDTO> getAllDtos() {
+        Iterable<Client> clients = super.getAllEntities();
         List<ClientDTO> result = new ArrayList<>();
 
         for (Client client : clients) {
@@ -53,15 +53,15 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
      * @see BaseBusinessLogic#validateEntity(BaseEntity).
      */
     @Override
-    protected void validateEntity(Client client) throws IllegalArgumentException {
-        if(client.getName() == null) {
-            throw new IllegalArgumentException("Un cliente debe tener un nombre");
+    protected void validateEntity(Client client) throws CorestudioException {
+        if (client.getName() == null) {
+            throw new CorestudioException("Un cliente debe tener un nombre");
         }
-        if(client.getFirstSurname() == null) {
-            throw new IllegalArgumentException("Un cliente debe tener un primer apellido");
+        if (client.getFirstSurname() == null) {
+            throw new CorestudioException("Un cliente debe tener un primer apellido");
         }
-        if(client.getFirstPhone() == null) {
-            throw new IllegalArgumentException("Un cliente debe tener al menos un teléfono principal");
+        if (client.getFirstPhone() == null) {
+            throw new CorestudioException("Un cliente debe tener al menos un teléfono principal");
         }
     }
 

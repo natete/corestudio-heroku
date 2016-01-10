@@ -170,20 +170,32 @@ public class AccountsBusinessLogic {
                     result.add(expense);
                     break;
                 case WEEKLY:
-                    while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-                        cal.add(Calendar.DATE, 1);
-                    }
-                    while ((cal.get(Calendar.MONTH) + 1) == month) {
-                        if (expense.getExpenseDate().before(cal.getTime()) || expense.getExpenseDate().equals(cal.getTime())) {
-                            result.add(expense);
-                        }
-                        cal.add(Calendar.DATE, 7);
-                    }
+                    processWeeklyExpense(month, cal, result, expense);
                     break;
                 default:
                     break;
             }
         }
         return result;
+    }
+
+    /**
+     * Processes the given expense to add it to the list of expenses if it should be added considering the dates.
+     *
+     * @param month    the month of the requested expenses.
+     * @param cal      {@link Calendar} instance to calculate dates.
+     * @param expenses the list of expenses where the expense has to be added.
+     * @param expense  the expense to be processed.
+     */
+    private void processWeeklyExpense(int month, Calendar cal, List<Expense> expenses, Expense expense) {
+        while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            cal.add(Calendar.DATE, 1);
+        }
+        while ((cal.get(Calendar.MONTH) + 1) == month) {
+            if (expense.getExpenseDate().before(cal.getTime()) || expense.getExpenseDate().equals(cal.getTime())) {
+                expenses.add(expense);
+            }
+            cal.add(Calendar.DATE, 7);
+        }
     }
 }

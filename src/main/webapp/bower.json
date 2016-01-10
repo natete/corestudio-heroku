@@ -36,6 +36,8 @@
     "angular-animate": "~1.4.8",
     "angular-treasure-overlay-spinner": "~1.1.0",
     "moment": "~2.10.6",
-    "checklist-model": "~0.8.0"
+    "checklist-model": "~0.8.0",
+    "sockjs": "~0.3.4",
+    "stomp-websocket": "~2.3.4"
   }
 }

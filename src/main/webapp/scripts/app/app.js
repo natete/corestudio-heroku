@@ -16,7 +16,8 @@
         'corestudioApp.modals',
         'corestudioApp.pass',
         'corestudioApp.accounts',
-        'corestudioApp.professor'
+        'corestudioApp.professor',
+        'corestudioApp.message'
     ]);
 
 

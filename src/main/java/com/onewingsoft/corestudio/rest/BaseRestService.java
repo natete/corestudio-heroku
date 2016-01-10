@@ -2,7 +2,9 @@ package com.onewingsoft.corestudio.rest;
 
 import com.onewingsoft.corestudio.business.BaseBusinessLogic;
 import com.onewingsoft.corestudio.model.BaseEntity;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +20,13 @@ import java.net.URISyntaxException;
 public abstract class BaseRestService<T extends BaseEntity> {
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<?> getAll() {
+    public Iterable<T> getAll() {
         return (Iterable<T>) this.getBusinessLogic().getAllEntities();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getEntity(@PathVariable Long id) {
-        Object entity = this.getBusinessLogic().getEntity(id);
+    public ResponseEntity<T> getEntity(@PathVariable Long id) {
+        T entity = this.getBusinessLogic().getEntity(id);
         if (null != entity) {
             return ResponseEntity.ok().body(entity);
         } else {
@@ -35,15 +37,17 @@ public abstract class BaseRestService<T extends BaseEntity> {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> saveEntity(@RequestBody T entity) {
+    public ResponseEntity<T> saveEntity(@RequestBody T entity) {
         try {
-            Object result = this.getBusinessLogic().createEntity(entity);
+            T result = this.getBusinessLogic().createEntity(entity);
             return ResponseEntity.created(new URI(this.getUri()))
                     .headers(HeaderUtil.createEntityAlert(this.getMessage(result)))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (IllegalArgumentException e) {
+        } catch (CorestudioException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.errorAlert(e.getMessage()))
                     .body(null);
@@ -51,15 +55,17 @@ public abstract class BaseRestService<T extends BaseEntity> {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> updateEntity(@RequestBody T entity) {
+    public ResponseEntity<T> updateEntity(@RequestBody T entity) {
         try {
-            Object result = this.getBusinessLogic().updateEntity(entity);
+            T result = this.getBusinessLogic().updateEntity(entity);
             return ResponseEntity.created(new URI(this.getUri()))
                     .headers(HeaderUtil.updateEntityAlert(this.getMessage(result)))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (IllegalArgumentException e) {
+        } catch (CorestudioException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.errorAlert(e.getMessage()))
                     .body(null);
@@ -67,22 +73,24 @@ public abstract class BaseRestService<T extends BaseEntity> {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteEntity(@PathVariable Long id) {
+    public ResponseEntity<T> deleteEntity(@PathVariable Long id) {
         try {
-            Object result = this.getBusinessLogic().deleteEntity(id);
+            T result = this.getBusinessLogic().deleteEntity(id);
             return ResponseEntity.created(new URI(this.getUri()))
                     .headers(HeaderUtil.deleteEntityAlert(this.getMessage(result)))
                     .body(null);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (IllegalArgumentException e) {
+        } catch (CorestudioException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.errorAlert(e.getMessage()))
                     .body(null);
         }
     }
 
-    protected abstract BaseBusinessLogic getBusinessLogic();
+    protected abstract BaseBusinessLogic<T> getBusinessLogic();
 
     protected abstract String getUri();
 

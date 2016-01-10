@@ -3,6 +3,7 @@ package com.onewingsoft.corestudio.business;
 import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Professor;
 import com.onewingsoft.corestudio.repository.ProfessorRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,15 @@ public class ProfessorBusinessLogic extends BaseBusinessLogic<Professor> {
      * @see BaseBusinessLogic#validateEntity(BaseEntity).
      */
     @Override
-    protected void validateEntity(Professor professor) throws IllegalArgumentException {
+    protected void validateEntity(Professor professor) throws CorestudioException {
         if (professor.getName() == null) {
-            throw new IllegalArgumentException("Un profesor debe tener un nombre");
+            throw new CorestudioException("Un profesor debe tener un nombre");
         }
         if (professor.getFirstSurname() == null) {
-            throw new IllegalArgumentException("Un profesor debe tener un primer apellido");
+            throw new CorestudioException("Un profesor debe tener un primer apellido");
         }
         if (professor.getFirstPhone() == null) {
-            throw new IllegalArgumentException("Un profesor debe tener al menos un teléfono principal");
+            throw new CorestudioException("Un profesor debe tener al menos un teléfono principal");
         }
     }
 

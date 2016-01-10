@@ -43,9 +43,9 @@ public class ActivityIncomesDTO {
 
     @JsonIgnore
     private PassTypeIncomesDTO getPassTypeIncomes(String passType) {
-        for (PassTypeIncomesDTO passTypeIncomes : this.passTypeIncomes) {
-            if (passType.equals(passTypeIncomes.getPassTypeName())) {
-                return passTypeIncomes;
+        for (PassTypeIncomesDTO incomes : this.passTypeIncomes) {
+            if (passType.equals(incomes.getPassTypeName())) {
+                return incomes;
             }
         }
         PassTypeIncomesDTO result = new PassTypeIncomesDTO(passType);
@@ -56,8 +56,8 @@ public class ActivityIncomesDTO {
     @JsonIgnore
     public Long getActivityIncomes() {
         Long result = 0L;
-        for (PassTypeIncomesDTO passTypeIncomes : this.passTypeIncomes) {
-            result += passTypeIncomes.getIncomes();
+        for (PassTypeIncomesDTO incomes : this.passTypeIncomes) {
+            result += incomes.getIncomes();
         }
         return result;
     }
@@ -68,8 +68,8 @@ public class ActivityIncomesDTO {
 
     public Integer getActivitySessions() {
         Integer result = 0;
-        for (PassTypeIncomesDTO passTypeIncomes : this.passTypeIncomes) {
-            result += passTypeIncomes.getNumberOfSessions();
+        for (PassTypeIncomesDTO incomes : this.passTypeIncomes) {
+            result += incomes.getNumberOfSessions();
         }
         return result;
     }

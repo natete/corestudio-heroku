@@ -25,5 +25,6 @@ angular.module("corestudioApp")
     .constant("PROFESSOR_ENDPOINT", "api/professor/:id")
     .constant("MONTHLY_SESSION_ENDPOINT", "api/professor/session/:professorId/:year")
     .constant("EXPENSES_ENDPOINT", "api/admin/expenses/:id")
+    .constant("MESSAGE_ENDPOINT", "api/messages/:id")
 
 ;

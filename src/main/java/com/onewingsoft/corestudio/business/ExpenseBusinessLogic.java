@@ -3,6 +3,7 @@ package com.onewingsoft.corestudio.business;
 import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Expense;
 import com.onewingsoft.corestudio.repository.ExpenseRepository;
+import com.onewingsoft.corestudio.utils.CorestudioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -32,12 +33,12 @@ public class ExpenseBusinessLogic extends BaseBusinessLogic<Expense> {
      * @see BaseBusinessLogic#validateEntity(BaseEntity).
      */
     @Override
-    protected void validateEntity(Expense expense) throws IllegalArgumentException {
+    protected void validateEntity(Expense expense) throws CorestudioException {
         if (expense.getExpenseDate() == null) {
-            throw new IllegalArgumentException("Un gasto debe tener una fecha de registro");
+            throw new CorestudioException("Un gasto debe tener una fecha de registro");
         }
         if (expense.getAmount() == null || expense.getAmount() <= 0) {
-            throw new IllegalArgumentException("Un gasto debe tener una cantidad mayor que cero");
+            throw new CorestudioException("Un gasto debe tener una cantidad mayor que cero");
         }
     }
 
