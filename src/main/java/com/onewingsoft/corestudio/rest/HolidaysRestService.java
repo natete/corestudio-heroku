@@ -4,41 +4,25 @@ import com.onewingsoft.corestudio.business.BaseBusinessLogic;
 import com.onewingsoft.corestudio.business.HolidayBusinessLogic;
 import com.onewingsoft.corestudio.model.Holiday;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
  * @since 22/11/15.
  */
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/holidays")
 public class HolidaysRestService extends BaseRestService<Holiday> {
 
     @Autowired
     private HolidayBusinessLogic holidayBusinessLogic;
 
-    @RequestMapping(value = "/holidays/{year}", method = RequestMethod.GET)
-    public Iterable<Holiday> getAllHolidays(@PathVariable Integer year) {
-        return super.getAll();
-    }
-
-
-    @RequestMapping(value = "holidays", method = RequestMethod.POST)
-    public ResponseEntity<Holiday> createHoliday(@Validated @RequestBody final Holiday holiday) {
-        return super.saveEntity(holiday);
-    }
-
-    @RequestMapping(value = "holidays", method = RequestMethod.PUT)
-    public ResponseEntity<Holiday> updateHoliday(@Validated @RequestBody final Holiday holiday) {
-        return super.updateEntity(holiday);
-    }
-
-    @RequestMapping(value = "holidays/{id}", method = RequestMethod.DELETE)
-    public void deleteHoliday(@PathVariable final Long id) {
-        super.deleteEntity(id);
-//        holidayBusinessLogic.deleteHoliday(id);
+    @RequestMapping(value = "/getByYear/{year}", method = RequestMethod.GET)
+    public Iterable<Holiday> getByYear(@PathVariable Integer year) {
+        return holidayBusinessLogic.getByYear(year);
     }
 
     @Override
@@ -52,12 +36,7 @@ public class HolidaysRestService extends BaseRestService<Holiday> {
     }
 
     @Override
-    protected String getEntityName() {
-        return "día festivo";
-    }
-
-    @Override
-    protected String getParameter(Holiday holiday) {
-        return holiday.getDate().toString();
+    protected String getMessage(Object holiday) {
+        return " el festivo " + holiday.toString();
     }
 }

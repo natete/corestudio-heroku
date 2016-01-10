@@ -5,13 +5,13 @@ package com.onewingsoft.corestudio.utils;
  * @since 08/12/15.
  */
 public enum Day {
+    SUNDAY(1, "Do"),
     MONDAY(2, "Lu"),
     TUESDAY(3, "Ma"),
     WEDNESDAY(4, "Mi"),
     THURSDAY(5, "Ju"),
     FRIDAY(6, "Vi"),
-    SATURDAY(7, "Sa"),
-    SUNDAY(1, "Do");
+    SATURDAY(7, "Sa");
 
     private int value;
     private String shortName;
@@ -26,6 +26,11 @@ public enum Day {
     }
 
     public String getShortName() {
+        return shortName;
+    }
+
+    @Override
+    public String toString() {
         return shortName;
     }
 }

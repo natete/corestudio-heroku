@@ -12,7 +12,7 @@
 
     function Accounts($resource, ACCOUNTS_ENDPOINT) {
         return $resource(ACCOUNTS_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true}
+            'query': {method: 'GET'}
         });
     }
 

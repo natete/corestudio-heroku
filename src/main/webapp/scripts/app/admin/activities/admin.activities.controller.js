@@ -27,7 +27,7 @@
         /////////////////////////
 
         function activate() {
-            Activity.getAllDtos({}, function(data) {
+            Activity.query({}, function(data) {
                 vm.data = data;
             });
         }
@@ -75,21 +75,21 @@
             }
 
             if (activity.isNew) {
-                Activity.save(activity.activity, function (savedActivity) {
-                    activity.activity.id = savedActivity.id;
+                Activity.save(activity.activity, function (responseData, headers) {
+                    activity.activity.id = responseData.activity.id;
                     activity.isNew = false;
                     activity.editing = false;
-                    Alerts.addSuccessAlert('Se ha guardado la actividad ' + savedActivity.activity.name);
-                }, function () {
-                    Alerts.addErrorAlert('Ha habido un error creando la actividad ' + activity.name);
+                    Alerts.addHeaderSuccessAlert(headers());
+                }, function (response) {
+                    Alerts.addHeaderErrorAlert(response.headers());
                 });
             } else {
-                Activity.update(activity.activity, function (savedActivity) {
+                Activity.update(activity.activity, function (responseData, headers) {
                     activity.isNew = false;
                     activity.editing = false;
-                    Alerts.addSuccessAlert('Se ha actualizado la actividad ' + savedActivity.activity.name);
-                }, function () {
-                    Alerts.addErrorAlert('Ha habido un error actualizando la actividad ' + activity.name);
+                    Alerts.addHeaderSuccessAlert(headers());
+                }, function (response) {
+                    Alerts.addHeaderErrorAlert(response.headers());
                 });
             }
         }
@@ -114,11 +114,11 @@
             modalInstance.result.then(function (result) {
                 if (result === 'OK') {
                     var index = vm.data.indexOf(activity);
-                    Activity.delete({id: activity.activity.id}, function () {
+                    Activity.delete({id: activity.activity.id}, function (responseData, headers) {
                         vm.data.splice(index, 1);
-                        Alerts.addSuccessAlert('Se ha eliminado la actividad ' + activity.activity.name);
-                    }, function () {
-                        Alerts.addErrorAlert('Ha habido un error eliminando la actividad ' + activity.activity.name);
+                        Alerts.addHeaderSuccessAlert(headers());
+                    }, function (response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
                     });
                 }
             });

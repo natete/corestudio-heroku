@@ -10,13 +10,12 @@
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
     function config($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider
-            .when('/clients', '/clients/list');
+        $urlRouterProvider.when('/clients', '/clients/list');
+
         $stateProvider
             .state('clients', {
                 url: '/clients',
                 templateUrl: 'scripts/app/entities/client/clients.html'
-                //abstract: true,
             })
             .state('clients.list', {
                 url: '/list',
@@ -33,12 +32,8 @@
             .state('clients.viewClient', {
                 url: '/:id/:permalink/view',
                 templateUrl: 'scripts/app/entities/client/client.details.html',
-                //abstract: true,
                 controller: 'ClientTabsController',
                 controllerAs: 'tabs'
-                //params: {
-                //    client: undefined
-                //}
             })
             .state('clients.viewClient.personal', {
                 url: '/personal',
@@ -48,7 +43,7 @@
                 url: '/payments',
                 templateUrl: 'scripts/app/entities/client/client.pass.html',
                 controller: 'ClientPassController',
-                controllerAs: 'vm'
+                controllerAs: 'passCtrl'
             })
             .state('clients.viewClient.calendar', {
                 url: '/calendar',
@@ -61,9 +56,6 @@
                 templateUrl: 'scripts/app/entities/client/client.form.html',
                 controller: 'ClientFormController',
                 controllerAs: 'clientForm'
-                //params: {
-                //    client: undefined
-                //}
             });
     }
 })();

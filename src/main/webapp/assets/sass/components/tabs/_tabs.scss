@@ -1,4 +1,4 @@
-.dynamic-tabs{
+.dynamic-tabs {
 
   ul.nav.nav-tabs.nav-justified > li.active > a {
     background: white;
@@ -19,5 +19,10 @@
     border-radius: 0 0 10px 10px;
     margin-bottom: 15px;
   }
+}
+
+.spaced-tab-content {
+  margin-bottom: 15px;
+  padding-top: 30px;
 }
 

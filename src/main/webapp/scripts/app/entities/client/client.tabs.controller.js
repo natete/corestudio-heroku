@@ -26,8 +26,8 @@
                 if ($stateParams.client === undefined) {
                     Client.get({id: $stateParams.id}, function (client) {
                         vm.client = parseDates(client);
-                    }, function () {
-                        Alerts.addErrorAlert('Se ha producido un error accediendo al cliente')
+                    }, function (response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
                     });
                 } else {
                     vm.client = $stateParams.client;
@@ -37,8 +37,7 @@
             vm.tabs = [
                 { title: 'Personal', route: 'clients.viewClient.personal', active: false },
                 { title: 'Pagos', route: 'clients.viewClient.passes', active: false },
-                { title: 'Calendario', route: 'clients.viewClient.calendar', active: false },
-                { title: 'Comentarios', route: '', active: false }
+                { title: 'Calendario', route: 'clients.viewClient.calendar', active: false }
             ]
         }
 
@@ -54,7 +53,7 @@
 
         function active(route){
             return $state.is(route);
-        };
+        }
 
         function parseDates(client) {
             if (client.birthdate) {

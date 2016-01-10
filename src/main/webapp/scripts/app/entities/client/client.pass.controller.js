@@ -23,14 +23,14 @@
         function activate() {
             Client.get({id: $stateParams.id}, function(data) {
                 vm.client = data;
-            }, function() {
-                Alerts.addErrorAlert("El cliente solicitado no existe");
+            }, function(response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
             Pass.getByClient({clientId: $stateParams.id}, function (data) {
                 vm.data = data;
                 vm.displayData = [].concat(vm.data);
-            }, function() {
-                Alerts.addErrorAlert("El cliente solicitado no existe");
+            }, function(response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
@@ -64,22 +64,22 @@
         }
 
         function createPass(pass) {
-            Pass.save(pass, function (data) {
+            Pass.save(pass, function (data, headers) {
                 vm.data.push(data);
                 vm.displayData = [].concat(vm.data);
-                Alerts.addSuccessAlert('Se ha creado el bono de ' + pass.client.name + ' ' + pass.client.firstSurname);
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error creando el bono');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function updatePass(pass, index) {
-            Pass.update(pass, function (data) {
+            Pass.update(pass, function (data, headers) {
                 vm.data[index] = data;
                 vm.displayData = [].concat(vm.data);
-                Alerts.addSuccessAlert('Se ha actualizado el bono de ' + pass.client.name + ' ' + pass.client.firstSurname);
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error actualizando el bono');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 

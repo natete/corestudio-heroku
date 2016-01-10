@@ -1,12 +1,12 @@
 package com.onewingsoft.corestudio.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Entity to persist the holidays the user wants the application to consider
@@ -40,5 +40,11 @@ public class Holiday extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, new Locale("es", "ES"));
+        return formatter.format(date) + " " + description;
     }
 }

@@ -29,6 +29,10 @@
                 vm.passTypes = data;
                 if(params.pass) {
                     vm.pass = params.pass;
+                    vm.updateGroups();
+                    vm.pass.initialDate = new Date(vm.pass.initialDate);
+                    vm.pass.paymentDate = new Date(vm.pass.paymentDate);
+                    vm.warn = 'Esta acción reiniciará todas las fechas del bono';
                 } else {
                     vm.pass = {};
                     vm.pass.paymentDate = new Date();
@@ -42,9 +46,12 @@
         function updateGroups() {
             Group.getGroupsByActivity({activityId: vm.pass.passType.activity.id}, function (data) {
                 vm.groups = data;
+                if(vm.pass.group) {
+                    vm.pass.group = vm.groups[vm.groups.indexOfId(vm.pass.group.id)];
+                }
             });
 
-            vm.pass.price = vm.pass.passType.basePrice;
+            vm.pass.money = vm.pass.passType.money;
         }
 
         function savePass() {

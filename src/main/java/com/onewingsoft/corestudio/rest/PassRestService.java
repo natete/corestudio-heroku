@@ -5,10 +5,10 @@ import com.onewingsoft.corestudio.business.PassBusinessLogic;
 import com.onewingsoft.corestudio.dto.ClientDateDTO;
 import com.onewingsoft.corestudio.model.Pass;
 import com.onewingsoft.corestudio.utils.HeaderUtil;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -25,22 +25,6 @@ public class PassRestService extends BaseRestService<Pass> {
     @Autowired
     private PassBusinessLogic passBusinessLogic;
 
-    @Override
-    @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Pass> getAll() {
-        return super.getAll();
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Pass> savePass(@Validated @RequestBody final Pass pass) {
-        return super.saveEntity(pass);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Pass> updatePass(@Validated @RequestBody final Pass pass) {
-        return super.updateEntity(pass);
-    }
-
     @RequestMapping(value = "/getByClient/{clientId}", method = RequestMethod.GET)
     public Iterable<Pass> getByClient(@PathVariable final Long clientId) {
         return passBusinessLogic.getByClient(clientId);
@@ -51,21 +35,18 @@ public class PassRestService extends BaseRestService<Pass> {
         return passBusinessLogic.getByClientAndYear(clientId, year);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deletePass(@PathVariable final Long id) {
-        super.deleteEntity(id);
-    }
-
     @RequestMapping(value = "/freezeDate", method = RequestMethod.POST)
     public ResponseEntity<Pass> freezeDate(@RequestBody ClientDateDTO clientDateDTO) {
         try {
             Pass result = passBusinessLogic.freezeDate(clientDateDTO);
             return ResponseEntity.created(new URI(this.getUri()))
-                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .headers(HeaderUtil.createAlert("Se ha congelado la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest().header(e.getMessage()).body(null);
         }
 
@@ -76,13 +57,15 @@ public class PassRestService extends BaseRestService<Pass> {
         try {
             Pass result = passBusinessLogic.consumeDate(clientDateDTO);
             return ResponseEntity.created(new URI(this.getUri()))
-                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .headers(HeaderUtil.createAlert("Se ha consumido la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createAlert(e.getMessage(), null))
+                    .headers(HeaderUtil.createAlert(e.getMessage()))
                     .body(null);
         }
     }
@@ -92,20 +75,17 @@ public class PassRestService extends BaseRestService<Pass> {
         try {
             Pass result = passBusinessLogic.releaseDate(clientDateDTO);
             return ResponseEntity.created(new URI(this.getUri()))
-                    .headers(HeaderUtil.createEntityUpdateAlert(this.getEntityName(), this.getParameter(result)))
+                    .headers(HeaderUtil.createAlert("Se ha liberado la fecha: " + clientDateDTO.toString()))
                     .body(result);
         } catch (URISyntaxException e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
+            LoggerUtil.writeErrorLog(e.getMessage(), e);
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createAlert(e.getMessage(), null))
+                    .headers(HeaderUtil.createAlert(e.getMessage()))
                     .body(null);
         }
-    }
-
-    @RequestMapping(value = "/consumeCurrentDate", method = RequestMethod.GET)
-    public void consumeCurrentDate() {
-        passBusinessLogic.consumeCurrentDate();
     }
 
     @Override
@@ -119,12 +99,7 @@ public class PassRestService extends BaseRestService<Pass> {
     }
 
     @Override
-    protected String getEntityName() {
-        return " abono ";
-    }
-
-    @Override
-    protected String getParameter(Pass pass) {
-        return pass.getInitialDate() + " " + pass.getPrice();
+    protected String getMessage(Object pass) {
+        return " el abono " + pass.toString();
     }
 }

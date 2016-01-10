@@ -13,7 +13,11 @@
         var cache = $cacheFactory('clientCache');
 
         return $resource(CLIENT_ENDPOINT, {}, {
-            'query': {method: 'GET', isArray: true},
+            'query': {
+                url: 'api/clients/getAll',
+                method: 'GET',
+                isArray: true
+            },
             'get': {
                 method: 'GET',
                 cache: cache,

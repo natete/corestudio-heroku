@@ -1,7 +1,7 @@
 package com.onewingsoft.corestudio.rest;
 
 import com.onewingsoft.corestudio.business.AccountsBusinessLogic;
-import com.onewingsoft.corestudio.dto.AccountsDTO;
+import com.onewingsoft.corestudio.dto.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class AccountsRestService {
     private AccountsBusinessLogic accountsBusinessLogic;
 
     @RequestMapping(value = "/{year}/{month}", method = RequestMethod.GET)
-    Iterable<AccountsDTO> getAccounts(@PathVariable final int year, @PathVariable final int month) {
+    AccountDTO getAccounts(@PathVariable final int year, @PathVariable final int month) {
         return accountsBusinessLogic.getAccounts(year, month);
     }
 }

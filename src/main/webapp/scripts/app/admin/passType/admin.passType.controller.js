@@ -57,21 +57,21 @@
         }
 
         function createPassType(passType) {
-            PassType.save(passType, function (data) {
+            PassType.save(passType, function (data, headers) {
                 vm.data.push(data);
-                Alerts.addSuccessAlert('Se ha creado el tipo de abono ' + data.activity.name + ' ' + data.numberOfSessions + ' sesiones.');
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error creando el tipo de abono');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
         function updatePassType(passType, index) {
-            PassType.update(passType, function (data) {
+            PassType.update(passType, function (data, headers) {
                 vm.data[index] = data;
                 vm.displayData = [].concat(vm.data);
-                Alerts.addSuccessAlert('Se ha actualizado el tipo de abono ' + data.activity.name + ' ' + data.numberOfSessions + ' sesiones.');
-            }, function () {
-                Alerts.addErrorAlert('Se ha producido un error actualizando el tipo de abono');
+                Alerts.addHeaderSuccessAlert(headers());
+            }, function (response) {
+                Alerts.addHeaderErrorAlert(response.headers());
             });
         }
 
@@ -96,11 +96,11 @@
             modalInstance.result.then(function (result) {
                 if(result === 'OK') {
                     var index = vm.data.indexOf(passType);
-                    PassType.delete({id: passType.id}, function () {
+                    PassType.delete({id: passType.id}, function (data, headers) {
                         vm.data.splice(index, 1);
-                        Alerts.addSuccessAlert('Se ha eliminado el tipo de abono ' + passType.activity.name + ' ' + passType.numberOfSessions + ' sesiones.');
-                    }, function () {
-                        Alerts.addErrorAlert('Se ha producido un error eliminando el tipo de abono');
+                        Alerts.addHeaderSuccessAlert(headers());
+                    }, function (response) {
+                        Alerts.addHeaderErrorAlert(response.headers());
                     });
                 }
             });

@@ -1,26 +1,31 @@
 package com.onewingsoft.corestudio.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.onewingsoft.corestudio.business.BaseBusinessLogic;
+import com.onewingsoft.corestudio.business.ProfessorBusinessLogic;
 import com.onewingsoft.corestudio.model.Professor;
-import com.onewingsoft.corestudio.repository.ProfessorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/professor")
-public class ProfessorRestService {
+public class ProfessorRestService extends BaseRestService<Professor> {
 
-	@Autowired
-	private ProfessorRepository professorRepository;
-	
-	@RequestMapping(method = RequestMethod.POST)
-	public Professor addProfessor(@RequestBody Professor professor) {
-		//TODO work in progress
-		professor.setPasswordHash((new BCryptPasswordEncoder()).encode(professor.getPasswordHash()));
-		return professorRepository.save(professor);
-	}
+    @Autowired
+    private ProfessorBusinessLogic professorBusinessLogic;
+
+    @Override
+    protected BaseBusinessLogic getBusinessLogic() {
+        return this.professorBusinessLogic;
+    }
+
+    @Override
+    protected String getUri() {
+        return "/api/professor";
+    }
+
+    @Override
+    protected String getMessage(Object professor) {
+        return " el profesor " + professor.toString();
+    }
 }

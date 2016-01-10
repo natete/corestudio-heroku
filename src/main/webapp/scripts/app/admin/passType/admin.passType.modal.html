@@ -7,7 +7,7 @@
         <div class="form-group" show-errors>
             <label for="activity" class="control-label">Selecciones la actividad</label>
             <select name="activity" id="activity" class="form-control" ng-model="modal.passType.activity"
-                    ng-options="activity.name for activity in modal.activities track by activity.id" required></select>
+                    ng-options="item.activity as item.activity.name for item in modal.activities" required></select>
         </div>
         <div class="form-group" show-errors>
             <label for="numberOfSessions" class="control-label">Número de sesiones</label>
@@ -19,13 +19,13 @@
         <div class="form-group" show-errors="{showFeedback: false}">
             <label for="basePrice" class="control-label">Precio base</label>
             <div class="input-group">
-                <input currency type="number" id="basePrice" name="basePrice" ng-model="modal.passType.basePrice"
+                <input type="number" id="basePrice" name="basePrice" ng-model="modal.passType.money"
                        required class="form-control" step="1" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
                 <span class="btn btn-default input-group-addon">
                     <i class="fa fa-eur"></i>
                 </span>
             </div>    
-            <div ng-messages="passTypeForm.basePrice.$error" class="help-block" role="alert">
+            <div ng-messages="passTypeForm.money.$error" class="help-block" role="alert">
                 <div ng-messages-include="scripts/components/errors/errors.html"></div>
             </div>
         </div>

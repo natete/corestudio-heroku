@@ -4,22 +4,29 @@ import org.springframework.http.HttpHeaders;
 
 public class HeaderUtil {
 
-	public static HttpHeaders createAlert(String message, String param) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("X-corestudioApp-alert", message);
-		headers.add("X-corestudioApp-params", param);
-		return headers;
-	}
+    private HeaderUtil() {
+        super();
+    }
 
-	public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
-		return createAlert("Se ha creado un nuevo " + entityName + " con identificador " + param, param);
-	}
+    public static HttpHeaders createAlert(String message) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-corestudioApp-alert", message);
+        return headers;
+    }
 
-	public static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
-		return createAlert("Se ha actualizado un " + entityName + " con identificador " + param, param);
-	}
+    public static HttpHeaders createEntityAlert(String message) {
+        return createAlert("Se ha creado " + message);
+    }
 
-	public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
-		return createAlert("Se ha eliminado un " + entityName + " con identificador " + param, param);
-	}
+    public static HttpHeaders updateEntityAlert(String message) {
+        return createAlert("Se ha actualizado " + message);
+    }
+
+    public static HttpHeaders deleteEntityAlert(String message) {
+        return createAlert("Se ha eliminado " + message);
+    }
+
+    public static HttpHeaders errorAlert(String message) {
+        return createAlert(message);
+    }
 }

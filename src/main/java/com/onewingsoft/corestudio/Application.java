@@ -17,13 +17,13 @@ import java.util.TimeZone;
 @EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
-	public static void main(String args[]) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		super.onStartup(servletContext);
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
-	}
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
+    }
 }

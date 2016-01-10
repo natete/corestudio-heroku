@@ -10,7 +10,7 @@
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider) {
         $stateProvider
             .state('admin', {
                 url: '/admin',
@@ -33,7 +33,14 @@
                 templateUrl: 'scripts/app/admin/passType/admin.passType.html',
                 controller: 'PassTypeController',
                 controllerAs: 'passTypes'
-            });
+            })
+            .state('admin.expenses', {
+                url: '/expenses',
+                templateUrl: 'scripts/app/admin/expense/admin.expenses.html',
+                controller: 'ExpenseController',
+                controllerAs: 'expensesCtrl'
+            })
+        ;
     }
 })();
 

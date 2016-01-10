@@ -53,7 +53,7 @@
             'LOW': 'Bajo',
             'MEDIUM': 'Medio',
             'HIGH': 'Alto'
-        }
+        };
         return function (input) {
             return mapping[input];
         }

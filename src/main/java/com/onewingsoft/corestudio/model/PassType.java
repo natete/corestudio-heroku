@@ -1,5 +1,7 @@
 package com.onewingsoft.corestudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +19,7 @@ public class PassType extends BaseEntity {
 
     @Column
     @NotNull
-    private Integer basePrice;
+    private Long basePrice;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
@@ -31,12 +33,32 @@ public class PassType extends BaseEntity {
         this.numberOfSessions = numberOfSessions;
     }
 
-    public Integer getBasePrice() {
+    @JsonIgnore
+    public Long getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(Integer basePrice) {
+    @JsonIgnore
+    public void setBasePrice(Long basePrice) {
         this.basePrice = basePrice;
+    }
+
+    /**
+     * Returns persisted Long price converted to double adding decimals
+     * @return base price with decimals
+     */
+    @Transient
+    public double getMoney() {
+        return (double) basePrice / 100;
+    }
+
+    /**
+     * Sets the price removing the decimals to convert it to Long
+     * @param price base price with decimals
+     */
+    @Transient
+    public void setMoney(double price) {
+        this.basePrice = Math.round(price * 100);
     }
 
     public Activity getActivity() {
@@ -56,4 +78,5 @@ public class PassType extends BaseEntity {
     public String toString() {
         return activity.getName() + " - " + numberOfSessions + " sesiones";
     }
+
 }

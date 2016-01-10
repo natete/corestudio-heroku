@@ -1,6 +1,8 @@
 package com.onewingsoft.corestudio.dto;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Ignacio González Bullón - <nacho.gonzalez.bullon@gmail.com>
@@ -25,5 +27,11 @@ public class ClientDateDTO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, new Locale("es", "ES"));
+        return formatter.format(date);
     }
 }

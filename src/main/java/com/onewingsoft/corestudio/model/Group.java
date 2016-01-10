@@ -4,6 +4,7 @@ import com.onewingsoft.corestudio.utils.Day;
 import com.onewingsoft.corestudio.utils.Level;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ public class Group extends BaseEntity {
     }
 
     public void setDays(List<Day> days) {
+        Collections.sort(days);
         this.days = days;
     }
 
@@ -60,5 +62,16 @@ public class Group extends BaseEntity {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(activity.toString())
+                .append(" ")
+                .append(days.toString())
+                .append(hour + ":00");
+
+        return result.toString();
     }
 }

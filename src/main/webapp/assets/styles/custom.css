@@ -11750,6 +11750,9 @@ textarea {
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important; }
 
+.right-bordered {
+  border-right: 1px solid #5bc0de; }
+
 .font-awesome-icon, .st-sort-ascent:before, .st-sort-descent:before {
   font-family: FontAwesome;
   font-style: normal;
@@ -11874,8 +11877,32 @@ horizontal-calendar table.table > tbody > tr > td.day {
   border-radius: 0 0 10px 10px;
   margin-bottom: 15px; }
 
+.spaced-tab-content {
+  margin-bottom: 15px;
+  padding-top: 30px; }
+
 .client-header {
   maargin-bottom: 15px; }
+
+.read-message {
+  opacity: 0.6; }
+
+.message-icon {
+  font-size: 30px;
+  display: inline-block;
+  margin-right: 15px; }
+
+.message-area {
+  display: inline-block; }
+
+.message-body {
+  font-weight: bold; }
+
+.message-actions {
+  font-size: 25px;
+  opacity: 0.8; }
+  .message-actions:first-child {
+    margin-right: 15px; }
 
 /*!
  * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)

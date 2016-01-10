@@ -42,4 +42,9 @@ public class ActivityDTO {
     public String getName() {
         return activity.getName();
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

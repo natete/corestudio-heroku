@@ -15,7 +15,9 @@
         'corestudioApp.group',
         'corestudioApp.modals',
         'corestudioApp.pass',
-        'corestudioApp.accounts'
+        'corestudioApp.accounts',
+        'corestudioApp.professor',
+        'corestudioApp.message'
     ]);
 
 

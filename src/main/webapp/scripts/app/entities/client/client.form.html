@@ -67,9 +67,11 @@
                         1</label>
 
                     <div class="col-md-4 input-group">
-                        <input type="text" class="form-control" id="firstPhone" name="firstPhone"
-                               ng-model="clientForm.client.firstPhone" ng-pattern="/^[0-9]{9}$/" required>
-
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="firstPhone" name="firstPhone"
+                                   ng-model="clientForm.client.firstPhone" ng-pattern="/^[0-9]{9}$/" required>
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                        </div>
                         <div ng-messages="userForm.firstPhone.$error" class="help-block" role="alert">
                             <div ng-messages-include="scripts/components/errors/errors.html"></div>
                         </div>
@@ -80,9 +82,11 @@
                         2</label>
 
                     <div class="col-md-4 input-group">
-                        <input type="text" class="form-control" id="secondPhone" name="secondPhone"
-                               ng-model="clientForm.client.secondPhone" ng-pattern="/^[0-9]{9}$/">
-
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="secondPhone" name="secondPhone"
+                                   ng-model="clientForm.client.secondPhone" ng-pattern="/^[0-9]{9}$/">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                        </div>
                         <div ng-messages="userForm.secondPhone.$error" class="help-block" role="alert">
                             <div ng-messages-include="scripts/components/errors/errors.html"></div>
                         </div>
@@ -95,6 +99,7 @@
                     <div class="col-md-4 input-group">
                         <input type="email" class="form-control" id="email" name="email"
                                ng-model="clientForm.client.email">
+                        <span class="input-group-addon"><i class="fa fa-at"></i></span>
 
                         <div ng-messages="userForm.email.$error" class="help-block" role="alert">
                             <div ng-messages-include="scripts/components/errors/errors.html"></div>
@@ -111,7 +116,8 @@
                                    is-open="clientForm.birthdateDatepicker.opened"
                                    ng-model="clientForm.client.birthdate"
                                    ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
-                            <span class="btn btn-default input-group-addon"  ng-click="clientForm.birthdateDatepicker.opened = true">
+                            <span class="btn btn-default input-group-addon"
+                                  ng-click="clientForm.birthdateDatepicker.opened = true">
                                 <i class="fa fa-calendar"></i>
                             </span>
                         </div>
@@ -131,7 +137,8 @@
                                    is-open="clientForm.admissionDateDatepicker.opened"
                                    ng-model="clientForm.client.admissionDate"
                                    ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
-                            <span class="btn btn-default input-group-addon" ng-click="clientForm.admissionDateDatepicker.opened = true">
+                            <span class="btn btn-default input-group-addon"
+                                  ng-click="clientForm.admissionDateDatepicker.opened = true">
                                 <i class="fa fa-calendar"></i>
                             </span>
                         </div>

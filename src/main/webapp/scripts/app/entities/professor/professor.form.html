@@ -1,0 +1,208 @@
+<div class="row">
+    <div class="col-md-9">
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa" ng-class="professorFormCtrl.classArea"></i> {{professorFormCtrl.area}}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<form class="row client-header" name="professorForm" novalidate>
+    <div class="col-md-9">
+        <div class="row vertical-align">
+            <div class="col-md-3">
+                <img src="assets/images/face.png" class="img-circle img-responsive profile-size">
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="name">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   ng-model="professorFormCtrl.professor.name" required/>
+
+                            <div ng-messages="professorForm.name.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="firstSurname">Primer apellido</label>
+                            <input type="text" class="form-control" id="firstSurname" name="firstSurname"
+                                   ng-model="professorFormCtrl.professor.firstSurname" required/>
+
+                            <div ng-messages="professorForm.firstSurname.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-feedback" show-errors>
+                            <label class="control-label" for="secondSurname">Segundo apellido</label>
+                            <input type="text" class="form-control" id="secondSurname" name="secondSurname"
+                                   ng-model="professorFormCtrl.professor.secondSurname" required/>
+
+                            <div ng-messages="professorForm.secondSurname.$error" class="help-block" role="alert">
+                                <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+                <div class="form-group has-feedback" show-errors>
+                    <label for="username" class="col-md-6 control-label horizontal-control-label text-right">Nombre de
+                        usuario</label>
+
+                    <div class="col-md-4 input-group">
+                        <input type="text" class="form-control" id="username" name="username"
+                               ng-model="professorFormCtrl.professor.username" required>
+
+                        <div class="help-block" ng-messages="professorForm.username.$error" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors>
+                    <label for="password"
+                           class="col-md-6 control-label horizontal-control-label text-right">Contraseña</label>
+
+                    <div class="col-md-4 input-group">
+                        <input type="password" class="form-control" id="password" name="password"
+                               ng-model="professorFormCtrl.professor.passwordHash" required>
+
+                        <div class="help-block" ng-messages="professorForm.password.$error" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors>
+                    <label for="passwordConfirm" class="col-md-6 control-label horizontal-control-label text-right">Repita la contraseña</label>
+
+                    <div class="col-md-4 input-group">
+                        <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+                               ng-model="professorFormCtrl.passwordConfirm"
+                               match-validator="professorFormCtrl.professor.passwordHash">
+
+                        <div class="help-block" ng-messages="professorForm.passwordConfirm.$error" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors>
+                    <label for="role" class="col-md-6 control-label horizontal-control-label text-right">Perfil</label>
+
+                    <div class="col-md-4 input-group">
+                        <select class="form-control" id="role" name="role" ng-model="professorFormCtrl.professor.role"
+                                required>
+                            <option value="" disabled selected>Seleccione perfil</option>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="USER">Usuario</option>
+                        </select>
+
+                        <div class="help-block" ng-messages="professorForm.role.$error" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address"
+                           class="col-md-6 control-label horizontal-control-label text-right">Dirección</label>
+
+                    <div class="col-md-4 input-group">
+                        <input type="text" class="form-control" id="address"
+                               ng-model="professorFormCtrl.professor.address">
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors>
+                    <label for="firstPhone"
+                           class="col-md-6 control-label horizontal-control-label text-right">Teléfono</label>
+
+                    <div class="col-md-4 input-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="firstPhone" name="firstPhone"
+                                   ng-model="professorFormCtrl.professor.firstPhone" ng-pattern="/^[0-9]{9}$/" required>
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                        </div>
+                        <div ng-messages="professorForm.firstPhone.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors="{showSuccess: false}">
+                    <label for="email" class="col-md-6 control-label horizontal-control-label text-right">Correo
+                        electrónico</label>
+
+                    <div class="col-md-4 input-group">
+                        <input type="email" class="form-control" id="email" name="email"
+                               ng-model="professorFormCtrol.professor.email">
+                        <span class="input-group-addon"><i class="fa fa-at"></i></span>
+
+                        <div ng-messages="professorForm.email.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors="{showSuccess: false}">
+                    <label for="birthdate" class="col-md-6 control-label horizontal-control-label text-right">Fecha de
+                        nacimiento</label>
+
+                    <div class="col-md-4 input-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="birthdate" name="birthdate" uib-datepicker-popup
+                                   is-open="professorFormCtrl.birthdateDatepicker.opened"
+                                   ng-model="professorFormCtrl.professor.birthdate"
+                                   ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
+                            <span class="btn btn-default input-group-addon"
+                                  ng-click="professorFormCtrl.birthdateDatepicker.opened = true">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                        <div ng-messages="professorForm.birthdate.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" show-errors="{showSuccess: false}">
+                    <label for="admissionDate" class="col-md-6 control-label horizontal-control-label text-right">Fecha
+                        de alta</label>
+
+                    <div class="col-md-4 input-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="admissionDate" name="admissionDate"
+                                   uib-datepicker-popup
+                                   is-open="professorFormCtrl.admissionDateDatepicker.opened"
+                                   ng-model="professorFormCtrl.professor.admissionDate"
+                                   ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/">
+                            <span class="btn btn-default input-group-addon"
+                                  ng-click="professorFormCtrl.admissionDateDatepicker.opened = true">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                        <div ng-messages="professorForm.admissionDate.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <ul class="list-inline">
+                    <li>
+                        <a ui-sref="professors.list" class="btn btn-cancel">Volver</a>
+                    </li>
+                    <li>
+                        <button class="btn btn-primary" ng-click="professorFormCtrl.processSaveProfessor()"><i
+                                class="fa fa-floppy-o"></i> {{professorFormCtrl.saveBtnText}}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>
