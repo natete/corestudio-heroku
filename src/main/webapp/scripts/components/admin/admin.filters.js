@@ -13,6 +13,5 @@
             return input.activity.name + ' ' + input.numberOfSessions + ' sesiones';
         };
     }
-
 })();
 

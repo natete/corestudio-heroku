@@ -29,7 +29,7 @@
             <tr ng-repeat="group in groups.data track by group.id">
                 <td class="vertical-middle text-center">{{ group.days | daysArray }}</td>
                 <td class="vertical-middle text-center">{{ group.hour | hour }}</td>
-                <td class="vertical-middle text-center">{{ group.level | level }}</td>
+                <td class="vertical-middle text-center">{{ group.level | translateLevel }}</td>
                 <td class="vertical-middle text-center">{{ group.activity.name }}</td>
                 <td class="text-center vertical-middle">
                     <ul class="list-inline">

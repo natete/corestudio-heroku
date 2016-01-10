@@ -8,8 +8,7 @@
     angular.module('corestudioApp')
         .filter('range', range)
         .filter('hour', hour)
-        .filter('daysArray', daysArray)
-        .filter('level', level);
+        .filter('daysArray', daysArray);
 
     function range() {
         return function (input, min, max) {
@@ -45,17 +44,6 @@
                 return mapping[day];
             });
             return result.toString();
-        }
-    }
-
-    function level() {
-        var mapping = {
-            'LOW': 'Bajo',
-            'MEDIUM': 'Medio',
-            'HIGH': 'Alto'
-        };
-        return function (input) {
-            return mapping[input];
         }
     }
 })();

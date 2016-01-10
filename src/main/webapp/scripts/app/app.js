@@ -11,7 +11,6 @@
         'corestudioApp.admin',
         'corestudioApp.alerts',
         'corestudioApp.overlay',
-        'corestudioApp.currency',
         'corestudioApp.group',
         'corestudioApp.modals',
         'corestudioApp.pass',

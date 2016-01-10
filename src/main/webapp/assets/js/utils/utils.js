@@ -23,7 +23,7 @@
     Date.prototype.getMonthName = function () {
         var names = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         return names[this.getMonth()];
-    }
+    };
 
     Array.prototype.indexOfId = function (id) {
         for (var i = 0; i < this.length; i++) {
