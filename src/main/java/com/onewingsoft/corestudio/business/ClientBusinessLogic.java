@@ -28,7 +28,7 @@ public class ClientBusinessLogic extends BaseBusinessLogic<Client> {
 
     /**
      * @return list of {@link ClientDTO} that includes pass information.
-     * @see BaseBusinessLogic#getAllEntities(int page, int size, String sortBy, String direction).
+     * @see BaseBusinessLogic#getAllEntities(Integer, Integer, String, String) .
      */
     public Page<ClientDTO> getAllDtos(Integer page, Integer size, String sortBy, String direction) {
         Page<Client> clients = super.getAllEntities(page, size, sortBy, direction);

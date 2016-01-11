@@ -13,7 +13,8 @@
     function MonthlySession($resource, MONTHLY_SESSION_ENDPOINT) {
         return $resource(MONTHLY_SESSION_ENDPOINT, {}, {
             'query': {
-                method: 'GET'
+                method: 'GET',
+                isArray: 'true'
             },
             'update': {
                 method: 'PUT'

@@ -28,16 +28,17 @@ public class ActivityBusinessLogic extends BaseBusinessLogic<Activity> {
      * Return all activities as a dto to include the number of related groups.
      *
      * @return all {@link ActivityDTO}
-     * @see BaseBusinessLogic#getAllEntities(int page, int size, String sortBy, String direction).
+     * @see BaseBusinessLogic#getAllEntities(Integer, Integer, String, String).
      */
-    public Page<ActivityDTO> getAllDtos(int page, int size, String sortBy, String direction) {
-
-        Sort sort = null;
-        if (sortBy != null) {
-            sort = new Sort(Sort.Direction.fromString(direction), sortBy);
+    public Page<ActivityDTO> getAllDtos(Integer page, Integer size, String sortBy, String direction) {
+        Pageable pageRequest = null;
+        if(page != null) {
+            Sort sort = null;
+            if (sortBy != null) {
+                sort = new Sort(Sort.Direction.fromString(direction), sortBy);
+            }
+            pageRequest = new PageRequest(page, size, sort);
         }
-        Pageable pageRequest = new PageRequest(page, size, sort);
-
         Page<Activity> activities = activityRepository.findAll(pageRequest);
         List<ActivityDTO> dtos = new ArrayList<>();
         for (Activity activity : activities.getContent()) {

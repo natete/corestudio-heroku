@@ -31,7 +31,7 @@ public class ActivityRestService extends BaseRestService<Activity> {
     private ActivityBusinessLogic activityBusinessLogic;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public Page<ActivityDTO> getAllDtos(int page, int size, String sortBy, String direction) {
+    public Page<ActivityDTO> getAllDtos(Integer page, Integer size, String sortBy, String direction) {
         return activityBusinessLogic.getAllDtos(page, size, sortBy, direction);
     }
 

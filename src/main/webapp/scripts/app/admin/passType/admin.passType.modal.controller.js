@@ -28,8 +28,8 @@
             }
 
 
-            Activity.query({}, function (data) {
-                vm.activities = data;
+            Activity.query({}, function (response) {
+                vm.activities = response.content;
                 if(vm.passType.activity) {
                     var index = -1;
 

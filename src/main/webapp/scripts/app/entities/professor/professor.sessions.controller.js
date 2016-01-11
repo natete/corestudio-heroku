@@ -60,7 +60,7 @@
             month.editing = undefined;
         }
 
-        function saveSessions(monthNumber, sessions) {
+        function saveSessions(monthNumber, monthComponent) {
             $scope.$broadcast('show-errors-check-validity');
 
             if($scope.sessionsForm.$invalid) {
@@ -71,13 +71,13 @@
                     professor: vm.professor,
                     month: monthNumber,
                     year: vm.year,
-                    numberOfSessions: sessions.numberOfSessions
+                    numberOfSessions: monthComponent.numberOfSessions
                 };
 
                 if (!sessions.persisted) {
                     MonthlySession.save(sessions, function (responseData, headers) {
-                        sessions.editing = undefined;
-                        sessions.persisted = true;
+                        monthComponent.editing = false;
+                        monthComponent.persisted = true;
                         Alerts.addHeaderSuccessAlert(headers());
                     }, function (response) {
                         cancelEditing(sessions);
@@ -85,7 +85,7 @@
                     });
                 } else {
                     MonthlySession.update(sessions, function (responseData, headers) {
-                        sessions.editing = undefined;
+                        monthComponent.editing = false;
                         Alerts.addHeaderSuccessAlert(headers());
                     }, function (response) {
                         cancelEditing(sessions);
