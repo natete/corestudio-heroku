@@ -1,7 +1,6 @@
 package com.onewingsoft.corestudio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -44,10 +43,10 @@ public class Professor extends Person {
         super();
     }
 
-    public Professor(String username, String password) {
-        this.username = username;
-        this.passwordHash = (new BCryptPasswordEncoder()).encode(password);
-    }
+//    public Professor(String username, String password) {
+//        this.username = username;
+//        this.passwordHash = passwordEncoder.encode(password);
+//    }
 
     public String getUsername() {
         return username;
@@ -63,7 +62,7 @@ public class Professor extends Person {
     }
 
     public void setPasswordHash(String password) {
-        this.passwordHash = (new BCryptPasswordEncoder()).encode(password);
+        this.passwordHash = password;
     }
 
     public CorestudioRole getRole() {

@@ -15,7 +15,15 @@
             url: '/inbox',
             templateUrl: 'scripts/app/message/message.html',
             controller: 'MessageController',
-            controllerAs: 'messagesCtrl'
+            controllerAs: 'messagesCtrl',
+            data: {
+                authorities: ['USER', 'ADMIN']
+            },
+            resolve: {
+                principal: ['Auth', function (Auth) {
+                    return Auth.authorize();
+                }]
+            }
         });
     }
 

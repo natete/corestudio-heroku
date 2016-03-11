@@ -9,13 +9,18 @@ angular.module('corestudioApp')
         $stateProvider.state('login', {
             url: '/login',
             controller: 'LoginController',
+            controllerAs: 'loginCtrl',
+            templateUrl: 'scripts/app/login/login.html',
             resolve: {
-                user:['authService', '$q', function(authService, $q) {
-                    if(authService.user) {
-                        return $q.reject({authorized: true});
+                auth: ['$q', 'Principal', function($q, Principal) {
+                    var deferred = $q.defer();
+                    if(Principal.isAuthenticated()) {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve();
                     }
+                    return deferred.promise;
                 }]
-            },
-            templateUrl: 'scripts/app/login/login.html'
+            }
         });
     });

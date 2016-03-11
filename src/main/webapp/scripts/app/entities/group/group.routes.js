@@ -16,7 +16,15 @@
                 url: '/groups',
                 templateUrl: 'scripts/app/entities/group/groups.html',
                 controller: 'GroupController',
-                controllerAs: 'groups'
+                controllerAs: 'groups',
+                data: {
+                    authorities: ['ADMIN', 'USER']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             });
     }
 

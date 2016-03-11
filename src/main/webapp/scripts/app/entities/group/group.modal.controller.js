@@ -20,7 +20,7 @@
         vm.title = isNew ? 'Crear grupo' : 'Editar grupo';
         vm.isDaysEmpty = false;
         vm.dismiss = dismiss;
-        vm.saveGroup = saveGroup;
+        vm.savePassword = savePassword;
         var listener;
 
         activate();
@@ -37,7 +37,7 @@
             $uibModalInstance.dismiss('CANCEL');
         }
 
-        function saveGroup() {
+        function savePassword() {
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.groupForm.$valid && vm.selectedGroup.days.length > 0) {

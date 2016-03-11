@@ -11,7 +11,7 @@
     <title>Corestudio Pilates</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/assets/styles/custom.css" rel="stylesheet">
+    <link href="/assets/styles/custom.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="/assets/styles/lib/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -23,11 +23,11 @@
 
 </head>
 
-<body ng-app="corestudioApp">
+<body ng-app="corestudioApp" ng-controller="NavbarController as navbarCtrl" ng-class="{'login-page': !navbarCtrl.authenticated}">
 
 <div id="wrapper">
     <!-- Navigation -->
-    <div ng-include="'scripts/app/navbar/navbar.html'"></div>
+    <div ng-include="'scripts/app/navbar/navbar.html'" ng-show="navbarCtrl.authenticated"></div>
 
 
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
@@ -42,96 +42,102 @@
     </div>
     <!-- /.container-fluid -->
 
-    <footer>OneWingSoft</footer>
+    <footer ng-class="{'login-page': !navbarCtrl.authenticated}">OneWingSoft</footer>
 </div>
 
 <!-- libs -->
-<script src="assets/js/lib/angular/angular.js"></script>
-<script src="assets/js/lib/jquery/jquery.min.js"></script>
-<script src="assets/js/lib/bootstrap/bootstrap.min.js"></script>
-<script src="assets/js/lib/angular-ui-router/angular-ui-router.min.js"></script>
-<script src="assets/js/lib/angular-cookies/angular-cookies.min.js"></script>
-<script src="assets/js/lib/angular-resource/angular-resource.min.js"></script>
-<script src="assets/js/lib/angular-smart-table/smart-table.min.js"></script>
-<script src="assets/js/lib/angular-bootstrap-show-errors/showErrors.js"></script>
-<script src="assets/js/lib/angular-messages/angular-messages.min.js"></script>
-<script src="assets/js/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="assets/js/lib/angular-locale/angular-locale_es-es.js"></script>
-<script src="assets/js/lib/angular-animate/angular-animate.min.js"></script>
-<script src="assets/js/lib/angular-treasure-overlay/treasure-overlay-spinner.min.js"></script>
-<script src="assets/js/lib/checklist-model/checklist-model.js"></script>
-<script src="assets/js/utils/utils.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular/angular.js"></script>
+<script type="text/javascript" src="assets/js/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-ui-router/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-smart-table/smart-table.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-bootstrap-show-errors/showErrors.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-locale/angular-locale_es-es.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/angular-treasure-overlay/treasure-overlay-spinner.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/checklist-model/checklist-model.js"></script>
+<script type="text/javascript" src="assets/js/utils/utils.js"></script>
 
 <!-- Angular modules -->
-<script src="scripts/app/app.js"></script>
-<script src="scripts/app/app.core.js"></script>
-<script src="scripts/app/app.routes.js"></script>
-<script src="scripts/app/app.constants.js"></script>
-<script src="scripts/app/app.controller.js"></script>
-<!--<script src="scripts/app/login/login.js"></script>-->
-<script src="scripts/app/entities/client/client.module.js"></script>
-<script src="scripts/app/entities/client/client.routes.js"></script>
-<script src="scripts/app/entities/client/client.controller.js"></script>
-<script src="scripts/app/entities/client/client.form.controller.js"></script>
-<script src="scripts/app/entities/client/client.tabs.controller.js"></script>
-<script src="scripts/app/entities/client/client.pass.controller.js"></script>
-<script src="scripts/app/admin/admin.module.js"></script>
-<script src="scripts/app/admin/admin.routes.js"></script>
-<script src="scripts/app/admin/holidays/admin.holidays.controller.js"></script>
-<script src="scripts/app/admin/holidays/admin.holidays.modal.controller.js"></script>
-<script src="scripts/app/admin/activities/admin.activities.controller.js"></script>
-<script src="scripts/app/entities/group/group.module.js"></script>
-<script src="scripts/app/entities/group/group.routes.js"></script>
-<script src="scripts/app/entities/group/group.controller.js"></script>
-<script src="scripts/app/entities/group/group.modal.controller.js"></script>
-<script src="scripts/app/admin/passType/admin.passType.controller.js"></script>
-<script src="scripts/app/admin/passType/admin.passType.modal.controller.js"></script>
-<script src="scripts/app/entities/pass/pass.module.js"></script>
-<script src="scripts/app/entities/pass/pass.modal.controller.js"></script>
-<script src="scripts/app/entities/client/client.calendar.controller.js"></script>
-<script src="scripts/app/entities/client/client.date.modal.controller.js"></script>
-<script src="scripts/app/entities/accounts/accounts.module.js"></script>
-<script src="scripts/app/entities/accounts/accounts.routes.js"></script>
-<script src="scripts/app/entities/accounts/accounts.controller.js"></script>
-<script src="scripts/app/entities/professor/professor.module.js"></script>
-<script src="scripts/app/entities/professor/professor.routes.js"></script>
-<script src="scripts/app/entities/professor/professor.list.controller.js"></script>
-<script src="scripts/app/entities/professor/professor.form.controller.js"></script>
-<script src="scripts/app/entities/professor/professor.tabs.controller.js"></script>
-<script src="scripts/app/entities/professor/professor.sessions.controller.js"></script>
-<script src="scripts/app/admin/expense/admin.expense.controller.js"></script>
-<script src="scripts/app/admin/expense/admin.expense.modal.controller.js"></script>
-<script src="scripts/app/message/message.module.js"></script>
-<script src="scripts/app/message/message.routes.js"></script>
-<script src="scripts/app/message/message.controller.js"></script>
-<script src="scripts/app/navbar/navbar.controller.js"></script>
+<script type="text/javascript" src="scripts/app/app.js"></script>
+<script type="text/javascript" src="scripts/app/app.core.js"></script>
+<script type="text/javascript" src="scripts/app/app.routes.js"></script>
+<script type="text/javascript" src="scripts/app/app.constants.js"></script>
+<script type="text/javascript" src="scripts/app/app.controller.js"></script>
+<script type="text/javascript" src="scripts/app/login/login.js"></script>
+<script type="text/javascript" src="scripts/app/login/login.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.module.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.routes.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.form.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.tabs.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.pass.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/admin.module.js"></script>
+<script type="text/javascript" src="scripts/app/admin/admin.routes.js"></script>
+<script type="text/javascript" src="scripts/app/admin/holidays/admin.holidays.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/holidays/admin.holidays.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/activities/admin.activities.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/group/group.module.js"></script>
+<script type="text/javascript" src="scripts/app/entities/group/group.routes.js"></script>
+<script type="text/javascript" src="scripts/app/entities/group/group.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/group/group.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/passType/admin.passType.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/passType/admin.passType.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/pass/pass.module.js"></script>
+<script type="text/javascript" src="scripts/app/entities/pass/pass.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.calendar.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/client/client.date.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/accounts/accounts.module.js"></script>
+<script type="text/javascript" src="scripts/app/entities/accounts/accounts.routes.js"></script>
+<script type="text/javascript" src="scripts/app/entities/accounts/accounts.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.module.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.routes.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.list.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.form.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.tabs.controller.js"></script>
+<script type="text/javascript" src="scripts/app/entities/professor/professor.sessions.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/expense/admin.expense.controller.js"></script>
+<script type="text/javascript" src="scripts/app/admin/expense/admin.expense.modal.controller.js"></script>
+<script type="text/javascript" src="scripts/app/message/message.module.js"></script>
+<script type="text/javascript" src="scripts/app/message/message.routes.js"></script>
+<script type="text/javascript" src="scripts/app/message/message.controller.js"></script>
+<script type="text/javascript" src="scripts/app/navbar/navbar.controller.js"></script>
+<script type="text/javascript" src="scripts/app/navbar/changepass.modal.controller.js"></script>
 
-<script src="scripts/components/alerts/alerts.service.js"></script>
-<script src="scripts/components/overlay/overlay.service.js"></script>
-<script src="scripts/components/entities/client/client.service.js"></script>
-<script src="scripts/components/entities/client/client.filters.js"></script>
-<script src="scripts/components/calendar/calendar.module.js"></script>
-<script src="scripts/components/calendar/calendar.directive.js"></script>
-<script src="scripts/components/admin/admin.holidays.service.js"></script>
-<script src="scripts/components/admin/admin.activities.service.js"></script>
-<script src="scripts/components/currency/currency.module.js"></script>
-<script src="scripts/components/currency/currency.directive.js"></script>
-<script src="scripts/components/config/config.service.js"></script>
-<script src="scripts/components/config/config.filters.js"></script>
-<script src="scripts/components/entities/group/group.service.js"></script>
-<script src="scripts/components/entities/group/group.filters.js"></script>
-<script src="scripts/components/admin/admin.passType.service.js"></script>
-<script src="scripts/components/modals/modals.module.js"></script>
-<script src="scripts/components/modals/modals.confirm.controller.js"></script>
-<script src="scripts/components/commons/commons.filters.js"></script>
-<script src="scripts/components/entities/pass/pass.service.js"></script>
-<script src="scripts/components/admin/admin.filters.js"></script>
-<script src="scripts/components/entities/accounts/accounts.service.js"></script>
-<script src="scripts/components/entities/professor/professor.service.js"></script>
-<script src="scripts/components/password/password.directive.js"></script>
-<script src="scripts/components/entities/professor/professor.monthlySession.service.js"></script>
-<script src="scripts/components/admin/admin.expense.service.js"></script>
-<script src="scripts/components/message/message.service.js"></script>
+<script type="text/javascript" src="scripts/components/alerts/alerts.service.js"></script>
+<script type="text/javascript" src="scripts/components/overlay/overlay.service.js"></script>
+<script type="text/javascript" src="scripts/components/entities/client/client.service.js"></script>
+<script type="text/javascript" src="scripts/components/entities/client/client.filters.js"></script>
+<script type="text/javascript" src="scripts/components/calendar/calendar.module.js"></script>
+<script type="text/javascript" src="scripts/components/calendar/calendar.directive.js"></script>
+<script type="text/javascript" src="scripts/components/admin/admin.holidays.service.js"></script>
+<script type="text/javascript" src="scripts/components/admin/admin.activities.service.js"></script>
+<script type="text/javascript" src="scripts/components/currency/currency.module.js"></script>
+<script type="text/javascript" src="scripts/components/currency/currency.directive.js"></script>
+<script type="text/javascript" src="scripts/components/config/config.service.js"></script>
+<script type="text/javascript" src="scripts/components/config/config.filters.js"></script>
+<script type="text/javascript" src="scripts/components/entities/group/group.service.js"></script>
+<script type="text/javascript" src="scripts/components/entities/group/group.filters.js"></script>
+<script type="text/javascript" src="scripts/components/admin/admin.passType.service.js"></script>
+<script type="text/javascript" src="scripts/components/modals/modals.module.js"></script>
+<script type="text/javascript" src="scripts/components/modals/modals.confirm.controller.js"></script>
+<script type="text/javascript" src="scripts/components/commons/commons.filters.js"></script>
+<script type="text/javascript" src="scripts/components/entities/pass/pass.service.js"></script>
+<script type="text/javascript" src="scripts/components/admin/admin.filters.js"></script>
+<script type="text/javascript" src="scripts/components/entities/accounts/accounts.service.js"></script>
+<script type="text/javascript" src="scripts/components/entities/professor/professor.service.js"></script>
+<script type="text/javascript" src="scripts/components/password/password.directive.js"></script>
+<script type="text/javascript" src="scripts/components/entities/professor/professor.monthlySession.service.js"></script>
+<script type="text/javascript" src="scripts/components/admin/admin.expense.service.js"></script>
+<script type="text/javascript" src="scripts/components/message/message.service.js"></script>
+<script type="text/javascript" src="scripts/components/auth/account.service.js"></script>
+<script type="text/javascript" src="scripts/components/auth/auth.service.js"></script>
+<script type="text/javascript" src="scripts/components/auth/auth.session.service.js"></script>
+<script type="text/javascript" src="scripts/components/auth/principal.service.js"></script>
 
 </body>
 

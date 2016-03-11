@@ -16,7 +16,15 @@
         $stateProvider
             .state('professors', {
                 url: '/professors',
-                templateUrl: 'scripts/app/entities/professor/professor.html'
+                templateUrl: 'scripts/app/entities/professor/professor.html',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
             .state('professors.list', {
                 url: '/list',

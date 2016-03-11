@@ -5,27 +5,28 @@
 'use strict';
 
 angular.module('corestudioApp')
-    .controller('LoginController', ['$rootScope', '$scope', '$state', 'Auth', function($rootScope, $scope, $state, Auth) {
+    .controller('LoginController', ['$state', 'Auth', function ($state, Auth) {
+        var vm = this;
+        vm.buttonText = 'Entrar';
 
-        $scope.buttonText = 'Entrar';
+        vm.login = function () {
 
-        $scope.login = function () {
+            vm.buttonText = 'Entrando...';
+            vm.authenticationError = false;
 
-            $scope.buttonText = 'Entrando...';
-
-            Auth.login({
-                username: $scope.username,
-                password: $scope.password,
-            }).then(function () {
-                $state.go('home');
-                $scope.authenticationError = false;
-                //if ($rootScope.previousStateName === 'register') {
-                //    $state.go('home');
-                //} else {
-                //    $rootScope.back();
-                //}
-            }).catch(function () {
-                $scope.authenticationError = true;
-            });
+            Auth.login(vm.credential)
+                .then(function () {
+                    $state.go('inbox');
+                    vm.authenticationError = false;
+                    //if ($rootScope.previousStateName === 'register') {
+                    //    $state.go('home');
+                    //} else {
+                    //    $rootScope.back();
+                    //}
+                })
+                .catch(function () {
+                    vm.authenticationError = true;
+                    vm.buttonText = 'Entrar';
+                });
         };
     }]);

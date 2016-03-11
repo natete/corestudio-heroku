@@ -2,6 +2,8 @@
 
 angular.module("corestudioApp")
     .constant("CLIENT_ENDPOINT", "api/clients/:id")
+    .constant("LOGIN_ENDPOINT", "api/authentication")
+    .constant("LOGOUT_ENDPOINT", "api/logout")
     .constant("HOLIDAYS_ENDPOINT", "api/admin/holidays/:id")
     .constant("ACTIVITIES_ENDPOINT", "api/admin/activities/:id")
     .constant("GROUP_ENDPOINT", "api/groups/:id")

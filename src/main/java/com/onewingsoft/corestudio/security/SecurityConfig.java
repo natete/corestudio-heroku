@@ -6,17 +6,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,13 +37,37 @@ import java.io.IOException;
  * @since 17 oct. 2015
  */
 @Configuration
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static PasswordEncoder encoder;
+    @Inject
+    private RestAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
+    @Inject
+    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
+
+    @Inject
+    private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
+
+    @Inject
+    private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
+
+
+    @Inject
     private UserDetailsService customUserDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/scripts/**/*.{js,html}")
+                .antMatchers("/assets/**");
+    }
 
     /**
      * @see WebSecurityConfigurerAdapter#configure(HttpSecurity)
@@ -46,63 +75,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
-
+        http
+            .csrf()
+        .and()
+            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
+            .exceptionHandling()
+            .accessDeniedHandler(new CustomAccesDeniedHandler())
+            .authenticationEntryPoint(authenticationEntryPoint)
+        .and()
+            .formLogin()
+            .loginProcessingUrl("/api/authentication")
+            .successHandler(ajaxAuthenticationSuccessHandler)
+            .failureHandler(ajaxAuthenticationFailureHandler)
+            .permitAll()
+        .and()
+            .logout()
+            .logoutUrl("/api/logout")
+            .logoutSuccessHandler(ajaxLogoutSuccessHandler)
+            .deleteCookies("JSESSIONID", "CSRF-TOKEN")
+            .permitAll()
+        .and()
+            .authorizeRequests()
+            .antMatchers("/api/accounts/**").hasAuthority("ADMIN")
+            .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+            .antMatchers("/api/client/**").authenticated()
+            .antMatchers("/api/config/**").authenticated()
+            .antMatchers("/api/groups/**").authenticated()
+            .antMatchers("/api/messages/**").authenticated()
+            .antMatchers("/api/pass/**").authenticated()
+            .antMatchers("/api/professor/**").hasAuthority("ADMIN");
     }
 
     /**
      * @see WebSecurityConfigurerAdapter#configure(AuthenticationManagerBuilder)
      */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    /**
-     * Method that returns a new {@link OncePerRequestFilter} Filter to manage Angular cookies
-     *
-     * @return {@link Filter} to manage Angular cookies
-     */
-    private Filter csrfHeaderFilter() {
-        return new OncePerRequestFilter() {
-            @Override
-            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain filterChain) throws ServletException, IOException {
-                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-                if (csrf != null) {
-                    Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
-                    String token = csrf.getToken();
-                    if (cookie == null || token != null && !token.equals(cookie.getValue())) {
-                        cookie = new Cookie("XSRF-TOKEN", token);
-                        cookie.setPath("/");
-                        response.addCookie(cookie);
-                    }
-                }
-                filterChain.doFilter(request, response);
-            }
-        };
-    }
-
-    /**
-     * @return
-     */
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
-    }
-
-    /**
-     * Method to use PasswordEncoder as a singleton
-     *
-     * @return
-     */
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        if (encoder == null) {
-            encoder = new BCryptPasswordEncoder();
-        }
-
-        return encoder;
+    @Inject
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .userDetailsService(customUserDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
 }
