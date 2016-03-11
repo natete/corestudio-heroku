@@ -4,6 +4,7 @@ import com.onewingsoft.corestudio.model.BaseEntity;
 import com.onewingsoft.corestudio.model.Professor;
 import com.onewingsoft.corestudio.repository.ProfessorRepository;
 import com.onewingsoft.corestudio.utils.CorestudioException;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,7 @@ public class ProfessorBusinessLogic extends BaseBusinessLogic<Professor> {
      */
     @Override
     protected void validateEntity(Professor professor) throws CorestudioException {
+        LoggerUtil.writeErrorLog("Password " + professor.getPasswordHash());
         professor.setPasswordHash(passwordEncoder.encode(professor.getPasswordHash()));
 
         if (professor.getName() == null) {

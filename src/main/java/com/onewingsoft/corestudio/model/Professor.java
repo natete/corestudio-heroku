@@ -2,6 +2,7 @@ package com.onewingsoft.corestudio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.onewingsoft.corestudio.utils.LoggerUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -60,6 +61,7 @@ public class Professor extends Person {
 
     @JsonProperty
     public void setPasswordHash(String password) {
+        LoggerUtil.writeErrorLog("Setting password" + password);
         this.passwordHash = password;
     }
 
