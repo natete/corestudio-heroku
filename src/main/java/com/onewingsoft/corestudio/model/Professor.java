@@ -1,6 +1,7 @@
 package com.onewingsoft.corestudio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ public class Professor extends Person {
     @Column
     @NotNull
     @Size(min = 1, max = 60)
+    @JsonIgnore
     private String passwordHash;
 
     @Column
@@ -43,11 +45,6 @@ public class Professor extends Person {
         super();
     }
 
-//    public Professor(String username, String password) {
-//        this.username = username;
-//        this.passwordHash = passwordEncoder.encode(password);
-//    }
-
     public String getUsername() {
         return username;
     }
@@ -61,6 +58,7 @@ public class Professor extends Person {
         return passwordHash;
     }
 
+    @JsonProperty
     public void setPasswordHash(String password) {
         this.passwordHash = password;
     }
