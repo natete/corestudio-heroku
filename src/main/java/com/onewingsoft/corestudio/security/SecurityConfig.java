@@ -103,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/groups/**").authenticated()
             .antMatchers("/api/messages/**").authenticated()
             .antMatchers("/api/pass/**").authenticated()
-            .antMatchers("/api/professor/**").permitAll();
+            .antMatchers("/api/professor/**").hasAuthority("ADMIN");
     }
 
     /**
