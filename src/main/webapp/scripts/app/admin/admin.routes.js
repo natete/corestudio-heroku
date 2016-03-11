@@ -20,25 +20,57 @@
                 url: '/holidays',
                 templateUrl: 'scripts/app/admin/holidays/admin.holidays.html',
                 controller: 'HolidaysController',
-                controllerAs: 'holidays'
+                controllerAs: 'holidays',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
             .state('admin.activities', {
                 url: '/activities',
                 templateUrl: 'scripts/app/admin/activities/admin.activities.html',
                 controller: 'ActivitiesController',
-                controllerAs: 'activities'
+                controllerAs: 'activities',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
             .state('admin.passTypes', {
                 url: '/passTypes',
                 templateUrl: 'scripts/app/admin/passType/admin.passType.html',
                 controller: 'PassTypeController',
-                controllerAs: 'passTypes'
+                controllerAs: 'passTypes',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
             .state('admin.expenses', {
                 url: '/expenses',
                 templateUrl: 'scripts/app/admin/expense/admin.expenses.html',
                 controller: 'ExpenseController',
-                controllerAs: 'expensesCtrl'
+                controllerAs: 'expensesCtrl',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
         ;
     }

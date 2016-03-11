@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="modal.dismiss()" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">{{modal.title}}</h4>
+</div>
+<div class="modal-body">
+    <form novalidate name="changePasswordForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 form-group has-feedback" show-errors>
+                        <label for="oldPassword" class="control-label">Contraseña actual</label>
+                        <div class="input-group">
+                            <input type="password" id="oldPassword" class="form-control" name="oldPassword" ng-model="modal.oldPassword" ng-required="true">
+                            <span class="btn btn-default input-group-addon">
+                              <i class="fa fa-key"></i>
+                            </span>
+                        </div>
+                        <div ng-messages="changePasswordForm.oldPassword.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group has-feedback" show-errors>
+                        <label for="newPassword" class="control-label">Nueva contraseña</label>
+                        <div class="input-group">
+                            <input type="password" id="newPassword" class="form-control" name="newPassword" ng-model="modal.newPassword" ng-required="true">
+                            <span class="btn btn-default input-group-addon">
+                              <i class="fa fa-key"></i>
+                            </span>
+                        </div>
+                        <div ng-messages="changePasswordForm.newPassword.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group has-feedback" show-errors>
+                        <label for="checkPassword" class="control-label">Repita la contraseña</label>
+                        <div class="input-group">
+                            <input type="password" id="checkPassword" class="form-control" name="checkPassword" ng-model="modal.checkPassword" match-validator="modal.newPassword" ng-required="true">
+                            <span class="btn btn-default input-group-addon">
+                              <i class="fa fa-key"></i>
+                            </span>
+                        </div>
+                        <div ng-messages="changePasswordForm.checkPassword.$error" class="help-block" role="alert">
+                            <div ng-messages-include="scripts/components/errors/errors.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="modal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-primary" ng-click="modal.savePassword()">Guardar</button>
+</div>

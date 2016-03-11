@@ -20,7 +20,7 @@ public class AccountsRestService {
     private AccountsBusinessLogic accountsBusinessLogic;
 
     @RequestMapping(value = "/{year}/{month}", method = RequestMethod.GET)
-    AccountDTO getAccounts(@PathVariable final int year, @PathVariable final int month) {
+    public AccountDTO getAccounts(@PathVariable final int year, @PathVariable final int month) {
         return accountsBusinessLogic.getAccounts(year, month);
     }
 }

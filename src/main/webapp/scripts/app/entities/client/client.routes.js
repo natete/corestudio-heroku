@@ -15,7 +15,15 @@
         $stateProvider
             .state('clients', {
                 url: '/clients',
-                templateUrl: 'scripts/app/entities/client/clients.html'
+                templateUrl: 'scripts/app/entities/client/clients.html',
+                data: {
+                    authorities: ['ADMIN', 'USER']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             })
             .state('clients.list', {
                 url: '/list',

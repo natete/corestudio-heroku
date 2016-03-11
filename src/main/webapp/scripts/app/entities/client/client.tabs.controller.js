@@ -8,9 +8,9 @@
     angular.module('corestudioApp.client')
         .controller('ClientTabsController', ClientTabsController);
 
-    ClientTabsController.$inject = ['Client', '$stateParams', '$state', '$scope'];
+    ClientTabsController.$inject = ['$stateParams', '$state', '$scope', 'Alerts', 'Client'];
 
-    function ClientTabsController(Client, $stateParams, $state, $scope) {
+    function ClientTabsController($stateParams, $state, $scope, Alerts, Client) {
         var vm = this;
 
         vm.go = go;

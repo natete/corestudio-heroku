@@ -51,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @return {@link User} based on the professor.
      */
     private User buildUserForAuthentication(Professor professor, GrantedAuthority authority) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         return new User(professor.getUsername(), professor.getPasswordHash(), authorities);
     }

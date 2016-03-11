@@ -16,7 +16,15 @@
                 url: '/accounts',
                 templateUrl: 'scripts/app/entities/accounts/accounts.html',
                 controller: 'AccountsController',
-                controllerAs: 'accountsCtrl'
+                controllerAs: 'accountsCtrl',
+                data: {
+                    authorities: ['ADMIN']
+                },
+                resolve: {
+                    principal: ['Auth', function (Auth) {
+                        return Auth.authorize();
+                    }]
+                }
             });
     }
 })();
