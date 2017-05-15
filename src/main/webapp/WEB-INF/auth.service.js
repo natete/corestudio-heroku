@@ -21,8 +21,8 @@ angular.module('corestudioApp.services')
             return $http.post(LOGOUT_ENDPOINT).then(function(response) {
                 auth.user = undefined;
                 $cookieStore.remove('user');
-            })
-        }
+            });
+        };
 
         return auth;
     }]);
