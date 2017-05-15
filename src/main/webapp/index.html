@@ -29,7 +29,6 @@
     <!-- Navigation -->
     <div ng-include="'scripts/app/navbar/navbar.html'" ng-show="navbarCtrl.authenticated"></div>
 
-
     <div id="page-wrapper" ng-controller="MainController as parentCtrl">
         <div class="alert-area">
             <uib-alert class="animate-if" ng-repeat="alert in parentCtrl.alerts" type="{{alert.type}}" dismiss-on-timeout="5000" close="parentCtrl.closeAlert($index)">
