@@ -1,0 +1,13 @@
+node_modules
+bower_components
+target
+webpack
+.idea
+templates
+.DS_Store
+scripts/app/templates
+assets/styles
+build
+dist
+reports
+*.iml

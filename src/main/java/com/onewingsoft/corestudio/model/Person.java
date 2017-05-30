@@ -27,7 +27,7 @@ public class Person extends BaseEntity {
     private String firstSurname;
 
     @Column
-    @Size(min = 1, max = 35)
+    @Size(min = 0, max = 35)
     @Pattern(regexp = "[a-zA-z ñáàâäéèêëíìîïóòôöúùûüçÑÁÀÂÄÉÈÊËÍÌÎÏÓÒÔÖÚÙÛÜÇ-]*")
     private String secondSurname;
 
