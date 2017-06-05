@@ -18,7 +18,7 @@
         function search(tableState) {
             var pagination = tableState.pagination;
             var pageRequest = {};
-            pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
+            pageRequest.page = pagination.start ? Math.floor((pagination.start + 1) / pagination.number) : 0;
             pageRequest.size = pagination.number || 10;
             pageRequest.sortBy = tableState.sort.predicate;
             pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
