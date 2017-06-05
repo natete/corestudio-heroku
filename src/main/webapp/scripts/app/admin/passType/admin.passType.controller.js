@@ -8,9 +8,9 @@
     angular.module('corestudioApp.admin')
         .controller('PassTypeController', PassTypeController);
 
-    PassTypeController.$inject = ['PassType', 'Alerts', '$scope', '$uibModal'];
+    PassTypeController.$inject = ['PassType', 'Alerts', '$uibModal'];
 
-    function PassTypeController(PassType, Alerts, $scope, $uibModal) {
+    function PassTypeController(PassType, Alerts, $uibModal) {
         var vm = this;
 
         vm.data = [];
@@ -24,7 +24,7 @@
             var pageRequest = {};
             pageRequest.page = pagination.start ? (pagination.start + 1) % pagination.number : 0;
             pageRequest.size = pagination.number || 10;
-            pageRequest.sortBy = tableState.sort.predicate;
+            pageRequest.sortBy = tableState.sort.predicate || 'activity.name';
             pageRequest.direction = tableState.sort.reverse ? 'DESC' : 'ASC';
             PassType.query(pageRequest, function (responseData) {
                 vm.data = responseData.content;

@@ -26,8 +26,10 @@
 
         function activate() {
             PassType.query({}, function (responseData) {
-                vm.passTypes = responseData.content;
-                if(params.pass) {
+                vm.passTypes = responseData.content.sort(function (p1, p2) {
+                    return p1.activity.name.localeCompare(p2.activity.name)
+                });
+                if (params.pass) {
                     vm.pass = params.pass;
                     vm.updateGroups();
                     vm.pass.initialDate = new Date(vm.pass.initialDate);
@@ -46,7 +48,7 @@
         function updateGroups() {
             Group.getGroupsByActivity({activityId: vm.pass.passType.activity.id}, function (data) {
                 vm.groups = data;
-                if(vm.pass.group) {
+                if (vm.pass.group) {
                     vm.pass.group = vm.groups[vm.groups.indexOfId(vm.pass.group.id)];
                 }
             });
